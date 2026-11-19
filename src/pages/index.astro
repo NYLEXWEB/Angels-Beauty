@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import ServicesShowcase from '../components/ServicesShowcase';
+import BridalHighlight from '../components/BridalHighlight.astro';
+import GallerySection from '../components/GallerySection.astro';
+import InstagramSection from '../components/InstagramSection.astro';
+import ReviewsCarousel from '../components/ReviewsCarousel';
+import BookingForm from '../components/BookingForm';
+import ContactSection from '../components/ContactSection.astro';
+import Footer from '../components/Footer.astro';
+import FloatingActions from '../components/FloatingActions';
+---
+
+<Layout 
+  title="Angels Beauty Parlour and Bridal Studio | Mananthavady, Wayanad"
+  description="Wayanad's signature destination for bespoke bridal makeup, HD beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady. Open daily 9 AM - 8 PM."
+>
+  <Header />
+  
+  <main class="min-h-screen">
+    <!-- 1. Hero Section -->
+    <Hero />
+
+    <!-- 2. Intro / About Section -->
+    <About />
+
+    <!-- 3. Services Showcase (The Showpiece) -->
+    <ServicesShowcase client:visible />
+
+    <!-- 4. Bridal Highlight Teaser -->
+    <BridalHighlight />
+
+    <!-- 5. Studio Gallery with Lightbox -->
+    <GallerySection />
+
+    <!-- 6. Instagram Section with Real Client Photos -->
+    <InstagramSection />
+
+    <!-- 7. Google Reviews Carousel -->
+    <ReviewsCarousel client:visible />
+
+    <!-- 8. Interactive Booking Form -->
+    <BookingForm client:visible />
+
+    <!-- 9. Contact, Address & Google Maps Location -->
+    <ContactSection />
+  </main>
+
+  <!-- 10. Footer -->
+  <Footer />
+
+  <!-- 11. Floating Action Buttons (WhatsApp & Instagram) -->
+  <FloatingActions client:load />
+</Layout>

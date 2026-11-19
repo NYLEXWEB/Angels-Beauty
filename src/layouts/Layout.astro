@@ -1,0 +1,104 @@
+---
+import '../styles/global.css';
+import { SITE_CONFIG } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = "Angels Beauty Parlour and Bridal Studio | Wayanad, Kerala",
+  description = "Wayanad's signature destination for bespoke bridal makeup, HD beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady.",
+  ogImage = "/images/bridal-church.jpg"
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://angelsbeautyparlour.in');
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BeautySalon",
+  "name": SITE_CONFIG.name,
+  "image": "https://angelsbeautyparlour.in/images/logo.png",
+  "url": "https://angelsbeautyparlour.in",
+  "telephone": SITE_CONFIG.contact.phoneTel,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": SITE_CONFIG.address.line1,
+    "addressLocality": SITE_CONFIG.address.city,
+    "addressRegion": SITE_CONFIG.address.state,
+    "postalCode": SITE_CONFIG.address.pincode,
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 11.8028,
+    "longitude": 76.0035
+  },
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "09:00",
+      "closes": "20:00"
+    }
+  ],
+  "sameAs": [
+    SITE_CONFIG.social.instagramUrl
+  ],
+  "priceRange": "₹₹",
+  "servesCuisine": "Bridal Makeup, HD Airbrush, Korean Glass Skin, Hair Botox, Nanoplastia"
+};
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="canonical" href={canonicalURL} />
+    
+    <!-- Primary Meta -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content="bridal makeup wayanad, angels beauty parlour mananthavady, bridal studio mananthavady, HD bridal makeup kerala, glass skin facial wayanad, hair botox mananthavady, nanoplastia wayanad" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogImage} />
+
+    <!-- LocalBusiness Schema JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+  </head>
+  <body class="bg-canvas text-charcoal antialiased selection:bg-[#EBD6B0] selection:text-charcoal min-h-screen">
+    <slot />
+
+    <script>
+      import { initMotion } from '../scripts/motion';
+      document.addEventListener('DOMContentLoaded', () => {
+        initMotion();
+      });
+    </script>
+  </body>
+</html>

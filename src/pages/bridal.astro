@@ -1,0 +1,292 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FloatingActions from '../components/FloatingActions';
+import { SITE_CONFIG, BRIDAL_PACKAGES, getWhatsAppBookingUrl } from '../config/site';
+
+const BRIDAL_STEPS = [
+  {
+    step: "01",
+    title: "Personal Consultation & Skin Prep",
+    timeline: "2 to 4 weeks prior",
+    description: "We evaluate your skin profile, wedding gown or saree tones, and ceremonial lighting (daylight church ceremony, indoor hall, or sunset reception) to plan hydration care."
+  },
+  {
+    step: "02",
+    title: "Hairstyle & Jewelry Alignment",
+    timeline: "1 to 2 weeks prior",
+    description: "Trial hair styling, veil anchoring, fresh floral placement, and jewelry draping. We ensure your dupatta, crown, antique temple ornaments, or tiara sit securely."
+  },
+  {
+    step: "03",
+    title: "The Wedding Day Artistry",
+    timeline: "Ceremony Day",
+    description: "Step into our serene, air-conditioned private Bridal Suite at PP Building, Mananthavady. You receive uninterrupted care, meticulous HD/airbrush application, and precise saree pleating."
+  }
+];
+
+const BRIDAL_STRIP = [
+  { src: "/images/bridal-church.jpg", title: "Real Bride", desc: "Church Wedding" },
+  { src: "/images/bridal-room.jpg", title: "Bridal Suite", desc: "Private Chamber" },
+  { src: "/images/bridal-suite.jpg", title: "Dressing Bay", desc: "Vanity Arch" },
+  { src: "/images/pedicure-spa.jpg", title: "Spa Lounge", desc: "Rose Foot Spa" }
+];
+---
+
+<Layout 
+  title="Bridal Packages & Studio Couture | Angels Beauty Parlour, Wayanad"
+  description="Explore our 6 signature bridal makeup packages: Normal, HD, UHD, Glass Skin, Airbrush, and Signature Bridal Packages in Mananthavady, Wayanad. Private bridal room."
+>
+  <Header />
+
+  <main class="min-h-screen bg-canvas overflow-x-clip">
+    
+    <!-- Bridal Hero -->
+    <section class="pt-24 pb-12 sm:pt-32 sm:pb-16 md:pt-40 md:pb-24 bg-surface border-b border-gold-border/30 relative overflow-x-clip">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+          
+          <div class="lg:col-span-7 space-y-4 sm:space-y-6">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-gold-border bg-canvas text-charcoal">
+              <span class="w-2 h-2 rounded-full bg-gold-deep shrink-0"></span>
+              <span class="text-[10px] sm:text-[11px] font-sans font-medium uppercase tracking-[0.16em] sm:tracking-[0.2em] text-gold-deep">
+                Wayanad Bridal Artistry
+              </span>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl md:text-6xl font-serif text-charcoal leading-tight">
+              Bespoke Bridal Elegance, Tailored for Your <span class="italic font-serif text-gold-deep">Sacred Day</span>.
+            </h1>
+
+            <p class="text-sm sm:text-base md:text-lg text-muted font-sans max-w-2xl leading-relaxed">
+              Every bride deserves an unhurried, royal experience. In our dedicated private bridal room at Mananthavady, our certified artists harmonize HD precision, airbrush endurance, and traditional Kerala draping to reflect your timeless beauty.
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 pt-1 sm:pt-2">
+              <a 
+                href="#packages" 
+                class="px-7 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-gold hover:bg-gold-hover text-charcoal shadow-sm transition-all duration-300 text-center"
+              >
+                Explore 6 Packages
+              </a>
+              <a 
+                href={SITE_CONFIG.contact.whatsappUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                class="px-7 py-3.5 rounded-full text-xs font-semibold tracking-wider uppercase border border-gold-border hover:bg-canvas text-charcoal transition-all duration-300 text-center"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+
+          <!-- Hero Image Trio -->
+          <div class="lg:col-span-5 relative pt-4 sm:pt-0">
+            <div class="arch-frame max-w-[280px] sm:max-w-[360px] mx-auto overflow-hidden border-2 border-gold-border shadow-xl aspect-[4/5] bg-canvas">
+              <img 
+                src="/images/bridal-church.jpg" 
+                alt="Christian wedding bride styled by Angels Beauty Parlour" 
+                class="w-full h-full object-cover object-top"
+                width="360"
+                height="450"
+                loading="eager"
+              />
+            </div>
+            
+            <div class="absolute -bottom-4 right-2 sm:-bottom-6 sm:-right-4 bg-canvas/95 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-gold-border shadow-lg max-w-[180px] sm:max-w-[200px]">
+              <p class="text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-widest text-gold-deep">Private Chamber</p>
+              <p class="text-xs font-serif text-charcoal font-medium mt-0.5 leading-snug">Dedicated Suite with Hair & Saree Draping Lounge</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section id="packages" class="py-14 sm:py-20 md:py-28 bg-canvas">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-2 sm:space-y-3">
+          <span class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep block">
+            Signature Formulations
+          </span>
+          <h2 class="text-2xl sm:text-4xl md:text-5xl font-serif text-charcoal tracking-tight">
+            Six Bridal Packages Comparison
+          </h2>
+          <p class="text-muted text-xs sm:text-base font-sans leading-relaxed">
+            Choose the formula that matches your wedding timeline and photography demands. No hidden tiers — simply enquire to reserve your wedding date.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8">
+          {BRIDAL_PACKAGES.map((pkg) => {
+            const waUrl = getWhatsAppBookingUrl({ packageName: pkg.name });
+
+            return (
+              <div class={`rounded-2xl sm:rounded-3xl p-5 sm:p-8 flex flex-col justify-between transition-all duration-300 ${
+                pkg.featured 
+                  ? 'bg-surface border-2 border-gold shadow-md sm:shadow-xl ring-1 ring-gold/30' 
+                  : 'bg-surface/60 hover:bg-surface border border-gold-border/60 hover:border-gold hover:shadow-md'
+              }`}>
+                <div>
+                  {pkg.featured && (
+                    <span class="inline-block mb-2.5 px-2.5 py-0.5 rounded-full text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-widest bg-gold text-charcoal">
+                      Bridal Favourite
+                    </span>
+                  )}
+
+                  <h3 class="font-serif text-xl sm:text-2xl md:text-3xl text-charcoal font-medium mb-1">
+                    {pkg.name}
+                  </h3>
+                  <p class="text-xs font-sans text-gold-deep italic mb-3 sm:mb-4">
+                    {pkg.tagline}
+                  </p>
+                  
+                  <p class="text-xs sm:text-sm text-muted font-sans leading-relaxed mb-4 sm:mb-6">
+                    {pkg.description}
+                  </p>
+
+                  <div class="pt-4 border-t border-gold-border/40 space-y-2">
+                    <span class="text-[9px] sm:text-[10px] font-sans uppercase tracking-widest text-subtle font-semibold block">
+                      Core Artistry Inclusions:
+                    </span>
+                    <ul class="space-y-1.5 sm:space-y-2 text-xs font-sans text-charcoal">
+                      {pkg.highlights.map(h => (
+                        <li class="flex items-start gap-2">
+                          <span class="text-gold-deep font-bold mt-0.5">✦</span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div class="mt-4 sm:mt-6 pt-3 border-t border-gold-border/20 text-[10px] sm:text-[11px] font-sans text-muted">
+                    <span class="font-semibold text-charcoal">Best suited for:</span> {pkg.recommendedFor}
+                  </div>
+                </div>
+
+                <div class="pt-5 sm:pt-8 mt-4 sm:mt-6 border-t border-gold-border/40">
+                  <a 
+                    href={waUrl} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    class={`w-full py-3 sm:py-3.5 px-5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all active:scale-98 ${
+                      pkg.featured
+                        ? 'bg-gold hover:bg-gold-hover text-charcoal shadow-sm'
+                        : 'border border-gold text-charcoal hover:bg-gold/20'
+                    }`}
+                  >
+                    <span>Book on WhatsApp</span>
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 3-Step Journey -->
+    <section class="py-14 sm:py-20 md:py-28 bg-surface border-y border-gold-border/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16 space-y-2 sm:space-y-3">
+          <span class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep block">
+            The Journey
+          </span>
+          <h2 class="text-2xl sm:text-4xl md:text-5xl font-serif text-charcoal tracking-tight">
+            What to Expect on Your Wedding Path
+          </h2>
+          <p class="text-muted text-xs sm:text-base font-sans">
+            A serene, step-by-step collaboration ensuring total peace of mind on your ceremony day.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-8">
+          {BRIDAL_STEPS.map((st) => (
+            <div class="p-5 sm:p-8 rounded-2xl sm:rounded-3xl bg-canvas border border-gold-border/60 shadow-xs space-y-3 sm:space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="font-serif text-2xl sm:text-3xl font-semibold text-gold-deep">
+                  {st.step}
+                </span>
+                <span class="text-[9px] sm:text-[10px] font-sans uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-gold/15 text-gold-deep border border-gold/30">
+                  {st.timeline}
+                </span>
+              </div>
+              <h3 class="font-serif text-lg sm:text-2xl text-charcoal font-medium">
+                {st.title}
+              </h3>
+              <p class="text-xs sm:text-sm text-muted font-sans leading-relaxed">
+                {st.description}
+              </p>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Bridal Gallery Strip -->
+    <section class="py-12 sm:py-20 bg-canvas">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4">
+          {BRIDAL_STRIP.map((item) => (
+            <div class="group relative rounded-xl sm:rounded-2xl overflow-hidden border border-gold-border/40 aspect-[4/5] bg-surface">
+              <img 
+                src={item.src} 
+                alt={item.title} 
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-transparent flex flex-col justify-end p-2.5 sm:p-4 text-white">
+                <span class="text-[8px] sm:text-[10px] font-sans uppercase tracking-widest text-gold-light">{item.desc}</span>
+                <p class="font-serif text-xs sm:text-base text-white">{item.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- Consultation CTA -->
+    <section class="py-14 sm:py-20 bg-gold-shimmer border-t border-gold-border text-center">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4 sm:space-y-6">
+        <span class="text-[11px] sm:text-xs font-sans font-semibold uppercase tracking-[0.25em] text-gold-deep block">
+          Reserve Your Wedding Date
+        </span>
+        <h2 class="text-2xl sm:text-4xl md:text-5xl font-serif text-charcoal">
+          Allow Us to Be Part of Your Forever Story.
+        </h2>
+        <p class="text-muted text-xs sm:text-base font-sans max-w-xl mx-auto">
+          Wedding dates in Wayanad fill up fast. Connect with our senior bridal coordinator to discuss availability and trial bookings.
+        </p>
+        <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4">
+          <a 
+            href={SITE_CONFIG.contact.whatsappUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider bg-charcoal text-white hover:bg-gold hover:text-charcoal transition-all shadow-md text-center"
+          >
+            Chat with Bridal Coordinator
+          </a>
+          <a 
+            href="/#booking" 
+            class="px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-wider border border-gold-strong text-charcoal hover:bg-white transition-all text-center"
+          >
+            Fill Booking Form
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer />
+  <FloatingActions client:load />
+</Layout>

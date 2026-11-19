@@ -1,0 +1,187 @@
+---
+import { SITE_CONFIG } from '../config/site';
+
+/**
+ * EMAIL FORM SETUP NOTE:
+ * Form action can be connected to Formspree or custom email API.
+ */
+---
+
+<section id="contact" class="py-14 sm:py-20 md:py-28 bg-canvas overflow-x-clip">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Section Title -->
+    <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16 space-y-2 sm:space-y-3">
+      <span class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep block">
+        Visit & Connect
+      </span>
+      <h2 class="text-2xl sm:text-4xl md:text-5xl font-serif text-charcoal tracking-tight">
+        Find Our Studio in Mananthavady
+      </h2>
+      <p class="text-muted text-xs sm:text-base font-sans">
+        Centrally located at PP Building near St Joseph’s Hospital with dedicated parking and private suites.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Left Column: Location Details & Map (6 cols) -->
+      <div class="lg:col-span-6 space-y-5 sm:space-y-6">
+        
+        <!-- Info Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          
+          <!-- Address Card -->
+          <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-gold-border/70 space-y-2">
+            <div class="w-8 h-8 rounded-full bg-gold/15 flex items-center justify-center text-gold-deep mb-2 sm:mb-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <h3 class="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">Studio Location</h3>
+            <p class="text-xs text-muted leading-relaxed font-sans">
+              {SITE_CONFIG.address.full}
+            </p>
+          </div>
+
+          <!-- Hours & Contact Card -->
+          <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-gold-border/70 space-y-1 sm:space-y-2">
+            <div class="w-8 h-8 rounded-full bg-gold/15 flex items-center justify-center text-gold-deep mb-2 sm:mb-3">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h3 class="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">Studio Hours</h3>
+            <p class="text-xs font-medium text-gold-deep font-sans">
+              {SITE_CONFIG.hours.timings}
+            </p>
+            <p class="text-[11px] text-muted font-sans">
+              {SITE_CONFIG.hours.note}
+            </p>
+            <p class="text-xs text-charcoal font-semibold pt-1">
+              Call: <a href={`tel:${SITE_CONFIG.contact.phoneTel}`} class="underline">{SITE_CONFIG.contact.phoneDisplay}</a>
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Google Maps Embed Container -->
+        <div class="relative rounded-2xl sm:rounded-3xl overflow-hidden border border-gold-border shadow-sm sm:shadow-md bg-surface h-64 sm:h-80">
+          <iframe 
+            src={SITE_CONFIG.maps.embedUrl}
+            width="100%" 
+            height="100%" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Angels Beauty Parlour Google Maps location"
+            class="w-full h-full grayscale-[20%] contrast-[1.05]"
+          ></iframe>
+
+          <!-- Get Directions Button -->
+          <div class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4">
+            <a 
+              href={SITE_CONFIG.maps.directionsUrl} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="px-4 py-2 sm:px-5 sm:py-2.5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-charcoal text-white hover:bg-gold hover:text-charcoal transition-all shadow-lg flex items-center gap-1.5"
+            >
+              <span>Get Directions</span>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Column: Direct Contact Form (6 cols) -->
+      <div class="lg:col-span-6 bg-surface p-5 sm:p-8 md:p-10 rounded-2xl sm:rounded-3xl border border-gold-border shadow-xs">
+        <div class="space-y-1.5 sm:space-y-2 mb-5 sm:mb-6">
+          <h3 class="font-serif text-xl sm:text-3xl text-charcoal font-medium">
+            Send an Enquiry to Front Desk
+          </h3>
+          <p class="text-xs sm:text-sm text-muted font-sans leading-relaxed">
+            Have questions about bridal booking or personalized treatments? Leave a message below.
+          </p>
+        </div>
+
+        <form id="contact-form" action="https://formspree.io/f/placeholder_form_id" method="POST" class="space-y-3.5 sm:space-y-4">
+          
+          <div class="space-y-1">
+            <label for="contact-name" class="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+              Your Name
+            </label>
+            <input 
+              id="contact-name" 
+              name="name" 
+              type="text" 
+              required
+              placeholder="e.g. Sandra Joseph" 
+              class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gold-border bg-canvas text-charcoal text-base font-sans focus:outline-none focus:border-gold-strong transition-all"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+            <div class="space-y-1">
+              <label for="contact-phone" class="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+                Phone Number
+              </label>
+              <input 
+                id="contact-phone" 
+                name="phone" 
+                type="tel" 
+                required
+                placeholder="e.g. 98470 00000" 
+                class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gold-border bg-canvas text-charcoal text-base font-sans focus:outline-none focus:border-gold-strong transition-all"
+              />
+            </div>
+
+            <div class="space-y-1">
+              <label for="contact-email" class="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+                Email Address
+              </label>
+              <input 
+                id="contact-email" 
+                name="email" 
+                type="email" 
+                placeholder="e.g. sandra@example.com" 
+                class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gold-border bg-canvas text-charcoal text-base font-sans focus:outline-none focus:border-gold-strong transition-all"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-1">
+            <label for="contact-msg" class="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+              Message / Notes
+            </label>
+            <textarea 
+              id="contact-msg" 
+              name="message" 
+              rows={3} 
+              required
+              placeholder="Tell us what you would like to know..." 
+              class="w-full px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl border border-gold-border bg-canvas text-charcoal text-base font-sans focus:outline-none focus:border-gold-strong transition-all resize-none"
+            ></textarea>
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full py-3.5 px-6 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-gold hover:bg-gold-hover text-charcoal shadow-sm transition-all duration-300 hover:shadow-md cursor-pointer mt-1 active:scale-98"
+          >
+            Submit Enquiry
+          </button>
+
+          <p class="text-[11px] text-muted text-center font-sans pt-1">
+            Or call <a href={`tel:${SITE_CONFIG.contact.phoneTel}`} class="text-gold-deep font-semibold underline">{SITE_CONFIG.contact.phoneDisplay}</a> for quick answers.
+          </p>
+        </form>
+      </div>
+
+    </div>
+
+  </div>
+</section>

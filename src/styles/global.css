@@ -1,0 +1,143 @@
+@import "tailwindcss";
+@import "@fontsource-variable/cormorant-garamond";
+@import "@fontsource-variable/jost";
+
+@theme {
+  --color-canvas: #FDFBF7;
+  --color-surface: #F8F3EC;
+  --color-surface-card: #FFFFFF;
+  --color-surface-hover: #F3ECE2;
+  
+  --color-gold: #C9A66B;
+  --color-gold-light: #F7E9CE;
+  --color-gold-deep: #9E7B35;
+  --color-gold-hover: #B59357;
+  --color-gold-border: rgba(201, 166, 107, 0.28);
+  --color-gold-border-strong: rgba(201, 166, 107, 0.55);
+
+  --color-charcoal: #221C18;
+  --color-charcoal-light: #38302B;
+  --color-muted: #6B6056;
+  --color-subtle: #8E8277;
+
+  --font-serif: "Cormorant Garamond Variable", "Cormorant Garamond", Georgia, serif;
+  --font-sans: "Jost Variable", "Jost", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-canvas);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    position: relative;
+    background-color: var(--color-canvas);
+  }
+
+  ::selection {
+    background-color: #EBD6B0;
+    color: #221C18;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+  }
+
+  /* Prevent iOS zoom on inputs */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Custom Arch Frame Utilities */
+.arch-frame {
+  border-top-left-radius: 9999px;
+  border-top-right-radius: 9999px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.arch-full {
+  border-radius: 9999px;
+}
+
+/* Hairline borders and gold gradients */
+.border-gold-hairline {
+  border: 1px solid rgba(201, 166, 107, 0.28);
+}
+
+.border-gold-strong {
+  border: 1px solid rgba(201, 166, 107, 0.55);
+}
+
+.bg-gold-shimmer {
+  background: linear-gradient(135deg, #FDF9F3 0%, #F5E8D3 50%, #FDF9F3 100%);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #8E6D2B 0%, #C9A66B 50%, #9E7B35 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Premium Card Hover Transitions */
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 35px -10px rgba(42, 36, 32, 0.08);
+  border-color: #C9A66B;
+}
+
+/* Mobile Stacking Cards Class */
+@media (max-width: 639px) {
+  .mobile-stack-card {
+    position: -webkit-sticky !important;
+    position: sticky !important;
+    will-change: transform;
+  }
+}
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Lenis smooth scroll recommended CSS */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Accessible focus outline */
+:focus-visible {
+  outline: 2px solid #C9A66B;
+  outline-offset: 3px;
+}

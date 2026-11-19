@@ -1,0 +1,227 @@
+---
+const GALLERY_ITEMS = [
+  {
+    src: "/images/bridal-church.jpg",
+    title: "Christian Bridal Artistry",
+    category: "Bridal Couture",
+    alt: "Christian bride in lace wedding gown with flowers outside church, styled by Angels Beauty"
+  },
+  {
+    src: "/images/bridal-room.jpg",
+    title: "Private Bridal Room",
+    category: "Dedicated Suite",
+    alt: "Private Bridal Room suite with marble and gold signage at Angels Beauty Parlour"
+  },
+  {
+    src: "/images/bridal-suite.jpg",
+    title: "Floral Dressing Bay",
+    category: "Bridal Station",
+    alt: "Bridal dressing station with floral arch and illuminated vanity mirror"
+  },
+  {
+    src: "/images/styling-aisle.jpg",
+    title: "Hair Styling Mirrors",
+    category: "Hair Couture",
+    alt: "Hair styling aisle with illuminated mirrors and professional hair care treatments"
+  },
+  {
+    src: "/images/skin-hair-lounge.jpg",
+    title: "Aesthetic Skin & Hair Bay",
+    category: "Skin & Hair",
+    alt: "Skin and hair stations with warm wooden framing and back-lit product niches"
+  },
+  {
+    src: "/images/pedicure-spa.jpg",
+    title: "Rose Petal Pedicure Lounge",
+    category: "Relaxation Spa",
+    alt: "Luxury leather pedicure chair with rose petal foot spa and fluted oak wood"
+  }
+];
+
+// Duplicate for continuous seamless marquee loop
+const MARQUEE_ITEMS = [...GALLERY_ITEMS, ...GALLERY_ITEMS];
+---
+
+<section id="gallery" class="py-14 sm:py-20 md:py-28 bg-canvas overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 sm:mb-12">
+    <!-- Header -->
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+      <div class="max-w-2xl space-y-2 sm:space-y-3">
+        <span class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep block">
+          Visual Tour
+        </span>
+        <h2 class="text-2xl sm:text-4xl md:text-5xl font-serif text-charcoal tracking-tight">
+          Step Inside Angels Beauty Parlour
+        </h2>
+        <p class="text-muted text-xs sm:text-base font-sans">
+          An intimate look at our real bridal suites, illuminated styling bays, and tranquil spa zones in Mananthavady.
+        </p>
+      </div>
+
+      <div class="flex items-center gap-2 text-[11px] sm:text-xs font-sans text-muted shrink-0">
+        <span class="inline-block w-2 h-2 rounded-full bg-gold animate-ping"></span>
+        <span>Auto-scrolling • Tap any photo to inspect</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Auto-Scrolling Marquee Track (Continuous Left Scroll with NO white edge shades) -->
+  <div class="relative w-full overflow-hidden py-4 group">
+    <div class="flex w-max gap-4 sm:gap-6 marquee-track group-hover:[animation-play-state:paused]">
+      {MARQUEE_ITEMS.map((item, idx) => (
+        <div 
+          class="relative w-64 sm:w-80 md:w-96 aspect-[4/5] rounded-2xl sm:rounded-3xl overflow-hidden border border-gold-border/70 bg-surface shadow-md cursor-pointer shrink-0 transition-transform duration-300 hover:scale-102"
+          data-gallery-item
+          data-img-src={item.src}
+          data-img-title={item.title}
+          data-img-cat={item.category}
+          tabindex="0"
+          role="button"
+          aria-label={`View photo: ${item.title}`}
+        >
+          <img 
+            src={item.src} 
+            alt={item.alt}
+            class="w-full h-full object-cover transition-transform duration-700 hover:scale-108"
+            loading="lazy"
+          />
+
+          <!-- Gradient Overlay with Title and Category -->
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent flex flex-col justify-end p-4 sm:p-6 text-white">
+            <span class="text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-light">
+              {item.category}
+            </span>
+            <h3 class="font-serif text-base sm:text-xl text-white font-medium mt-0.5">
+              {item.title}
+            </h3>
+            <span class="text-[11px] text-white/80 font-sans mt-1 inline-flex items-center gap-1">
+              <span>View full image</span>
+              <svg class="w-3 h-3 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />
+              </svg>
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div 
+    id="gallery-lightbox" 
+    class="fixed inset-0 z-50 bg-charcoal/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Image Lightbox"
+  >
+    <button 
+      id="lightbox-close" 
+      class="absolute top-4 right-4 sm:top-6 sm:right-6 w-10 h-10 rounded-full bg-white/15 hover:bg-white/30 text-white flex items-center justify-center transition-colors cursor-pointer"
+      aria-label="Close Lightbox"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <div class="max-w-4xl max-h-[85dvh] flex flex-col items-center w-full">
+      <div class="relative rounded-2xl overflow-hidden border border-gold-border/50 shadow-2xl max-h-[70dvh] w-auto">
+        <img 
+          id="lightbox-img" 
+          src="" 
+          alt="Enlarged gallery view" 
+          class="max-w-full max-h-[70dvh] object-contain mx-auto"
+        />
+      </div>
+      <div class="mt-3 sm:mt-4 text-center px-4">
+        <span id="lightbox-cat" class="text-[10px] sm:text-[11px] font-sans uppercase tracking-[0.2em] text-gold-light block"></span>
+        <h4 id="lightbox-title" class="font-serif text-lg sm:text-2xl text-white font-medium mt-0.5"></h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marqueeLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  .marquee-track {
+    animation: marqueeLeft 32s linear infinite;
+    will-change: transform;
+  }
+
+  @media (max-width: 640px) {
+    .marquee-track {
+      animation-duration: 22s;
+    }
+  }
+</style>
+
+<script>
+  const galleryItems = document.querySelectorAll('[data-gallery-item]');
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const lightboxTitle = document.getElementById('lightbox-title');
+  const lightboxCat = document.getElementById('lightbox-cat');
+  const closeBtn = document.getElementById('lightbox-close');
+
+  function openLightbox(src: string, title: string, cat: string) {
+    if (!lightbox || !lightboxImg || !lightboxTitle || !lightboxCat) return;
+    lightboxImg.src = src;
+    lightboxTitle.textContent = title;
+    lightboxCat.textContent = cat;
+
+    lightbox.classList.remove('hidden');
+    setTimeout(() => {
+      lightbox.classList.remove('opacity-0');
+      lightbox.classList.add('opacity-100');
+    }, 10);
+    document.body.classList.add('overflow-hidden');
+  }
+
+  function closeLightbox() {
+    if (!lightbox) return;
+    lightbox.classList.add('opacity-0');
+    lightbox.classList.remove('opacity-100');
+    setTimeout(() => {
+      lightbox.classList.add('hidden');
+      document.body.classList.remove('overflow-hidden');
+    }, 300);
+  }
+
+  galleryItems.forEach(item => {
+    item.addEventListener('click', () => {
+      const src = item.getAttribute('data-img-src') || '';
+      const title = item.getAttribute('data-img-title') || '';
+      const cat = item.getAttribute('data-img-cat') || '';
+      openLightbox(src, title, cat);
+    });
+
+    item.addEventListener('keydown', (e: any) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        const src = item.getAttribute('data-img-src') || '';
+        const title = item.getAttribute('data-img-title') || '';
+        const cat = item.getAttribute('data-img-cat') || '';
+        openLightbox(src, title, cat);
+      }
+    });
+  });
+
+  closeBtn?.addEventListener('click', closeLightbox);
+  lightbox?.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !lightbox?.classList.contains('hidden')) {
+      closeLightbox();
+    }
+  });
+</script>

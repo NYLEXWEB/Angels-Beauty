@@ -1,0 +1,116 @@
+---
+import { SITE_CONFIG } from '../config/site';
+---
+
+<section id="about" class="py-14 sm:py-20 md:py-28 bg-surface border-y border-gold-border/30 overflow-x-clip">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Mobile Heading First (Visible on Mobile Only) -->
+    <div class="block lg:hidden space-y-2 mb-8 text-center sm:text-left">
+      <p class="text-[11px] font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep">
+        About Our Studio
+      </p>
+      <h2 class="text-2xl sm:text-3xl font-serif text-charcoal leading-tight">
+        A tranquil sanctuary for bridal grace and restorative beauty in Mananthavady.
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 sm:gap-12 lg:gap-16 items-center">
+      
+      <!-- Visual Duo (Now visible on BOTH mobile and desktop with premium 2-image design) -->
+      <div class="lg:col-span-5 relative pb-6 sm:pb-8 lg:pb-0">
+        <div class="relative mx-auto max-w-[280px] sm:max-w-[340px] md:max-w-[380px]">
+          
+          <!-- Image 1: Skin & Hair Lounge (Arch Frame with Reveal) -->
+          <div class="rounded-3xl overflow-hidden border border-gold-border shadow-lg aspect-[4/5] bg-canvas group">
+            <img 
+              src="/images/skin-hair-lounge.jpg" 
+              alt="Skin and Hair Treatment Lounge at Angels Beauty Parlour" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              width="380"
+              height="475"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Image 2: Styling Aisle (Layered Offset Design, beautifully visible on Mobile & Desktop) -->
+          <div class="absolute -bottom-4 -right-3 sm:-bottom-6 sm:-right-6 md:-bottom-8 md:-right-8 w-36 sm:w-44 h-48 sm:h-56 rounded-2xl overflow-hidden border-2 border-canvas shadow-xl bg-canvas group">
+            <img 
+              src="/images/styling-aisle.jpg" 
+              alt="Illuminated Styling Mirrors at Angels Beauty" 
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              width="176"
+              height="224"
+              loading="lazy"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-transparent to-transparent flex items-end p-2 sm:p-2.5">
+              <span class="text-[9px] sm:text-[10px] font-sans font-semibold uppercase tracking-wider text-gold-light">
+                Styling Lounge
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Content (Desktop Heading + Mobile/Desktop Text & 3 Highlights) -->
+      <div class="lg:col-span-7 space-y-6 sm:space-y-8 pt-2 sm:pt-0">
+        
+        <!-- Desktop Heading Only -->
+        <div class="hidden lg:block space-y-2 sm:space-y-3">
+          <p class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep">
+            About Our Studio
+          </p>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif text-charcoal leading-tight">
+            A tranquil sanctuary for bridal grace and restorative beauty in Mananthavady.
+          </h2>
+        </div>
+
+        <!-- Narrative Paragraph -->
+        <p class="text-muted text-sm sm:text-base md:text-lg leading-relaxed font-sans">
+          Nestled at PP Building near St Joseph’s Hospital, Angels Beauty Parlour and Bridal Studio is crafted to provide personalized care away from the rush. From our dedicated private bridal room to our tranquil hair spa and skin bays, each detail is centered on hygiene, precision, and authentic radiance.
+        </p>
+
+        <!-- 3 Highlights -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 pt-4 border-t border-gold-border/40">
+          
+          <!-- Highlight 1 -->
+          <div class="space-y-1.5 p-3.5 sm:p-0 rounded-2xl bg-canvas/60 sm:bg-transparent border border-gold-border/30 sm:border-0 shadow-2xs sm:shadow-none">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold/15 flex items-center justify-center text-gold-deep font-serif text-xs sm:text-sm font-semibold">
+              01
+            </div>
+            <h3 class="font-serif text-base sm:text-lg text-charcoal font-medium">Bridal Specialists</h3>
+            <p class="text-xs text-muted leading-relaxed font-sans">
+              Dedicated private bridal chamber with HD, UHD, Airbrush, and Glass Skin bridal packages tailored to your ceremony.
+            </p>
+          </div>
+
+          <!-- Highlight 2 -->
+          <div class="space-y-1.5 p-3.5 sm:p-0 rounded-2xl bg-canvas/60 sm:bg-transparent border border-gold-border/30 sm:border-0 shadow-2xs sm:shadow-none">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold/15 flex items-center justify-center text-gold-deep font-serif text-xs sm:text-sm font-semibold">
+              02
+            </div>
+            <h3 class="font-serif text-base sm:text-lg text-charcoal font-medium">Hair & Skin Care</h3>
+            <p class="text-xs text-muted leading-relaxed font-sans">
+              Advanced Nanoplastia, Keratin, and Hair Botox along with Korean glass skin facials and microblading.
+            </p>
+          </div>
+
+          <!-- Highlight 3 -->
+          <div class="space-y-1.5 p-3.5 sm:p-0 rounded-2xl bg-canvas/60 sm:bg-transparent border border-gold-border/30 sm:border-0 shadow-2xs sm:shadow-none">
+            <div class="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gold/15 flex items-center justify-center text-gold-deep font-serif text-xs sm:text-sm font-semibold">
+              03
+            </div>
+            <h3 class="font-serif text-base sm:text-lg text-charcoal font-medium">Open All 7 Days</h3>
+            <p class="text-xs text-muted leading-relaxed font-sans">
+              Welcoming clients Monday through Sunday from 9:00 AM to 8:00 PM with no weekly closures for complete convenience.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
