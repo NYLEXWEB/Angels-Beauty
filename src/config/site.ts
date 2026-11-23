@@ -54,9 +54,9 @@ export const SITE_CONFIG = {
     instagramHandle: "@angels_beauty__parlour"
   },
   maps: {
-    embedUrl: "https://maps.google.com/maps?q=PP+Building+near+St+Joseph's+Hospital+Mananthavady+Wayanad+Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    directionsUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9",
-    reviewUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9"
+    embedUrl: "https://maps.google.com/maps?q=Angels+Beauty+Parlour+and+Bridal+Studio,+PP+Building,+Near+St+Joseph's+Hospital,+Mananthavady,+Wayanad,+Kerala+670645&t=&z=16&ie=UTF8&iwloc=B&output=embed",
+    directionsUrl: "https://maps.app.goo.gl/JZCY4X9pEQJ6NKky9",
+    reviewUrl: "https://maps.app.goo.gl/JZCY4X9pEQJ6NKky9"
   }
 };
 

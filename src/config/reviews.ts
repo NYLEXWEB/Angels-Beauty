@@ -21,8 +21,8 @@ export interface GoogleReview {
 export const GOOGLE_RATING_SUMMARY = {
   averageRating: 4.9,
   totalReviews: 239,
-  googleProfileUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9",
-  writeReviewUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9"
+  googleProfileUrl: "https://maps.app.goo.gl/JZCY4X9pEQJ6NKky9",
+  writeReviewUrl: "https://maps.app.goo.gl/JZCY4X9pEQJ6NKky9"
 };
 
 export const SAMPLE_REVIEWS: GoogleReview[] = [
