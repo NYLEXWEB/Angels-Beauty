@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import BookingForm from '../components/BookingForm';
+import FloatingActions from '../components/FloatingActions';
+import { SITE_CONFIG } from '../config/site';
+---
+
+<Layout 
+  title="Book an Appointment | Angels Beauty Parlour, Mananthavady"
+  description="Reserve your appointment for bridal makeup, hair smoothing, skin facials, or spa pampering at Angels Beauty Parlour and Bridal Studio, Wayanad."
+>
+  <Header />
+
+  <main class="min-h-screen bg-canvas overflow-x-clip pt-24 sm:pt-28">
+    
+    <!-- Page Hero Banner -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-surface border-b border-gold-border/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Minimalist Aesthetic Back Button -->
+        <a 
+          href="/" 
+          onclick="if (window.history.length > 1) { window.history.back(); return false; }"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium text-charcoal/80 bg-white/95 hover:bg-white border border-black/[0.08] shadow-2xs hover:shadow-xs transition-all active:scale-97 group w-fit mb-5 cursor-pointer"
+          aria-label="Back to Previous Page"
+        >
+          <svg class="w-3.5 h-3.5 text-gold-deep transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          <span>Back</span>
+        </a>
+
+        <div class="max-w-3xl space-y-3 sm:space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/90 backdrop-blur-md text-charcoal shadow-2xs max-w-fit">
+            <span class="w-2 h-2 rounded-full bg-gold-deep shrink-0"></span>
+            <span class="text-[11px] sm:text-xs font-sans font-medium text-charcoal/90 tracking-tight">
+              Instant Reservation · Direct Front Desk Confirmation
+            </span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-light text-charcoal leading-[1.1] tracking-[-0.035em]">
+            Reserve Your <span class="italic font-normal text-gold-deep">Studio Experience</span>.
+          </h1>
+
+          <p class="text-sm sm:text-base lg:text-lg text-muted font-sans leading-relaxed tracking-tight max-w-2xl">
+            Select your preferred treatment date and service. Your request will be formatted and routed directly to our Mananthavady studio front desk on WhatsApp for prompt confirmation.
+          </p>
+
+          <div class="flex items-center gap-3 pt-2">
+            <a 
+              href={`tel:${SITE_CONFIG.contact.phoneTel}`} 
+              class="inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-full text-xs font-semibold tracking-wider uppercase bg-surface border border-gold-border text-charcoal hover:bg-white shadow-2xs transition-all active:scale-97"
+            >
+              <svg class="w-3.5 h-3.5 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+              <span>Call Front Desk Directly: {SITE_CONFIG.contact.phoneDisplay}</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Booking Form Component -->
+    <BookingForm client:load />
+
+  </main>
+
+  <Footer />
+  <FloatingActions client:idle />
+</Layout>

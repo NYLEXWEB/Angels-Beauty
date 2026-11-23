@@ -55,15 +55,15 @@ export default function BookingForm() {
     message += `\n_Submitted via Angels Beauty Parlour Website_`;
 
     const waUrl = `${SITE_CONFIG.contact.whatsappUrl}?text=${encodeURIComponent(message)}`;
-    
+
     setSubmitted(true);
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <section id="booking" className="py-14 sm:py-20 md:py-28 bg-surface border-y border-gold-border/30 overflow-x-clip">
+    <section id="booking" suppressHydrationWarning className="py-20 sm:py-28 lg:py-32 bg-surface border-y border-gold-border/30 overflow-x-clip">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+
         {/* Form Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2 sm:space-y-3">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-sans font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold-deep">
@@ -81,9 +81,9 @@ export default function BookingForm() {
         {/* Card Form */}
         <div className="bg-canvas rounded-2xl sm:rounded-3xl p-5 sm:p-10 border border-gold-border shadow-md sm:shadow-lg">
           <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
-            
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-              
+
               {/* Name */}
               <div className="space-y-1.5 sm:space-y-2">
                 <label htmlFor="booking-name" className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal flex items-center gap-1.5">
@@ -96,9 +96,8 @@ export default function BookingForm() {
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   placeholder="e.g. Mary Varghese"
-                  className={`w-full px-3.5 sm:px-4 py-3 rounded-xl border text-base font-sans bg-surface text-charcoal focus:outline-none transition-all ${
-                    errors.name ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-gold-border focus:border-gold-strong focus:bg-white'
-                  }`}
+                  className={`w-full px-3.5 sm:px-4 py-3 rounded-xl border text-base font-sans bg-surface text-charcoal focus:outline-none transition-all ${errors.name ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-gold-border focus:border-gold-strong focus:bg-white'
+                    }`}
                 />
                 {errors.name && <p className="text-xs text-red-500 font-sans">{errors.name}</p>}
               </div>
@@ -115,9 +114,8 @@ export default function BookingForm() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   placeholder="e.g. 98470 00000"
-                  className={`w-full px-3.5 sm:px-4 py-3 rounded-xl border text-base font-sans bg-surface text-charcoal focus:outline-none transition-all ${
-                    errors.phone ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-gold-border focus:border-gold-strong focus:bg-white'
-                  }`}
+                  className={`w-full px-3.5 sm:px-4 py-3 rounded-xl border text-base font-sans bg-surface text-charcoal focus:outline-none transition-all ${errors.phone ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-gold-border focus:border-gold-strong focus:bg-white'
+                    }`}
                 />
                 {errors.phone && <p className="text-xs text-red-500 font-sans">{errors.phone}</p>}
               </div>
@@ -125,7 +123,7 @@ export default function BookingForm() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
-              
+
               {/* Service Selection */}
               <div className="space-y-1.5 sm:space-y-2 sm:col-span-1">
                 <label htmlFor="booking-service" className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal flex items-center gap-1.5">
@@ -159,9 +157,8 @@ export default function BookingForm() {
                   type="date"
                   value={formData.date}
                   onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  className={`w-full px-3.5 sm:px-4 py-3 rounded-xl border text-base font-sans bg-surface text-charcoal focus:outline-none transition-all ${
-                    errors.date ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-gold-border focus:border-gold-strong focus:bg-white'
-                  }`}
+                  className={`w-full px-3.5 sm:px-4 py-3 rounded-xl border text-base font-sans bg-surface text-charcoal focus:outline-none transition-all ${errors.date ? 'border-red-400 focus:ring-1 focus:ring-red-400' : 'border-gold-border focus:border-gold-strong focus:bg-white'
+                    }`}
                 />
                 {errors.date && <p className="text-xs text-red-500 font-sans">{errors.date}</p>}
               </div>
@@ -204,7 +201,7 @@ export default function BookingForm() {
 
             {/* Actions (Stacked for mobile, row for desktop) */}
             <div className="pt-3 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 sm:gap-4">
-              
+
               <div className="flex items-center gap-2 text-[11px] sm:text-xs text-muted font-sans order-2 sm:order-1 justify-center sm:justify-start">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
                 <span>Opens formatted message on WhatsApp</span>

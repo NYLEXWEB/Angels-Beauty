@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import ReviewsCarousel from '../components/ReviewsCarousel';
+import FloatingActions from '../components/FloatingActions';
+import { SITE_CONFIG } from '../config/site';
+---
+
+<Layout 
+  title="Client Reviews & Google Ratings | Angels Beauty Parlour, Wayanad"
+  description="Read 4.9-star verified Google reviews and testimonials from real brides and clients of Angels Beauty Parlour and Bridal Studio, Mananthavady."
+>
+  <Header />
+
+  <main class="min-h-screen bg-canvas overflow-x-clip pt-24 sm:pt-28">
+    
+    <!-- Page Hero Banner -->
+    <section class="py-12 sm:py-16 lg:py-20 bg-surface border-b border-gold-border/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Minimalist Aesthetic Back Button -->
+        <a 
+          href="/" 
+          onclick="if (window.history.length > 1) { window.history.back(); return false; }"
+          class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium text-charcoal/80 bg-white/95 hover:bg-white border border-black/[0.08] shadow-2xs hover:shadow-xs transition-all active:scale-97 group w-fit mb-5 cursor-pointer"
+          aria-label="Back to Previous Page"
+        >
+          <svg class="w-3.5 h-3.5 text-gold-deep transition-transform duration-200 group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          </svg>
+          <span>Back</span>
+        </a>
+
+        <div class="max-w-3xl space-y-3 sm:space-y-4">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/90 backdrop-blur-md text-charcoal shadow-2xs max-w-fit">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0"></span>
+            <span class="text-[11px] sm:text-xs font-sans font-medium text-charcoal/90 tracking-tight">
+              Google Verified Business · 4.9 Star Rating (239+ Reviews)
+            </span>
+          </div>
+
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-light text-charcoal leading-[1.1] tracking-[-0.035em]">
+            Loved by Wayanad <span class="italic font-normal text-gold-deep">Brides & Families</span>.
+          </h1>
+
+          <p class="text-sm sm:text-base lg:text-lg text-muted font-sans leading-relaxed tracking-tight max-w-2xl">
+            Real experiences from real clients. We take pride in delivering unhurried, hygienic, and transformative beauty services that earn lasting trust across generations.
+          </p>
+
+          <div class="flex items-center gap-3 pt-2">
+            <a 
+              href="https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 py-2.5 px-6 rounded-full text-xs font-semibold tracking-wider uppercase bg-white border border-black/[0.08] text-charcoal shadow-xs hover:shadow-md transition-all active:scale-97 group"
+            >
+              <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z"/>
+                <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.36 24 12 24z"/>
+                <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.14-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.36 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+              </svg>
+              <span>Write a Review on Google</span>
+            </a>
+            <a 
+              href="/booking" 
+              class="inline-flex items-center justify-center py-2.5 px-6 rounded-full text-xs font-semibold tracking-wider uppercase bg-gold hover:bg-gold-hover text-charcoal shadow-xs transition-all active:scale-97"
+            >
+              Book an Appointment
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Google Reviews Interactive Component -->
+    <ReviewsCarousel client:load />
+
+  </main>
+
+  <Footer />
+  <FloatingActions client:idle />
+</Layout>

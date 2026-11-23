@@ -20,9 +20,9 @@ export interface GoogleReview {
 
 export const GOOGLE_RATING_SUMMARY = {
   averageRating: 4.9,
-  totalReviews: 128,
-  googleProfileUrl: "https://maps.google.com/?q=PP+Building+near+St+Joseph's+Hospital+Mananthavady+Wayanad+Kerala",
-  writeReviewUrl: "https://search.google.com/local/writereview?placeid=PLACEHOLDER_ADD_CLIENT_ID"
+  totalReviews: 239,
+  googleProfileUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9",
+  writeReviewUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9"
 };
 
 export const SAMPLE_REVIEWS: GoogleReview[] = [

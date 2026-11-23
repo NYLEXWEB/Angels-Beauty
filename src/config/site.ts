@@ -55,8 +55,8 @@ export const SITE_CONFIG = {
   },
   maps: {
     embedUrl: "https://maps.google.com/maps?q=PP+Building+near+St+Joseph's+Hospital+Mananthavady+Wayanad+Kerala&t=&z=15&ie=UTF8&iwloc=&output=embed",
-    directionsUrl: "https://www.google.com/maps/dir/?api=1&destination=PP+Building+near+St+Joseph%27s+Hospital+Mananthavady+Wayanad+Kerala",
-    reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJwWvBvL..."
+    directionsUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9",
+    reviewUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9"
   }
 };
 
@@ -67,7 +67,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Bridal Makeup",
       description: "Timeless traditional and contemporary bridal artistry crafted to illuminate your natural beauty.",
       category: "bridal",
-      image: "/Menu images/images (1).jpg",
+      image: "/images/services/bridal-makeup.jpg",
       featured: true,
       duration: "2 - 3 Hours",
       benefits: ["Skin-prep primer & long-wear foundation", "Soft contouring and natural blush", "Water-resistant ceremonial finish"],
@@ -78,7 +78,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "HD Bridal Makeup",
       description: "Flawless camera-ready high-definition finish designed for modern high-resolution wedding photography.",
       category: "bridal",
-      image: "/Menu images/images (2).jpg",
+      image: "/images/services/hd-bridal-makeup.jpg",
       badge: "Popular",
       featured: true,
       duration: "2.5 - 3 Hours",
@@ -90,7 +90,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "UHD Bridal Makeup",
       description: "Ultra-refined microscopic blending for radiant clarity that looks breath-taking both in person and 4K video.",
       category: "bridal",
-      image: "/Menu images/images (3).jpg",
+      image: "/images/services/hd-bridal-makeup.jpg",
       featured: true,
       duration: "3 Hours",
       benefits: ["Nanotechnology pigment formulation", "16+ hours humidity endurance", "Cinematic clarity under 4K video"],
@@ -101,7 +101,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Glass Skin Bridal Makeup",
       description: "Dewy, luminous translucent skin glow inspired by high-end Korean aesthetic techniques.",
       category: "bridal",
-      image: "/Menu images/images (4).jpg",
+      image: "/images/services/glass-skin-bridal.jpg",
       badge: "Signature",
       featured: true,
       duration: "2.5 Hours",
@@ -113,7 +113,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Airbrush Bridal Makeup",
       description: "Weightless, sweat-resistant, long-wear micro-fine mist application that stays flawless through long ceremonies.",
       category: "bridal",
-      image: "/Menu images/images (5).jpg",
+      image: "/images/services/airbrush-bridal.jpg",
       badge: "Waterproof",
       duration: "3 Hours",
       benefits: ["Featherlight micro-atomized spray", "100% tear-proof & sweat-proof", "Zero pore clogging feel"],
@@ -124,7 +124,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Bridal Hair Styling",
       description: "Intricate floral braids, regal bridal updos, modern textured waves, and veil pinning.",
       category: "bridal",
-      image: "/Menu images/images (6).jpg",
+      image: "/images/services/bridal-hair-styling.jpg",
       duration: "1.5 - 2 Hours",
       benefits: ["Fresh jasmine / rose veni placement", "Secure tiara and mathapatti pinning", "Long-lasting thermal setting"],
       detailedInfo: "From royal traditional South Indian braids adorned with fresh jasmine venis to elegant European textured updos and Christian veil anchoring. Every strand is set with humidity-resistant hair sprays to ensure zero shifting."
@@ -134,7 +134,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Bridal Saree Draping",
       description: "Pleated precision draping for traditional silk sarees, contemporary pleats, and bridal lehengas.",
       category: "bridal",
-      image: "/Menu images/images (7).jpg",
+      image: "/images/services/bridal-saree-draping.jpg",
       duration: "45 Mins",
       benefits: ["Iron-press pleated accuracy", "Secure, non-slip safety pinning", "Comfortable movement and posture"],
       detailedInfo: "Master draping for Kanchipuram silks, bridal set-mundus, and designer lehengas. We create knife-sharp, uniform pleats with reinforced invisible pins that let you walk, sit, and bow with total grace."
@@ -144,7 +144,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Reception Makeup",
       description: "Glamorous evening aesthetic with refined radiance and sculpted contours for your celebration.",
       category: "bridal",
-      image: "/Menu images/images (8).jpg",
+      image: "/images/services/reception-makeup.jpg",
       duration: "2 Hours",
       benefits: ["Sculpted cheekbones & glamorous shimmer", "Smokey or winged eye contour", "Bold or nude long-wear lip shade"],
       detailedInfo: "Transition into evening elegance with deeper contours, soft champagne shimmer eye highlights, and an alluring radiance made for the reception stage lights."
@@ -154,7 +154,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Engagement Makeup",
       description: "Chic, soft-glam perfection that sets the celebratory tone for your wedding journey.",
       category: "bridal",
-      image: "/Menu images/images (9).jpg",
+      image: "/images/services/bridal-makeup.jpg",
       duration: "2 Hours",
       benefits: ["Youthful pastel color coordination", "Feathered brow framing", "Natural fluttery lashes"],
       detailedInfo: "Delicate and romantic styling tailored to your engagement ring ceremony attire, creating a charming look that balances celebratory glamour with timeless softness."
@@ -164,7 +164,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Groom Makeup & Grooming",
       description: "Natural camera-ready grooming, beard profiling, skin tone evening, and precision styling for the groom.",
       category: "bridal",
-      image: "/Menu images/images (10).jpg",
+      image: "/images/services/hd-bridal-makeup.jpg",
       duration: "1 Hour",
       benefits: ["Mattifying anti-shine skin prep", "Beard alignment & hair styling", "Subtle under-eye tone correction"],
       detailedInfo: "Subtle, imperceptible grooming for the modern groom. We even out skin tone, banish unwanted flash glare, and precisely sculpt the beard and hair so the couple looks perfectly matched in photos."
@@ -174,7 +174,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Family Makeup",
       description: "Coordinated, elegant makeup and hair styling for the mother of the bride, bridesmaids, and close family.",
       category: "bridal",
-      image: "/Menu images/images (11).jpg",
+      image: "/images/services/bridal-makeup.jpg",
       duration: "1.5 Hours / person",
       benefits: ["Cohesive ceremonial aesthetics", "Age-appropriate skin refinement", "Fast, coordinated dressing"],
       detailedInfo: "Ensure the bridal entourage, bridesmaids, and proud mothers look picture-perfect. Dedicated artists take care of your close family simultaneously without wedding morning delays."
@@ -184,7 +184,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Bridal Packages",
       description: "Comprehensive end-to-end ceremonial packages encompassing skincare prep, trials, saree, and event day looks.",
       category: "bridal",
-      image: "/Menu images/images (12).jpg",
+      image: "/images/bridal-suite.jpg",
       badge: "Full Care",
       duration: "Multi-Day Journey",
       benefits: ["Pre-wedding skin & hair spa", "Full trial session in bridal chamber", "Complimentary family draping"],
@@ -198,7 +198,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Haircut & Styling",
       description: "Face-framing bespoke cuts, curtain bangs, layer sculpting, and blow-dry finishes tailored to your hair texture.",
       category: "hair",
-      image: "/Menu images/images (1).jpg",
+      image: "/images/services/hair-highlights.jpg",
       duration: "45 Mins",
       benefits: ["Face-shape consultation", "Precision split-end removal", "Signature blow-dry volume"],
       detailedInfo: "Customized haircuts designed to flatter your natural bone structure and hair fall. Concludes with an ionic blowout that leaves your hair bouncy, shiny, and easy to maintain."
@@ -208,7 +208,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Hair Colouring",
       description: "Rich ammonia-free hues, grey coverage, and dimensional fashion shades with deep conditioning shine.",
       category: "hair",
-      image: "/Menu images/images (2).jpg",
+      image: "/images/services/hair-highlights.jpg",
       duration: "1.5 - 2 Hours",
       benefits: ["100% grey root coverage", "Ammonia-free gentle formula", "Nourishing argan oil infusion"],
       detailedInfo: "Transform or refresh your hair with gentle, salon-grade color pigments. Enriched with botanical oils to seal moisture into the hair cuticle, ensuring vibrant color that doesn't feel brittle."
@@ -218,7 +218,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Global Hair Colour",
       description: "Seamless single-tone full hair color transformation enriched with nourishing botanical oils.",
       category: "hair",
-      image: "/Menu images/images (3).jpg",
+      image: "/images/services/hair-highlights.jpg",
       duration: "2 Hours",
       benefits: ["Even root-to-tip saturation", "Rich espresso, mocha or caramel hues", "High gloss mirror reflection"],
       detailedInfo: "Full head color application tailored to your skin undertone. We ensure seamless coverage from roots to tips, followed by a color-lock conditioning mask."
@@ -228,7 +228,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Highlights & Streaks",
       description: "Hand-painted balayage, foil baby-lights, and sunkissed contrast streaks that dance with the light.",
       category: "hair",
-      image: "/Menu images/images (4).jpg",
+      image: "/images/services/hair-highlights.jpg",
       badge: "Trending",
       duration: "2.5 - 3 Hours",
       benefits: ["Multidimensional depth & contrast", "Custom hand-painted foils", "Seamless soft grow-out line"],
@@ -239,7 +239,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Keratin Treatment",
       description: "Intense smoothing treatment that eliminates frizz, restores elasticity, and infuses silky radiance.",
       category: "hair",
-      image: "/Menu images/images (5).jpg",
+      image: "/images/services/keratin-treatment.jpg",
       duration: "2.5 - 3 Hours",
       benefits: ["Eliminates up to 90% frizz", "Weather and humidity resistance", "Cuts blow-dry time in half"],
       detailedInfo: "Infuses pure hydrolysed keratin deep into the porous cortex of your hair. Seals frizz, smooths unruly waves, and leaves your hair glossy and manageable for months."
@@ -249,7 +249,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Hair Botox",
       description: "Deep restorative filler that repairs split ends, replenishes depleted hair fibers, and restores youthfulness.",
       category: "hair",
-      image: "/Menu images/images (6).jpg",
+      image: "/images/services/keratin-treatment.jpg",
       badge: "Restorative",
       duration: "2 Hours",
       benefits: ["Non-chemical deep fibre repair", "Recharges thinning & damaged hair", "Silky touch without flattening volume"],
@@ -260,7 +260,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Nanoplastia",
       description: "Advanced organic hair straightening and healing system utilizing nano-nutrients for glass-like shine.",
       category: "hair",
-      image: "/Menu images/images (7).jpg",
+      image: "/images/services/keratin-treatment.jpg",
       badge: "Advanced",
       duration: "3 - 4 Hours",
       benefits: ["Formaldehyde-free organic formula", "Glass-like mirror straightening", "Safe for color-treated hair"],
@@ -271,7 +271,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Hair Smoothening",
       description: "Long-lasting thermal rebonding and silk smoothing for manageable, sleek, and straight tresses.",
       category: "hair",
-      image: "/Menu images/images (8).jpg",
+      image: "/images/services/keratin-treatment.jpg",
       duration: "3 Hours",
       benefits: ["Pin-straight silky finish", "Tames stubborn curls & cowlicks", "Long-lasting polished appearance"],
       detailedInfo: "Transforms unruly, thick or coarse hair into sleek, silky straight tresses that require minimal morning styling. Includes post-treatment nourishing mask."
@@ -281,7 +281,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Hair Spa",
       description: "Relaxing therapeutic scalp massage with deep steam penetration and intensive nourishing masks.",
       category: "hair",
-      image: "/Menu images/images (9).jpg",
+      image: "/images/services/keratin-treatment.jpg",
       duration: "1 Hour",
       benefits: ["Stimulates hair follicles & scalp health", "Warm ozone steam hydration", "Relieves stress and tension"],
       detailedInfo: "A rejuvenating escape for tired hair and a stressed scalp. Combines pressure-point scalp massage, deep steam penetration, and customized hair serums to stimulate root strength."
@@ -291,7 +291,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Advanced Hair Protein Treatments",
       description: "Targeted keratin and amino acid reconstruction for chemically treated or weather-stressed hair.",
       category: "hair",
-      image: "/Menu images/images (10).jpg",
+      image: "/images/services/keratin-treatment.jpg",
       duration: "1.5 Hours",
       benefits: ["Rebuilds broken protein bonds", "Prevents recurring hair breakage", "Restores elasticity and bounce"],
       detailedInfo: "Clinical grade protein infusion designed for bleach-damaged, heat-stressed, or fragile hair. Rebuilds internal keratin chains for immediate strength."
@@ -301,7 +301,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Hair Extensions",
       description: "Premium natural hair extension application for effortless volume, instant length, and seamless blending.",
       category: "hair",
-      image: "/Menu images/images (11).jpg",
+      image: "/images/services/hair-highlights.jpg",
       duration: "1.5 - 2 Hours",
       benefits: ["100% natural Remy human hair", "Invisible seamless bond placement", "Can be styled, curled & washed"],
       detailedInfo: "Instant luxury length and fullness for brides and special events. We color-match and feather-cut the extensions into your natural hair for an undetectable transition."
@@ -314,7 +314,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Premium Facials",
       description: "Customized multi-step botanical facials formulated to deeply cleanse, soothe, and nourish sensitive skin.",
       category: "skin",
-      image: "/Menu images/images (1).jpg",
+      image: "/images/services/korean-facial.jpg",
       duration: "1 Hour",
       benefits: ["Deep pore steam & extraction", "Herbal soothing exfoliation", "Firming neck & facial massage"],
       detailedInfo: "A tailored facial ritual chosen according to your skin type (oily, dry, or sensitive). Uses botanical extracts to detoxify pores and restore a calm, supple surface."
@@ -324,7 +324,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Korean Facial",
       description: "Multi-layered hydration therapy and gentle essence infusion inspired by Seoul skincare rituals.",
       category: "skin",
-      image: "/Menu images/images (2).jpg",
+      image: "/images/services/korean-facial.jpg",
       badge: "Signature",
       duration: "1.5 Hours",
       benefits: ["7-step essence infusion", "Centella & snail mucin hydration", "Cryo-cooling pore tightening"],
@@ -335,7 +335,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Glass Skin Treatments",
       description: "Advanced glow therapy targeting dullness, refining pores, and imparting a crystal-clear luminous sheen.",
       category: "skin",
-      image: "/Menu images/images (3).jpg",
+      image: "/images/services/korean-facial.jpg",
       badge: "Popular",
       duration: "1.5 Hours",
       benefits: ["Micro-polishing diamond peel", "Galvanic serum absorption", "Lit-from-within porcelain finish"],
@@ -346,7 +346,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Skin Brightening Treatments",
       description: "Vitamin C and peptide infused care designed to fade blemishes, even tone, and boost natural radiance.",
       category: "skin",
-      image: "/Menu images/images (4).jpg",
+      image: "/images/services/korean-facial.jpg",
       duration: "1 Hour",
       benefits: ["Fades pigmentation & dark spots", "Stabilised Vitamin C antioxidant peel", "Enhances overall skin clarity"],
       detailedInfo: "Targets sun-induced hyperpigmentation, uneven patches, and acne scars. Illuminates skin tone and encourages healthy cellular turnover."
@@ -356,7 +356,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "De-Tan Treatments",
       description: "Gentle yet potent sun damage reversal that restores your skin's natural baseline clarity and freshness.",
       category: "skin",
-      image: "/Menu images/images (5).jpg",
+      image: "/images/services/korean-facial.jpg",
       duration: "45 Mins",
       benefits: ["Immediate reversal of outdoor sun tan", "Soothing milk & kojic formulation", "Safe for sensitive skin"],
       detailedInfo: "Gentle formulation that breaks down stubborn outdoor tan lines on the face, neck, and arms without burning or bleaching delicate skin."
@@ -366,7 +366,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Skin Rejuvenation",
       description: "Collagen-stimulating, youth-enhancing treatment that refines skin texture and firms facial contours.",
       category: "skin",
-      image: "/Menu images/images (6).jpg",
+      image: "/images/services/korean-facial.jpg",
       duration: "1.5 Hours",
       benefits: ["Boosts natural collagen synthesis", "Firms jawline and cheek contours", "Plumps fine lines & expression marks"],
       detailedInfo: "Comprehensive age-defying treatment using micro-currents, peptide serums, and collagen masks to improve elasticity and skin firmness."
@@ -376,7 +376,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Microblading",
       description: "Semi-permanent hyper-realistic eyebrow hair strokes tailored to balance and elevate your natural arch.",
       category: "skin",
-      image: "/Menu images/images (7).jpg",
+      image: "/images/services/hd-bridal-makeup.jpg",
       badge: "Expert Artistry",
       duration: "2 Hours",
       benefits: ["Golden-ratio facial brow mapping", "Natural feather-stroke technique", "Lasts 12 to 18 months"],
@@ -387,7 +387,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Eyebrow Services",
       description: "Precision mapping, shaping, tinting, and brow laminations that frame your eyes with effortless polish.",
       category: "skin",
-      image: "/Menu images/images (8).jpg",
+      image: "/images/services/hd-bridal-makeup.jpg",
       duration: "30 - 45 Mins",
       benefits: ["Custom brow shape alignment", "Semi-permanent brow tinting", "Fluffy brow lamination option"],
       detailedInfo: "Accurate brow architectural shaping with threading, gentle tweezing, tinting, and laminations to keep unruly brow hairs slicked and groomed in place."
@@ -400,7 +400,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Nail Extensions",
       description: "Gel and acrylic extensions with bespoke length, durable architecture, and natural tip transitions.",
       category: "other",
-      image: "/Menu images/images (1).jpg",
+      image: "/images/services/pedicure-spa.jpg",
       duration: "1.5 - 2 Hours",
       benefits: ["Long-lasting acrylic & builder gel", "Custom shape (Almond, Coffin, Square)", "Resistant to chipping for weeks"],
       detailedInfo: "Full set extension enhancements crafted to perfection. Whether you prefer natural nude square tips or long glamorous almond extensions."
@@ -410,7 +410,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Nail Art",
       description: "Handcrafted bridal designs, chrome accents, French tips, and embellishments for your wedding festivities.",
       category: "other",
-      image: "/Menu images/images (2).jpg",
+      image: "/images/services/pedicure-spa.jpg",
       badge: "Bridal Chic",
       duration: "1 Hour",
       benefits: ["Intricate hand-painted wedding motifs", "Swarovski crystals & gold foil", "Mirror chrome & glazed donut finish"],
@@ -421,7 +421,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Manicure & Pedicure",
       description: "Therapeutic soak with rose petal foot bath, scrub, cuticle grooming, and rejuvenating massage in our luxury pedicure chair.",
       category: "other",
-      image: "/Menu images/images (3).jpg",
+      image: "/images/services/pedicure-spa.jpg",
       duration: "1.5 Hours",
       benefits: ["Fresh rose petal foot soak tub", "Dead-skin exfoliating salt scrub", "Reclining leather massage chair"],
       detailedInfo: "Relax in our private pedicure bay. Features a therapeutic foot bath infused with fresh rose petals, gentle heel buffing, cuticle nourishment, and calming reflexology massage."
@@ -431,7 +431,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Waxing",
       description: "Hygienic, gentle warm peel and strip waxing options ensuring smooth, irritation-free skin.",
       category: "other",
-      image: "/Menu images/images (4).jpg",
+      image: "/images/services/pedicure-spa.jpg",
       duration: "30 - 45 Mins",
       benefits: ["Hospital-grade hygienic strips", "Gentle aloe vera soothing wax", "Minimal discomfort formula"],
       detailedInfo: "Full body, arms, and legs waxing using gentle warm peel wax enriched with aloe and chamomile to minimize redness and ensure weeks of smooth skin."
@@ -441,7 +441,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Threading",
       description: "Precise facial hair removal and brow contouring with hygienic organic thread.",
       category: "other",
-      image: "/Menu images/images (5).jpg",
+      image: "/images/services/hd-bridal-makeup.jpg",
       duration: "15 - 30 Mins",
       benefits: ["100% organic cotton thread", "Precise line removal", "No chemical irritation"],
       detailedInfo: "Clean, hygienic hair removal for brows, upper lip, chin, and full face. Leaves crisp lines without skin pulling."
@@ -451,7 +451,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Rental Bridal Ornaments",
       description: "Curated collection of antique temple jewelry, choker sets, mathapattis, and contemporary bridal sets.",
       category: "other",
-      image: "/Menu images/images (6).jpg",
+      image: "/images/services/bridal-saree-draping.jpg",
       badge: "Rental Exclusive",
       duration: "Consultation / Rental",
       benefits: ["Authentic antique temple gold finish", "Chokers, harams, waist belts & jhumkas", "Sanitized & polished sets"],
@@ -462,7 +462,7 @@ export const SERVICES: Record<'bridal' | 'hair' | 'skin' | 'other', ServiceItem[
       name: "Bridal Accessories",
       description: "Hair brooches, floral venis, bridal crowns, veil attachments, and waistbands to complete your wedding ensemble.",
       category: "other",
-      image: "/Menu images/images (7).jpg",
+      image: "/images/services/bridal-hair-styling.jpg",
       duration: "Consultation",
       benefits: ["Traditional and Western accessories", "Custom matched to wedding dress", "Floral venis & hair pins"],
       detailedInfo: "Every finishing piece needed for your ceremony: from stone waistbands (ottiyanam) and hair brooches to Christian wedding veils and crowns."
@@ -483,7 +483,7 @@ export const BRIDAL_PACKAGES: BridalPackage[] = [
       "Pre-Ceremony Touch-Up Guidance"
     ],
     recommendedFor: "Traditional ceremonies & intimate wedding gatherings",
-    image: "/images/bridal-suite.jpg"
+    image: "/images/services/bridal-makeup.jpg"
   },
   {
     id: "hd-bridal",
@@ -497,7 +497,7 @@ export const BRIDAL_PACKAGES: BridalPackage[] = [
       "Pleated Precision Saree Draping"
     ],
     recommendedFor: "Indoor wedding stages, evening receptions & bright photography",
-    image: "/images/bridal-church.jpg",
+    image: "/images/services/hd-bridal-makeup.jpg",
     featured: true
   },
   {
@@ -512,7 +512,7 @@ export const BRIDAL_PACKAGES: BridalPackage[] = [
       "Complete Jewelry & Dupatta Placement"
     ],
     recommendedFor: "Extended daytime weddings, 4K videography & cinematic reels",
-    image: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80"
+    image: "/images/services/hd-bridal-makeup.jpg"
   },
   {
     id: "glass-skin-bridal",
@@ -526,7 +526,7 @@ export const BRIDAL_PACKAGES: BridalPackage[] = [
       "Bespoke Bridal Drape & Finishing Polish"
     ],
     recommendedFor: "Modern brides desiring a youthful, ethereal, natural glow",
-    image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=800&q=80"
+    image: "/images/services/glass-skin-bridal.jpg"
   },
   {
     id: "airbrush-bridal",
@@ -540,7 +540,7 @@ export const BRIDAL_PACKAGES: BridalPackage[] = [
       "Comprehensive Draping & Ornament Pinning"
     ],
     recommendedFor: "High-humidity days, church ceremonies & marathon wedding events",
-    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=800&q=80",
+    image: "/images/services/airbrush-bridal.jpg",
     featured: true
   },
   {
@@ -555,7 +555,7 @@ export const BRIDAL_PACKAGES: BridalPackage[] = [
       "Complimentary Draping for One Close Family Member"
     ],
     recommendedFor: "Brides seeking end-to-end luxury care with zero stress",
-    image: "/images/bridal-room.jpg"
+    image: "/images/services/bridal-saree-draping.jpg"
   }
 ];
 

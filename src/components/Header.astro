@@ -2,19 +2,24 @@
 import { SITE_CONFIG } from '../config/site';
 
 const currentPath = Astro.url.pathname;
+const isServicesActive = currentPath === '/services' || currentPath === '/services/';
 const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
+const isAboutActive = currentPath === '/about' || currentPath === '/about/';
+const isGalleryActive = currentPath === '/gallery' || currentPath === '/gallery/';
+const isReviewsActive = currentPath === '/reviews' || currentPath === '/reviews/';
+const isContactActive = currentPath === '/contact' || currentPath === '/contact/';
 ---
 
-<!-- Header Wrapper Container: Merged when unscrolled; edge-to-edge on mobile, floating on desktop when scrolled -->
-<div id="header-container" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 pointer-events-none px-0 pt-0">
+<!-- Header Wrapper Container: Full-Width Standard Modern Desktop Header -->
+<div id="header-container" class="fixed top-0 left-0 right-0 w-full max-w-full z-50 transition-all duration-300 pointer-events-none overflow-x-clip">
   <header 
     id="site-header" 
-    class="w-full transition-all duration-300 py-3.5 sm:py-5 px-4 sm:px-8 lg:px-12 bg-transparent border-b border-transparent pointer-events-auto"
+    class="w-full max-w-full transition-all duration-300 py-4 sm:py-5 px-4 sm:px-6 lg:px-8 bg-transparent border-b border-transparent pointer-events-auto"
   >
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
       <!-- Brand Identity -->
-      <a href="/" class="flex items-center gap-2.5 sm:gap-3 group shrink-0" aria-label="Angels Beauty Parlour Homepage">
-        <div class="relative w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden p-0.5 border border-gold/50 shadow-xs transition-transform duration-300 group-hover:scale-105 shrink-0 bg-white/80 backdrop-blur-xs">
+      <a href="/" class="flex items-center gap-3 group shrink-0" aria-label="Angels Beauty Parlour Homepage">
+        <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden p-0.5 border border-gold/50 shadow-xs transition-transform duration-300 group-hover:scale-105 shrink-0 bg-white/90 backdrop-blur-xs">
           <img 
             src="/images/logo.png" 
             alt="Angels Beauty Parlour Emblem" 
@@ -25,26 +30,32 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
           />
         </div>
         <div class="flex flex-col">
-          <span class="font-serif text-lg sm:text-2xl font-semibold tracking-tight text-charcoal leading-none group-hover:text-gold-deep transition-colors">
+          <span class="font-display text-lg sm:text-xl font-semibold tracking-tight text-charcoal leading-none group-hover:text-gold-deep transition-colors">
             Angels
           </span>
-          <span class="font-sans text-[8.5px] sm:text-[10px] font-medium tracking-[0.2em] uppercase text-muted mt-0.5 sm:mt-1 leading-none">
+          <span class="font-sans text-[8.5px] sm:text-[9.5px] font-medium tracking-[0.18em] uppercase text-muted mt-1 leading-none">
             Beauty & Bridal Studio
           </span>
         </div>
       </a>
 
-      <!-- Desktop Nav Links -->
-      <nav class="hidden lg:flex items-center gap-7 text-[13px] font-medium text-charcoal/90 tracking-wide uppercase font-sans">
-        <a href="/#services" class="hover:text-gold-deep transition-colors py-1 relative group">
+      <!-- Desktop Nav Links (Spacious, Minimalist, No Wrapping, Pure Clean / Pages) -->
+      <nav class="hidden lg:flex items-center gap-7 xl:gap-9 text-[13.5px] font-medium text-charcoal/80 font-sans tracking-tight">
+        <a 
+          href="/services" 
+          class={`whitespace-nowrap hover:text-gold-deep transition-colors py-1 relative group ${
+            isServicesActive ? 'text-gold-deep font-semibold' : ''
+          }`}
+        >
           Services
-          <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+          <span class={`absolute bottom-0 left-0 h-[1.5px] bg-gold transition-all duration-300 ${
+            isServicesActive ? 'w-full' : 'w-0 group-hover:w-full'
+          }`}></span>
         </a>
         
-        <!-- Bridal Packages: Fixed bug where it was auto-selected on home page -->
         <a 
           href="/bridal" 
-          class={`hover:text-gold-deep transition-colors py-1 relative group ${
+          class={`whitespace-nowrap hover:text-gold-deep transition-colors py-1 relative group ${
             isBridalActive ? 'text-gold-deep font-semibold' : ''
           }`}
         >
@@ -54,30 +65,61 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
           }`}></span>
         </a>
 
-        <a href="/#about" class="hover:text-gold-deep transition-colors py-1 relative group">
-          About Studio
-          <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+        <a 
+          href="/about" 
+          class={`whitespace-nowrap hover:text-gold-deep transition-colors py-1 relative group ${
+            isAboutActive ? 'text-gold-deep font-semibold' : ''
+          }`}
+        >
+          About
+          <span class={`absolute bottom-0 left-0 h-[1.5px] bg-gold transition-all duration-300 ${
+            isAboutActive ? 'w-full' : 'w-0 group-hover:w-full'
+          }`}></span>
         </a>
-        <a href="/#gallery" class="hover:text-gold-deep transition-colors py-1 relative group">
+
+        <a 
+          href="/gallery" 
+          class={`whitespace-nowrap hover:text-gold-deep transition-colors py-1 relative group ${
+            isGalleryActive ? 'text-gold-deep font-semibold' : ''
+          }`}
+        >
           Gallery
-          <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+          <span class={`absolute bottom-0 left-0 h-[1.5px] bg-gold transition-all duration-300 ${
+            isGalleryActive ? 'w-full' : 'w-0 group-hover:w-full'
+          }`}></span>
         </a>
-        <a href="/#reviews" class="hover:text-gold-deep transition-colors py-1 relative group">
+
+        <a 
+          href="/reviews" 
+          class={`whitespace-nowrap hover:text-gold-deep transition-colors py-1 relative group ${
+            isReviewsActive ? 'text-gold-deep font-semibold' : ''
+          }`}
+        >
           Reviews
-          <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+          <span class={`absolute bottom-0 left-0 h-[1.5px] bg-gold transition-all duration-300 ${
+            isReviewsActive ? 'w-full' : 'w-0 group-hover:w-full'
+          }`}></span>
         </a>
-        <a href="/#contact" class="hover:text-gold-deep transition-colors py-1 relative group">
-          Location & Hours
-          <span class="absolute bottom-0 left-0 w-0 h-[1.5px] bg-gold transition-all duration-300 group-hover:w-full"></span>
+
+        <a 
+          href="/contact" 
+          class={`whitespace-nowrap hover:text-gold-deep transition-colors py-1 relative group ${
+            isContactActive ? 'text-gold-deep font-semibold' : ''
+          }`}
+        >
+          Contact
+          <span class={`absolute bottom-0 left-0 h-[1.5px] bg-gold transition-all duration-300 ${
+            isContactActive ? 'w-full' : 'w-0 group-hover:w-full'
+          }`}></span>
         </a>
       </nav>
 
       <!-- Header Actions -->
-      <div class="flex items-center gap-2 sm:gap-3">
+      <div class="flex items-center gap-3 shrink-0">
         <!-- Direct Call Button -->
         <a 
           href={`tel:${SITE_CONFIG.contact.phoneTel}`} 
-          class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-gold-border/70 text-charcoal bg-white/70 hover:bg-gold/15 backdrop-blur-xs flex items-center justify-center transition-colors shadow-xs"
+          class="w-10 h-10 rounded-full border border-gold-border/70 text-charcoal bg-white/80 hover:bg-gold/15 backdrop-blur-xs flex items-center justify-center transition-colors shadow-2xs"
           aria-label="Call salon phone directly"
         >
           <svg class="w-4 h-4 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -86,8 +128,8 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
         </a>
 
         <a 
-          href="/#booking" 
-          class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl text-xs font-semibold tracking-wider uppercase bg-gold hover:bg-gold-hover text-charcoal shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 active:scale-98"
+          href="/booking" 
+          class="hidden sm:inline-flex items-center justify-center px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-gold hover:bg-gold-hover text-charcoal shadow-xs transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-97"
         >
           Book Now
         </a>
@@ -96,7 +138,7 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
         <button 
           type="button" 
           id="mobile-menu-trigger" 
-          class="lg:hidden w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-gold-border/70 flex items-center justify-center text-charcoal bg-white/70 backdrop-blur-xs hover:bg-surface transition-colors shadow-xs"
+          class="lg:hidden w-10 h-10 rounded-full border border-gold-border/70 flex items-center justify-center text-charcoal bg-white/80 backdrop-blur-xs hover:bg-surface transition-colors shadow-2xs"
           aria-label="Toggle navigation menu"
           aria-expanded="false"
         >
@@ -120,7 +162,9 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
       <span class="text-[10px] font-sans font-semibold tracking-[0.25em] uppercase text-muted border-b border-gold-border/30 pb-2">
         Menu Navigation
       </span>
-      <a href="/#services" class="mobile-nav-link py-2 text-xl font-serif text-charcoal hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15">
+      <a href="/services" class={`mobile-nav-link py-2 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15 ${
+        isServicesActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
+      }`}>
         <span>Services & Treatments</span>
         <span class="text-xs text-gold-deep font-sans">38 Menu →</span>
       </a>
@@ -130,19 +174,27 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
         <span>Bridal Packages</span>
         <span class="text-[10px] uppercase font-sans tracking-widest px-2.5 py-0.5 rounded-full bg-gold/20 text-gold-deep">Featured</span>
       </a>
-      <a href="/#about" class="mobile-nav-link py-2 text-xl font-serif text-charcoal hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15">
+      <a href="/about" class={`mobile-nav-link py-2 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15 ${
+        isAboutActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
+      }`}>
         <span>About Our Studio</span>
         <span class="text-xs text-muted/60 font-sans">→</span>
       </a>
-      <a href="/#gallery" class="mobile-nav-link py-2 text-xl font-serif text-charcoal hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15">
+      <a href="/gallery" class={`mobile-nav-link py-2 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15 ${
+        isGalleryActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
+      }`}>
         <span>Salon Gallery</span>
-        <span class="text-xs text-muted/60 font-sans">→</span>
+        <span class="text-xs text-muted/60 font-sans">15 Photos →</span>
       </a>
-      <a href="/#reviews" class="mobile-nav-link py-2 text-xl font-serif text-charcoal hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15">
+      <a href="/reviews" class={`mobile-nav-link py-2 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/15 ${
+        isReviewsActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
+      }`}>
         <span>Client Reviews</span>
         <span class="text-xs text-muted/60 font-sans">4.9 ★ →</span>
       </a>
-      <a href="/#contact" class="mobile-nav-link py-2 text-xl font-serif text-charcoal hover:text-gold-deep transition-colors flex items-center justify-between">
+      <a href="/contact" class={`mobile-nav-link py-2 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between ${
+        isContactActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
+      }`}>
         <span>Find Studio & Hours</span>
         <span class="text-xs text-muted/60 font-sans">→</span>
       </a>
@@ -167,7 +219,7 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
           <span>Call Salon</span>
         </a>
         <a 
-          href="/#booking" 
+          href="/booking" 
           class="mobile-nav-link flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-semibold uppercase tracking-wider text-charcoal bg-gold hover:bg-gold-hover transition-colors shadow-xs"
         >
           <span>Book Now</span>
@@ -186,50 +238,28 @@ const isBridalActive = currentPath === '/bridal' || currentPath === '/bridal/';
   const closeIcon = document.getElementById('close-icon');
   const navLinks = document.querySelectorAll('.mobile-nav-link');
 
-  // Handle scroll transition: Edge-to-edge docked on mobile, floating rounded-2xl on desktop
+  // Handle scroll transition: Full-width modern Apple-style fixed navbar with smooth glassmorphism
   function handleScroll() {
     if (window.scrollY > 25) {
-      container?.classList.add('sm:px-6', 'sm:pt-3');
-      container?.classList.remove('px-0', 'pt-0');
-
       header?.classList.add(
-        'sm:max-w-6xl',
-        'sm:mx-auto',
-        'sm:rounded-2xl',
-        'bg-canvas/96',
+        'bg-canvas/92',
         'backdrop-blur-xl',
-        'border-b',
-        'sm:border',
-        'border-gold-border/60',
-        'shadow-md',
-        'shadow-charcoal/5',
-        'py-2.5',
-        'sm:py-3',
-        'px-4',
-        'sm:px-6'
+        'border-black/[0.07]',
+        'shadow-xs',
+        'py-3',
+        'sm:py-3.5'
       );
-      header?.classList.remove('bg-transparent', 'border-transparent', 'py-3.5', 'sm:py-5', 'px-4', 'sm:px-8', 'lg:px-12');
+      header?.classList.remove('bg-transparent', 'border-transparent', 'py-4', 'sm:py-5');
     } else {
-      container?.classList.remove('sm:px-6', 'sm:pt-3');
-      container?.classList.add('px-0', 'pt-0');
-
       header?.classList.remove(
-        'sm:max-w-6xl',
-        'sm:mx-auto',
-        'sm:rounded-2xl',
-        'bg-canvas/96',
+        'bg-canvas/92',
         'backdrop-blur-xl',
-        'border-b',
-        'sm:border',
-        'border-gold-border/60',
-        'shadow-md',
-        'shadow-charcoal/5',
-        'py-2.5',
-        'sm:py-3',
-        'px-4',
-        'sm:px-6'
+        'border-black/[0.07]',
+        'shadow-xs',
+        'py-3',
+        'sm:py-3.5'
       );
-      header?.classList.add('bg-transparent', 'border-transparent', 'py-3.5', 'sm:py-5', 'px-4', 'sm:px-8', 'lg:px-12');
+      header?.classList.add('bg-transparent', 'border-transparent', 'py-4', 'sm:py-5');
     }
   }
 

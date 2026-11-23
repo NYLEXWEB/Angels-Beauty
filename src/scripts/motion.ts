@@ -40,8 +40,9 @@ export function initMotion() {
   }
 
   // 2. Google Reviews Card Reveal Animation
+  // Skip mutating if inside an astro-island (React client component) to prevent hydration mismatches
   const reviewsSection = document.querySelector('#reviews');
-  if (reviewsSection) {
+  if (reviewsSection && !reviewsSection.closest('astro-island')) {
     const reviewSummary = reviewsSection.querySelector('.rounded-3xl, .rounded-2xl');
     const reviewCards = reviewsSection.querySelectorAll('.rounded-3xl:not(:first-child), .rounded-2xl:not(:first-child), article, [class*="min-h-[220px]"]');
 
@@ -77,9 +78,12 @@ export function initMotion() {
   }
 
   // 3. Image Reveal Variety Animations (GSAP ScrollTrigger)
+  // Skip images inside client-hydrated React components (astro-island) to prevent hydration mismatches
   const allImages = document.querySelectorAll('img:not(.hero-text-reveal img):not(#site-header img):not(#gallery-lightbox img)');
   
   allImages.forEach((img, index) => {
+    if (img.closest('astro-island')) return;
+
     const parent = img.parentElement;
     if (!parent) return;
 
@@ -153,8 +157,11 @@ export function initMotion() {
   });
 
   // 4. Section Titles Staggered Reveal
+  // Skip sections inside client-hydrated React components (astro-island) to prevent hydration mismatches
   if (window.innerWidth >= 640) {
     gsap.utils.toArray<HTMLElement>('section:not(:first-of-type)').forEach((section) => {
+      if (section.closest('astro-island')) return;
+
       const heading = section.querySelector('h2');
       const overline = section.querySelector('span[class*="tracking-"]');
       const desc = section.querySelector('p');
