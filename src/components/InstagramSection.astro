@@ -76,14 +76,13 @@ const REELS = [
         >
           <div class="reel-container relative aspect-[9/16] w-full max-w-[330px] sm:max-w-[360px] lg:max-w-none mx-auto rounded-[30px] sm:rounded-[34px] overflow-hidden bg-black shadow-2xl border-[5px] sm:border-[6px] border-charcoal/90 select-none group transition-all duration-300 hover:shadow-gold/15">
             
-            <!-- Video Element -->
+            <!-- Video Element (Played by IntersectionObserver when in view) -->
             <video 
               class="reel-video absolute inset-0 w-full h-full object-cover cursor-pointer"
               src={reel.videoSrc}
               loop
               muted
               playsinline
-              autoplay
               preload="metadata"
             ></video>
 

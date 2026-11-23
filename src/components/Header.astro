@@ -239,8 +239,13 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
   const navLinks = document.querySelectorAll('.mobile-nav-link');
 
   // Handle scroll transition: Full-width modern Apple-style fixed navbar with smooth glassmorphism
+  let wasScrolled = false;
   function handleScroll() {
-    if (window.scrollY > 25) {
+    const isScrolled = window.scrollY > 25;
+    if (isScrolled === wasScrolled) return;
+    wasScrolled = isScrolled;
+
+    if (isScrolled) {
       header?.classList.add(
         'bg-canvas/92',
         'backdrop-blur-xl',

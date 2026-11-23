@@ -4,26 +4,74 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+declare global {
+  interface Window {
+    __lenis?: Lenis;
+  }
+}
+
 export function initMotion() {
+  if (typeof window === 'undefined') return;
+
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReduced) return;
 
-  // Initialize Lenis Smooth Scroll
+  // Prevent duplicate Lenis instances on re-initialization
+  if (window.__lenis) {
+    window.__lenis.destroy();
+  }
+
+  // Initialize Ultra-Smooth Lenis Momentum Scrolling
   const lenis = new Lenis({
-    duration: 1.2,
+    lerp: 0.08, // Silky luxury linear interpolation for buttery momentum
+    duration: 1.3,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    touchMultiplier: 1.4,
+    wheelMultiplier: 1.0,
+    touchMultiplier: 1.5,
+    autoResize: true,
   });
 
+  window.__lenis = lenis;
+
+  // Seamless GSAP ScrollTrigger Synchronization
   lenis.on('scroll', ScrollTrigger.update);
 
   gsap.ticker.add((time) => {
     lenis.raf(time * 1000);
   });
   gsap.ticker.lagSmoothing(0);
+
+  // Smooth scroll for in-page anchor links (e.g. #services, #contact)
+  document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((anchor) => {
+    anchor.addEventListener('click', (e) => {
+      const href = anchor.getAttribute('href');
+      if (!href) return;
+      const url = new URL(href, window.location.origin);
+      if (url.pathname === window.location.pathname && url.hash && url.hash.length > 1) {
+        const target = document.querySelector(url.hash);
+        if (target) {
+          e.preventDefault();
+          lenis.scrollTo(target as HTMLElement, {
+            offset: -75,
+            duration: 1.3,
+          });
+        }
+      }
+    });
+  });
+
+  // Refresh ScrollTrigger calculations after all fonts and layout settle
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      ScrollTrigger.refresh();
+    });
+  }
+  window.addEventListener('load', () => {
+    ScrollTrigger.refresh();
+  });
 
   // 1. Hero page-load sequence
   const heroReveal = document.querySelector('.hero-text-reveal');
@@ -80,7 +128,7 @@ export function initMotion() {
   // 3. Image Reveal Variety Animations (GSAP ScrollTrigger)
   // Skip images inside client-hydrated React components (astro-island) to prevent hydration mismatches
   const allImages = document.querySelectorAll('img:not(.hero-text-reveal img):not(#site-header img):not(#gallery-lightbox img)');
-  
+
   allImages.forEach((img, index) => {
     if (img.closest('astro-island')) return;
 

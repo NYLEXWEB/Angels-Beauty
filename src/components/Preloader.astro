@@ -4,13 +4,12 @@
  * 
  * Strict Features:
  * - Runs ONLY on initial session entry (never on page navigation or browser back button)
- * - Accurate real asset progress tracking across images and videos
- * - Smooth luxury typography, gold hairline progress bar, and percentage counter
- * - Automatic session caching with zero flash on subsequent visits
+ * - Complete asset decoding (GPU memory decode for images, buffer readyState for videos)
+ * - Accurate real-time percentage counter (0% to 100%) and hairline gold progress track
+ * - Instant zero-flash dismissal on back navigation or subpage traversal
  */
 ---
 
-<!-- Instant Head Guard Script is injected directly in Layout.astro to prevent flash -->
 <div 
   id="angels-preloader" 
   class="fixed inset-0 z-[99999] flex flex-col items-center justify-center bg-[#FAF8F5] text-charcoal select-none overflow-hidden transition-all duration-700 ease-out"
@@ -29,14 +28,14 @@
     {/* Brand Emblem with Breathing Gold Halo */}
     <div class="relative mb-6 sm:mb-7 group">
       {/* Outer subtle rotating gold dash halo */}
-      <div class="absolute -inset-2 rounded-full border border-gold/30 border-dashed animate-[spin_20s_linear_infinite] pointer-events-none"></div>
+      <div class="absolute -inset-2.5 rounded-full border border-gold/30 border-dashed animate-[spin_20s_linear_infinite] pointer-events-none"></div>
       
       {/* Inner glowing circle */}
       <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-white border border-gold/40 shadow-[0_8px_24px_rgba(158,123,53,0.15)] flex items-center justify-center overflow-hidden">
         <img 
           src="/images/logo.png" 
           alt="Angels Beauty Parlour Emblem" 
-          class="w-full h-full object-cover rounded-full transition-transform duration-500" 
+          class="w-full h-full object-cover rounded-full" 
           width="96" 
           height="96"
           loading="eager"
@@ -76,7 +75,7 @@
       id="preloader-status" 
       class="text-[9px] sm:text-[10px] font-sans tracking-[0.22em] uppercase text-muted/60 mt-3.5 h-4 transition-opacity duration-300"
     >
-      Curating Visuals...
+      Initializing Artistry...
     </p>
 
   </div>
@@ -88,108 +87,157 @@
   const preloader = document.getElementById('angels-preloader');
   if (!preloader) return;
 
-  // Immediate check: if already visited in this session, hide immediately without trace
+  // 1. Immediate Session Check: Never show on subsequent pages or back navigation
   if (sessionStorage.getItem(SESSION_KEY)) {
     preloader.style.display = 'none';
     preloader.remove();
     return;
   }
 
-  // Prevent background scrolling while loading
+  // Lock background scroll during initial load
   document.body.style.overflow = 'hidden';
 
   const counterEl = document.getElementById('preloader-counter');
   const barEl = document.getElementById('preloader-bar');
   const statusEl = document.getElementById('preloader-status');
 
-  // Curated list of critical site assets
-  const coreVisuals = [
+  // Complete Catalog of Visual Assets across the entire site
+  const MASTER_ASSET_MANIFEST = [
+    // Brand & Studio Architecture
     '/images/logo.png',
     '/images/hero-bg.jpg',
     '/images/bridal-church.jpg',
     '/images/bridal-room.jpg',
     '/images/bridal-suite.jpg',
     '/images/pedicure-spa.jpg',
+    '/images/skin-hair-lounge.jpg',
+    '/images/styling-aisle.jpg',
+    
+    // Curated Services Showcase Imagery
     '/images/services/bridal-makeup.jpg',
     '/images/services/hd-bridal-makeup.jpg',
     '/images/services/glass-skin-bridal.jpg',
-    '/images/services/korean-facial.jpg',
+    '/images/services/airbrush-bridal.jpg',
+    '/images/services/bridal-hair-styling.jpg',
+    '/images/services/bridal-saree-draping.jpg',
+    '/images/services/reception-makeup.jpg',
     '/images/services/hair-highlights.jpg',
+    '/images/services/keratin-treatment.jpg',
+    '/images/services/korean-facial.jpg',
+    '/images/services/pedicure-spa.jpg',
+
+    // Full 15-Photo Bridal Gallery
     '/images/gallery/gallery-01.jpg',
     '/images/gallery/gallery-02.jpg',
     '/images/gallery/gallery-03.jpg',
-    '/images/gallery/gallery-04.jpg'
+    '/images/gallery/gallery-04.jpg',
+    '/images/gallery/gallery-05.jpg',
+    '/images/gallery/gallery-06.jpg',
+    '/images/gallery/gallery-07.jpg',
+    '/images/gallery/gallery-08.jpg',
+    '/images/gallery/gallery-09.jpg',
+    '/images/gallery/gallery-10.jpg',
+    '/images/gallery/gallery-11.jpg',
+    '/images/gallery/gallery-12.jpg',
+    '/images/gallery/gallery-13.jpg',
+    '/images/gallery/gallery-14.jpg',
+    '/images/gallery/gallery-15.jpg'
   ];
 
-  // Gather all unique <img> sources currently on the page
-  const uniqueUrls = new Set(coreVisuals);
+  // Also collect any additional images found in DOM
+  const uniqueImageUrls = new Set(MASTER_ASSET_MANIFEST);
   const domImages = Array.from(document.images || []);
   domImages.forEach(img => {
     const src = img.currentSrc || img.src || img.getAttribute('src');
     if (src && !src.startsWith('data:') && !src.startsWith('blob:')) {
-      uniqueUrls.add(src);
+      uniqueImageUrls.add(src);
     }
   });
 
-  // Gather video elements
+  // Collect video elements (Reels)
   const domVideos = Array.from(document.querySelectorAll('video') || []);
 
-  const totalAssets = uniqueUrls.size + domVideos.length;
+  const totalAssets = uniqueImageUrls.size + domVideos.length;
   let loadedAssets = 0;
   let targetProgress = totalAssets === 0 ? 100 : 0;
   let currentProgress = 0;
   let isFinished = false;
 
-  function onAssetLoaded() {
+  function onAssetReady() {
     loadedAssets++;
     const rawPercent = Math.round((loadedAssets / totalAssets) * 100);
     targetProgress = Math.min(100, Math.max(targetProgress, rawPercent));
   }
 
-  // 1. Preload image assets
-  uniqueUrls.forEach(url => {
+  // 1. Force Image GPU Decompression & Decoding into Memory
+  uniqueImageUrls.forEach(url => {
     const img = new Image();
-    img.onload = onAssetLoaded;
-    img.onerror = onAssetLoaded; // avoid hanging on network error
     img.src = url;
-  });
 
-  // 2. Preload video ready states (buffer first frames)
-  domVideos.forEach(video => {
-    if (video.readyState >= 2) {
-      onAssetLoaded();
+    // Use native modern img.decode() to guarantee bitmap is fully loaded and ready in memory
+    if (typeof img.decode === 'function') {
+      img.decode()
+        .then(onAssetReady)
+        .catch(function() {
+          // If decode fails or is interrupted, fallback to onload
+          if (img.complete) {
+            onAssetReady();
+          } else {
+            img.onload = onAssetReady;
+            img.onerror = onAssetReady;
+          }
+        });
     } else {
-      let resolved = false;
-      const onReady = () => {
-        if (resolved) return;
-        resolved = true;
-        video.removeEventListener('loadeddata', onReady);
-        video.removeEventListener('canplay', onReady);
-        video.removeEventListener('error', onReady);
-        onAssetLoaded();
-      };
-      video.addEventListener('loadeddata', onReady, { once: true });
-      video.addEventListener('canplay', onReady, { once: true });
-      video.addEventListener('error', onReady, { once: true });
-      try {
-        video.load();
-      } catch (e) {
-        onAssetLoaded();
+      if (img.complete) {
+        onAssetReady();
+      } else {
+        img.onload = onAssetReady;
+        img.onerror = onAssetReady;
       }
     }
   });
 
-  // 3. Safety Fallback: Never block the user longer than 4.2 seconds
-  const safetyTimer = setTimeout(() => {
-    targetProgress = 100;
-  }, 4200);
+  // 2. Preload and Buffer Video Elements (Ready for instantaneous playback)
+  domVideos.forEach(video => {
+    // Ensure video begins preloading
+    video.preload = 'auto';
 
-  // 4. Smooth Animation Loop (Lerping for fluid aesthetic motion)
-  function updateProgress() {
+    if (video.readyState >= 2) { // HAVE_CURRENT_DATA or higher
+      onAssetReady();
+    } else {
+      let resolved = false;
+      const onVideoReady = function() {
+        if (resolved) return;
+        resolved = true;
+        video.removeEventListener('loadeddata', onVideoReady);
+        video.removeEventListener('canplay', onVideoReady);
+        video.removeEventListener('error', onVideoReady);
+        onAssetReady();
+      };
+
+      video.addEventListener('loadeddata', onVideoReady, { once: true });
+      video.addEventListener('canplay', onVideoReady, { once: true });
+      video.addEventListener('error', onVideoReady, { once: true });
+
+      try {
+        video.load();
+      } catch (e) {
+        onAssetReady();
+      }
+    }
+  });
+
+  // 3. Safety Fallback: Ensure UI never gets stuck indefinitely if a network stall occurs
+  const safetyTimeout = setTimeout(function() {
+    targetProgress = 100;
+  }, 4500);
+
+  // 4. Fluid Lerp Animation Loop
+  function renderProgress() {
     if (isFinished) return;
 
     if (currentProgress < targetProgress) {
-      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.15));
+      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.16));
       currentProgress = Math.min(targetProgress, currentProgress + step);
     }
 
@@ -197,31 +245,33 @@
     if (barEl) barEl.style.width = `${currentProgress}%`;
     if (preloader) preloader.setAttribute('aria-valuenow', String(currentProgress));
 
-    // Dynamic Contextual Status
+    // Refined Editorial Status Labels
     if (statusEl) {
-      if (currentProgress < 35) {
-        statusEl.textContent = "Curating Visuals...";
-      } else if (currentProgress < 75) {
+      if (currentProgress < 30) {
+        statusEl.textContent = "Loading Haute Visuals...";
+      } else if (currentProgress < 65) {
+        statusEl.textContent = "Decoding Gallery Imagery...";
+      } else if (currentProgress < 90) {
         statusEl.textContent = "Buffering Cinematic Reels...";
       } else if (currentProgress < 100) {
-        statusEl.textContent = "Refining Studio Experience...";
+        statusEl.textContent = "Refining Studio Ambience...";
       } else {
         statusEl.textContent = "Welcome to Angels Studio";
       }
     }
 
-    // Completion Condition
+    // Completion Trigger
     if (currentProgress >= 100 && (loadedAssets >= totalAssets || targetProgress === 100)) {
       isFinished = true;
-      clearTimeout(safetyTimer);
-      setTimeout(dismissPreloader, 320);
+      clearTimeout(safetyTimeout);
+      setTimeout(dismissPreloader, 350);
       return;
     }
 
-    requestAnimationFrame(updateProgress);
+    requestAnimationFrame(renderProgress);
   }
 
-  requestAnimationFrame(updateProgress);
+  requestAnimationFrame(renderProgress);
 
   // 5. Dismiss Preloader and Save Session State
   function dismissPreloader() {
@@ -234,14 +284,14 @@
     preloader.style.transform = 'translateY(-14px) scale(1.01)';
     preloader.style.pointerEvents = 'none';
 
-    setTimeout(() => {
+    setTimeout(function() {
       preloader.classList.add('is-done');
       preloader.remove();
       window.dispatchEvent(new CustomEvent('angels:ready'));
     }, 750);
   }
 
-  // 6. Handle back-forward cache (bfcache) navigation
+  // 6. Support Back-Forward Cache (bfcache) navigation
   window.addEventListener('pageshow', function(e) {
     if (e.persisted || sessionStorage.getItem(SESSION_KEY)) {
       document.body.style.overflow = '';
@@ -256,7 +306,6 @@
 </script>
 
 <style>
-  /* Ensure preloader stays smoothly hidden on subsequent pages or back clicks */
   :global(html.preloader-skipped) #angels-preloader,
   #angels-preloader.is-done {
     display: none !important;
