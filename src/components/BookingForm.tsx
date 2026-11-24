@@ -17,10 +17,15 @@ export default function BookingForm() {
 
   const allServices = [
     { group: 'Signature Bridal Packages', items: BRIDAL_PACKAGES.map(p => p.name) },
-    { group: 'Bridal Artistry', items: SERVICES.bridal.map(s => s.name) },
-    { group: 'Hair Transformations', items: SERVICES.hair.map(s => s.name) },
-    { group: 'Skin & Facial Therapies', items: SERVICES.skin.map(s => s.name) },
-    { group: 'Spa & Beauty Extras', items: SERVICES.other.map(s => s.name) }
+    { group: 'Bridal Studio & Ceremonial', items: (SERVICES.bridal || []).map(s => s.name) },
+    { group: 'Hair Care, Biotin & Treatments', items: (SERVICES['hair-treatments'] || []).map(s => s.name) },
+    { group: 'Hair Colouring & Balayage', items: (SERVICES['hair-colour'] || []).map(s => s.name) },
+    { group: 'Skin Care & Facials', items: (SERVICES.skin || []).map(s => s.name) },
+    { group: 'Korean Beauty & Spa', items: (SERVICES['korean-spa'] || []).map(s => s.name) },
+    { group: 'Nail Lounge & Art', items: (SERVICES.nails || []).map(s => s.name) },
+    { group: 'Brows, Lashes & Semi-Permanent', items: (SERVICES['eyes-brows'] || []).map(s => s.name) },
+    { group: 'Waxing & Body Care', items: (SERVICES['waxing-body'] || []).map(s => s.name) },
+    { group: 'Hair Extensions', items: (SERVICES.extensions || []).map(s => s.name) }
   ];
 
   const validate = () => {

@@ -2,13 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { SERVICES, getWhatsAppBookingUrl, type ServiceItem } from '../config/site';
 import { Search, X, Clock, CheckCircle2, ChevronRight, ShieldCheck, Sparkles } from 'lucide-react';
 
-type CategoryKey = 'bridal' | 'hair' | 'skin' | 'other';
+type CategoryKey = string;
 
 const CATEGORIES: { key: CategoryKey; label: string; count: number; tag: string }[] = [
-  { key: 'bridal', label: 'Bridal Artistry', count: SERVICES.bridal.length, tag: 'Ceremonial' },
-  { key: 'hair', label: 'Hair Couture', count: SERVICES.hair.length, tag: 'Transformations' },
-  { key: 'skin', label: 'Skin Therapies', count: SERVICES.skin.length, tag: 'Clinical & Glow' },
-  { key: 'other', label: 'Beauty Extras', count: SERVICES.other.length, tag: 'Bespoke Care' }
+  { key: 'bridal', label: 'Bridal Studio', count: SERVICES['bridal']?.length || 0, tag: 'Ceremonial & Draping' },
+  { key: 'hair-treatments', label: 'Hair Care & Treatments', count: SERVICES['hair-treatments']?.length || 0, tag: 'Biotin, Keratin & Spa' },
+  { key: 'hair-colour', label: 'Hair Colouring', count: SERVICES['hair-colour']?.length || 0, tag: 'Artistry & Balayage' },
+  { key: 'skin', label: 'Skin Care & Facials', count: SERVICES['skin']?.length || 0, tag: 'Clinical & De-Tan' },
+  { key: 'korean-spa', label: 'Korean Beauty & Spa', count: SERVICES['korean-spa']?.length || 0, tag: 'Glass Skin Rituals' },
+  { key: 'nails', label: 'Nail Lounge & Art', count: SERVICES['nails']?.length || 0, tag: 'Extensions & 3D Art' },
+  { key: 'eyes-brows', label: 'Brows & Lashes', count: SERVICES['eyes-brows']?.length || 0, tag: 'Microblading & Lashes' },
+  { key: 'waxing-body', label: 'Waxing & Body Care', count: SERVICES['waxing-body']?.length || 0, tag: 'Threading, Rica & Scrub' },
+  { key: 'extensions', label: 'Hair Extensions', count: SERVICES['extensions']?.length || 0, tag: 'Volume & Length' }
 ];
 
 export default function ServicesShowcase() {
@@ -33,12 +38,14 @@ export default function ServicesShowcase() {
     };
   }, [selectedService]);
 
-  const currentServices = SERVICES[activeCategory];
+  const currentServices = SERVICES[activeCategory] || [];
+  const allServicesList = Object.values(SERVICES).flat();
   const filteredServices = searchQuery.trim() === ''
     ? currentServices
-    : currentServices.filter(s =>
+    : allServicesList.filter(s =>
       s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      s.description.toLowerCase().includes(searchQuery.toLowerCase())
+      s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      (s.category && s.category.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
   const activeCategoryMeta = CATEGORIES.find(c => c.key === activeCategory);
@@ -82,7 +89,7 @@ export default function ServicesShowcase() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search 38 bespoke treatments..."
+                placeholder="Search 100+ bespoke treatments (e.g. Biotin, Balayage)..."
                 aria-label="Search treatments and services"
                 className="w-full pl-10 pr-9 py-2.5 sm:py-3 rounded-full border border-black/[0.08] bg-white/90 backdrop-blur-md text-charcoal text-xs sm:text-sm placeholder:text-muted/60 focus:outline-none focus:border-gold-deep focus:ring-1 focus:ring-gold-deep/30 focus:bg-white transition-all shadow-2xs group-hover:border-black/20"
               />
