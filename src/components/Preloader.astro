@@ -2,12 +2,10 @@
 /**
  * Master Haute-Couture Preloader for Angels Beauty Parlour & Bridal Studio
  * 
- * Strict Performance Features:
- * - Truly preloads and GPU-decodes EVERY photography asset (34 high-res images) before site entrance
- * - Strict gating: Website is revealed ONLY AFTER 100% of images are loaded and decoded
- * - Real-time percentage counter (0% to 100%) tracking actual image readiness
- * - ZERO video buffering in preloader: Videos are lazy-loaded strictly on user click/play
- * - Elegant gold track, emblem rotation, and smooth curtain reveal
+ * Strict Performance & UX Features:
+ * - Appears ONLY on first website entrance in a session or on manual page reload (F5 / Refresh)
+ * - Internal page transitions (Services, Bridal, Gallery, etc.) skip preloader immediately with ZERO flash
+ * - Smooth lerp percentage counter (0% to 100%) tracking actual image readiness
  * - Instant scroll unlock and trigger of hero entrance sequence
  */
 ---
@@ -88,6 +86,43 @@
   const preloader = document.getElementById('angels-preloader');
   if (!preloader) return;
 
+  // Determine if this is a first-time visit or a manual page reload (F5)
+  let isSkip = document.documentElement.classList.contains('skip-preloader');
+  if (!isSkip) {
+    try {
+      const navEntries = window.performance && performance.getEntriesByType && performance.getEntriesByType('navigation');
+      const isReload = (navEntries && navEntries[0] && navEntries[0].type === 'reload') || (window.performance && window.performance.navigation && window.performance.navigation.type === 1);
+      const hasVisited = sessionStorage.getItem('angels_session_visited');
+      if (hasVisited && !isReload) {
+        isSkip = true;
+      }
+    } catch (e) {}
+  }
+
+  // If internal page navigation, dismiss immediately with ZERO delay
+  if (isSkip) {
+    preloader.style.display = 'none';
+    preloader.remove();
+    document.body.style.overflow = '';
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        window.dispatchEvent(new CustomEvent('angels:ready'));
+      }, { once: true });
+    } else {
+      window.dispatchEvent(new CustomEvent('angels:ready'));
+    }
+    return;
+  }
+
+  // Handle bfcache back-forward navigation
+  window.addEventListener('pageshow', function(event) {
+    if (event.persisted) {
+      document.body.style.overflow = '';
+      if (preloader && preloader.parentNode) preloader.remove();
+      window.dispatchEvent(new CustomEvent('angels:ready'));
+    }
+  });
+
   // Lock scroll cleanly while loading
   document.body.style.overflow = 'hidden';
 
@@ -95,9 +130,8 @@
   const barEl = document.getElementById('preloader-bar');
   const statusEl = document.getElementById('preloader-status');
 
-  // Complete List of All 34 Photography Assets on the Website
+  // Key Photography Assets to decode
   const CORE_IMAGES = [
-    // Core & Studio Atmosphere
     '/images/logo.webp',
     '/images/hero-bg.webp',
     '/images/bridal-church.webp',
@@ -105,40 +139,9 @@
     '/images/bridal-suite.webp',
     '/images/pedicure-spa.webp',
     '/images/skin-hair-lounge.webp',
-    '/images/styling-aisle.webp',
-
-    // 15 Real Bridal Portfolio Photos (Gallery Section)
-    '/images/gallery/gallery-01.webp',
-    '/images/gallery/gallery-02.webp',
-    '/images/gallery/gallery-03.webp',
-    '/images/gallery/gallery-04.webp',
-    '/images/gallery/gallery-05.webp',
-    '/images/gallery/gallery-06.webp',
-    '/images/gallery/gallery-07.webp',
-    '/images/gallery/gallery-08.webp',
-    '/images/gallery/gallery-09.webp',
-    '/images/gallery/gallery-10.webp',
-    '/images/gallery/gallery-11.webp',
-    '/images/gallery/gallery-12.webp',
-    '/images/gallery/gallery-13.webp',
-    '/images/gallery/gallery-14.webp',
-    '/images/gallery/gallery-15.webp',
-
-    // 11 Services & Treatment Visuals
-    '/images/services/airbrush-bridal.webp',
-    '/images/services/bridal-hair-styling.webp',
-    '/images/services/bridal-makeup.webp',
-    '/images/services/bridal-saree-draping.webp',
-    '/images/services/glass-skin-bridal.webp',
-    '/images/services/hair-highlights.webp',
-    '/images/services/hd-bridal-makeup.webp',
-    '/images/services/keratin-treatment.webp',
-    '/images/services/korean-facial.webp',
-    '/images/services/pedicure-spa.webp',
-    '/images/services/reception-makeup.webp'
+    '/images/styling-aisle.webp'
   ];
 
-  // Discover any additional in-page images
   const imageSet = new Set(CORE_IMAGES);
   try {
     const pageImgs = document.querySelectorAll('img');
@@ -148,14 +151,12 @@
         imageSet.add(src);
       }
     });
-  } catch (e) {
-    // ignore
-  }
+  } catch (e) {}
 
   const ALL_IMAGES = Array.from(imageSet);
   const totalImages = ALL_IMAGES.length;
   let loadedImages = 0;
-  let targetProgress = 5;
+  let targetProgress = 12;
   let currentProgress = 0;
   let isDone = false;
 
@@ -168,7 +169,7 @@
     }
   }
 
-  // Preload and GPU-Decode All Images into Browser Memory
+  // Preload and GPU-Decode Critical Images
   ALL_IMAGES.forEach(function(url) {
     const img = new Image();
     img.src = url;
@@ -197,22 +198,22 @@
   // Fonts Readiness Check
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(function() {
-      targetProgress = Math.max(targetProgress, 15);
+      targetProgress = Math.max(targetProgress, 25);
     });
   }
 
-  // Emergency Safety Timeout (12s safeguard for offline/unstable networks so user is never trapped)
+  // Safety Timeout (2.5s safeguard so user is never stalled even on slow connection)
   const emergencyTimeout = setTimeout(function() {
     targetProgress = 100;
     loadedImages = totalImages;
-  }, 12000);
+  }, 2500);
 
   // Smooth Haute-Couture Lerp Animation Loop
   function renderProgress() {
     if (isDone) return;
 
     if (currentProgress < targetProgress) {
-      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.16));
+      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.22));
       currentProgress = Math.min(targetProgress, currentProgress + step);
     }
 
@@ -235,11 +236,10 @@
       }
     }
 
-    // STRICT COMPLETION: Reveals website ONLY when 100% of images are loaded & decoded
-    if (currentProgress >= 100 && loadedImages >= totalImages) {
+    if (currentProgress >= 100) {
       isDone = true;
       clearTimeout(emergencyTimeout);
-      setTimeout(dismissPreloader, 220);
+      setTimeout(dismissPreloader, 180);
       return;
     }
 
@@ -250,11 +250,15 @@
 
   // Dismiss Preloader and Reveal Website
   function dismissPreloader() {
+    try {
+      sessionStorage.setItem('angels_session_visited', 'true');
+    } catch(e) {}
+
     document.body.style.overflow = '';
 
-    preloader.style.transition = 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
+    preloader.style.transition = 'opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
     preloader.style.opacity = '0';
-    preloader.style.transform = 'translateY(-24px) scale(1.01)';
+    preloader.style.transform = 'translateY(-20px) scale(1.01)';
     preloader.style.pointerEvents = 'none';
 
     setTimeout(function() {
@@ -262,7 +266,7 @@
         preloader.remove();
       }
       window.dispatchEvent(new CustomEvent('angels:ready'));
-    }, 650);
+    }, 500);
   }
 
 })();

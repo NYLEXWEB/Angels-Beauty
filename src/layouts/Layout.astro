@@ -79,6 +79,25 @@ const jsonLd = {
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" />
     </noscript>
+    <!-- Immediate Zero-Flash Preloader Check: ONLY show on first session visit or page reload (F5) -->
+    <script is:inline>
+      (function() {
+        try {
+          var navEntries = window.performance && performance.getEntriesByType && performance.getEntriesByType('navigation');
+          var isReload = (navEntries && navEntries[0] && navEntries[0].type === 'reload') || (window.performance && window.performance.navigation && window.performance.navigation.type === 1);
+          var hasVisited = sessionStorage.getItem('angels_session_visited');
+          if (hasVisited && !isReload) {
+            document.documentElement.classList.add('skip-preloader');
+          }
+        } catch(e) {}
+      })();
+    </script>
+    <style is:inline>
+      html.skip-preloader #angels-preloader {
+        display: none !important;
+      }
+    </style>
+
 
     <!-- Critical Above-The-Fold Asset Preloads (Zero LCP Delay) -->
     <link rel="preload" as="image" href="/images/hero-bg.webp" fetchpriority="high" />

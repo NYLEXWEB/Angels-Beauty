@@ -112,7 +112,8 @@ export function initMotion() {
   };
 
   const preloaderEl = document.getElementById('angels-preloader');
-  if (preloaderEl) {
+  const isSkipPreloader = document.documentElement.classList.contains('skip-preloader');
+  if (preloaderEl && !isSkipPreloader) {
     window.addEventListener('angels:ready', playHeroReveal, { once: true });
   } else {
     playHeroReveal();

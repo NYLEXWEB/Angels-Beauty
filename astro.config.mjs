@@ -8,6 +8,7 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   site: 'https://angelsbeautyparlour.in',
   integrations: [react(), sitemap()],
+  prefetch: true,
   vite: {
     plugins: [tailwindcss()],
   },
