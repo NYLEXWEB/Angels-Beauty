@@ -12,7 +12,7 @@ interface Props {
 const {
   title = "Angels Beauty Parlour and Bridal Studio | Wayanad, Kerala",
   description = "Wayanad's signature destination for bespoke bridal makeup, HD beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady.",
-  ogImage = "/images/bridal-church.webp"
+  ogImage = "/images/studio/bridal-church.webp"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://angelsbeautyparlour.in');
@@ -21,7 +21,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BeautySalon",
   "name": SITE_CONFIG.name,
-  "image": "https://angelsbeautyparlour.in/images/logo.webp",
+  "image": "https://angelsbeautyparlour.in/images/brand/logo.webp",
   "url": "https://angelsbeautyparlour.in",
   "telephone": SITE_CONFIG.contact.phoneTel,
   "address": {
@@ -100,8 +100,8 @@ const jsonLd = {
 
 
     <!-- Critical Above-The-Fold Asset Preloads (Zero LCP Delay) -->
-    <link rel="preload" as="image" href="/images/hero-bg.webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/logo.webp" />
+    <link rel="preload" as="image" href="/images/hero/hero-bg.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/brand/logo.webp" />
     
     <!-- Primary Meta -->
     <title>{title}</title>
