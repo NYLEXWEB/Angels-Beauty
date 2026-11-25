@@ -64,7 +64,7 @@ export default function ReviewsCarousel() {
                 href={GOOGLE_RATING_SUMMARY.writeReviewUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold text-charcoal bg-white hover:bg-neutral-50 border border-black/[0.1] hover:border-gold-deep/60 transition-all shadow-2xs hover:shadow-xs active:scale-97 group cursor-pointer"
+                className="btn-luxury-shimmer inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold text-charcoal bg-white hover:bg-neutral-50 border border-black/[0.1] hover:border-gold-deep/60 transition-all shadow-2xs hover:shadow-xs active:scale-97 group cursor-pointer"
                 aria-label="Write a Review for Angels Beauty Parlour on Google"
               >
                 <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
@@ -112,7 +112,7 @@ export default function ReviewsCarousel() {
               <div
                 key={`${review.id}-${offset}`}
                 suppressHydrationWarning
-                className="rounded-3xl bg-white border border-black/[0.06] hover:border-black/[0.12] p-6 sm:p-7 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all duration-300 group"
+                className="luxury-card-hover rounded-3xl bg-white border border-black/[0.06] hover:border-black/[0.12] p-6 sm:p-7 flex flex-col justify-between shadow-2xs hover:shadow-md transition-all duration-300 group"
               >
                 <div className="space-y-4">
 
@@ -252,7 +252,7 @@ export default function ReviewsCarousel() {
               href={GOOGLE_RATING_SUMMARY.writeReviewUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-full text-xs font-semibold tracking-wide text-charcoal bg-white border border-black/[0.1] shadow-2xs hover:shadow-xs active:scale-98 transition-all"
+              className="btn-luxury-shimmer w-full inline-flex items-center justify-center gap-2.5 py-3 px-5 rounded-full text-xs font-semibold tracking-wide text-charcoal bg-white border border-black/[0.1] shadow-2xs hover:shadow-xs active:scale-98 transition-all"
             >
               <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
                 <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.66-5.17 3.66-9.17z" />

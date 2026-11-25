@@ -93,18 +93,19 @@ export function initMotion() {
     ScrollTrigger.refresh();
   });
 
-  // 1. Hero page-load sequence
+  // 1. Hero Page-Load Cinematic Deblur & Stagger Sequence
   const heroReveal = document.querySelector('.hero-text-reveal');
   const playHeroReveal = () => {
     if (heroReveal) {
       gsap.fromTo(
         heroReveal.children,
-        { opacity: 0, y: 30 },
+        { opacity: 0, y: 26, filter: 'blur(6px)' },
         {
           opacity: 1,
           y: 0,
-          stagger: 0.1,
-          duration: 1.0,
+          filter: 'blur(0px)',
+          stagger: 0.12,
+          duration: 1.05,
           ease: 'power3.out'
         }
       );
@@ -120,7 +121,6 @@ export function initMotion() {
   }
 
   // 2. About Section: Line-by-Line Scroll-Tied Heading Reveal
-  // As the user scrolls, each line becomes crisp, dark and visible in direct sync with scroll
   const aboutHeadings = document.querySelectorAll('.about-scroll-heading');
   aboutHeadings.forEach((heading) => {
     const lines = heading.querySelectorAll('.about-heading-line');
@@ -150,18 +150,18 @@ export function initMotion() {
       y: 0,
       color: '#1A1614',
       stagger: 0.1,
-      duration: 0.7,
+      duration: 0.75,
       ease: 'power2.out',
       scrollTrigger: {
         trigger: packagesTrigger,
         start: 'top 85%',
         toggleActions: 'play none none none',
+        once: true
       },
     });
   }
 
-  // 4. Gallery Section: Multi-Directional Scroll Reveal
-  // Images enter gracefully from left, bottom, and right sides as the user scrolls
+  // 4. Gallery Section: Multi-Directional Scroll Reveal (Left, Center-Up, Right)
   const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
   if (galleryItems.length > 0) {
     const isDesktop = window.innerWidth >= 768;
@@ -173,18 +173,18 @@ export function initMotion() {
       if (isDesktop) {
         const col = index % 3;
         if (col === 0) {
-          xOffset = -55; // Left column slides in from left
+          xOffset = -45;
         } else if (col === 1) {
-          yOffset = 50;  // Center column rises from bottom
+          yOffset = 40;
         } else {
-          xOffset = 55;  // Right column slides in from right
+          xOffset = 45;
         }
       } else {
         const col = index % 2;
         if (col === 0) {
-          xOffset = -40; // Left on mobile
+          xOffset = -30;
         } else {
-          xOffset = 40;  // Right on mobile
+          xOffset = 30;
         }
       }
 
@@ -194,14 +194,14 @@ export function initMotion() {
           opacity: 0.2,
           x: xOffset,
           y: yOffset,
-          scale: 0.94,
+          scale: 0.95,
         },
         {
           opacity: 1,
           x: 0,
           y: 0,
           scale: 1,
-          duration: 0.9,
+          duration: 0.85,
           ease: 'power3.out',
           scrollTrigger: {
             trigger: item,
@@ -216,70 +216,102 @@ export function initMotion() {
 
   // 5. Google Reviews Card Reveal Animation
   const reviewsSection = document.querySelector('#reviews');
-  if (reviewsSection && !reviewsSection.closest('astro-island')) {
-    const reviewSummary = reviewsSection.querySelector('.rounded-3xl, .rounded-2xl');
-    const reviewCards = reviewsSection.querySelectorAll('.rounded-3xl:not(:first-child), .rounded-2xl:not(:first-child), article, [class*="min-h-[220px]"]');
-
+  if (reviewsSection) {
+    const reviewSummary = reviewsSection.querySelector('.rounded-3xl');
     if (reviewSummary) {
-      gsap.from(reviewSummary, {
-        scrollTrigger: {
-          trigger: reviewsSection,
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-          once: true
-        },
-        opacity: 0,
-        y: 40,
-        scale: 0.97,
-        duration: 1.0,
-        ease: 'power3.out'
-      });
-    }
-
-    if (reviewCards.length > 0) {
-      gsap.from(reviewCards, {
-        scrollTrigger: {
-          trigger: reviewCards[0],
-          start: 'top 88%',
-          toggleActions: 'play none none none',
-          once: true
-        },
-        opacity: 0,
-        y: 45,
-        stagger: 0.15,
-        duration: 1.1,
-        ease: 'power3.out'
-      });
-    }
-  }
-
-  // 6. Section Titles Staggered Reveal
-  if (window.innerWidth >= 640) {
-    gsap.utils.toArray<HTMLElement>('section:not(:first-of-type)').forEach((section) => {
-      if (
-        section.closest('astro-island') ||
-        section.querySelector('.packages-heading-reveal') ||
-        section.querySelector('.about-scroll-heading')
-      ) return;
-
-      const overline = section.querySelector('span[class*="tracking-"]');
-      const desc = section.querySelector('p');
-
-      if (overline || desc) {
-        gsap.from([overline, desc].filter(Boolean), {
-          opacity: 0,
-          y: 20,
-          stagger: 0.1,
-          duration: 0.9,
-          ease: 'power2.out',
+      gsap.fromTo(
+        reviewSummary,
+        { opacity: 0, y: 35, scale: 0.98 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.95,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: section,
-            start: 'top 82%',
+            trigger: reviewsSection,
+            start: 'top 85%',
             toggleActions: 'play none none none',
             once: true
           }
-        });
-      }
-    });
+        }
+      );
+    }
   }
+
+  // 6. Bridal Package Cards Staggered Reveal
+  const bridalCards = document.querySelectorAll<HTMLElement>('.bridal-package-card');
+  if (bridalCards.length > 0) {
+    gsap.fromTo(
+      bridalCards,
+      { opacity: 0, y: 35, scale: 0.97 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        stagger: 0.12,
+        duration: 0.9,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: bridalCards[0],
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      }
+    );
+  }
+
+  // 7. Universal Section Headings Deblur & Rise Reveal (All Sections Across All 8 Pages)
+  const allSectionHeadings = document.querySelectorAll<HTMLElement>(
+    'section:not(:first-of-type) h2:not(.about-scroll-heading):not(.packages-heading-reveal)'
+  );
+  allSectionHeadings.forEach((heading) => {
+    gsap.fromTo(
+      heading,
+      {
+        opacity: 0,
+        y: 28,
+        filter: 'blur(5px)',
+      },
+      {
+        opacity: 1,
+        y: 0,
+        filter: 'blur(0px)',
+        duration: 0.95,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: heading,
+          start: 'top 88%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      }
+    );
+  });
+
+  // 8. Universal Section Overline Badges Soft Float
+  const allOverlinePills = document.querySelectorAll<HTMLElement>(
+    'section:not(:first-of-type) div.inline-flex.rounded-full, section:not(:first-of-type) > div > div > span[class*="tracking-"]'
+  );
+  allOverlinePills.forEach((pill) => {
+    if (pill.closest('.hero-text-reveal') || pill.closest('.mobile-stack-card')) return;
+    gsap.fromTo(
+      pill,
+      { opacity: 0, y: 16, scale: 0.96 },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        duration: 0.75,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: pill,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          once: true,
+        },
+      }
+    );
+  });
 }

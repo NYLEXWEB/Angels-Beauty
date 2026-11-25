@@ -2,10 +2,11 @@
 /**
  * Master Haute-Couture Preloader for Angels Beauty Parlour & Bridal Studio
  * 
- * Strict Performance & UX Features:
- * - Appears ONLY on first website entrance in a session or on manual page reload (F5 / Refresh)
- * - Internal page transitions (Services, Bridal, Gallery, etc.) skip preloader immediately with ZERO flash
- * - Smooth lerp percentage counter (0% to 100%) tracking actual image readiness
+ * Performance & Polish:
+ * - Truly preloads and GPU-decodes EVERY photography asset (34 high-res images) before site entrance
+ * - Real-time percentage counter (0% to 100%) tracking actual asset readiness
+ * - ZERO video buffering in preloader: Videos are lazy-loaded strictly on user click/play
+ * - Elegant gold track, emblem rotation, and smooth curtain reveal
  * - Instant scroll unlock and trigger of hero entrance sequence
  */
 ---
@@ -130,8 +131,9 @@
   const barEl = document.getElementById('preloader-bar');
   const statusEl = document.getElementById('preloader-status');
 
-  // Key Photography Assets to decode
+  // Complete List of All 34 Photography Assets on the Website
   const CORE_IMAGES = [
+    // Core & Studio Atmosphere
     '/images/logo.webp',
     '/images/hero-bg.webp',
     '/images/bridal-church.webp',
@@ -139,7 +141,37 @@
     '/images/bridal-suite.webp',
     '/images/pedicure-spa.webp',
     '/images/skin-hair-lounge.webp',
-    '/images/styling-aisle.webp'
+    '/images/styling-aisle.webp',
+
+    // 15 Real Bridal Portfolio Photos (Gallery Section)
+    '/images/gallery/gallery-01.webp',
+    '/images/gallery/gallery-02.webp',
+    '/images/gallery/gallery-03.webp',
+    '/images/gallery/gallery-04.webp',
+    '/images/gallery/gallery-05.webp',
+    '/images/gallery/gallery-06.webp',
+    '/images/gallery/gallery-07.webp',
+    '/images/gallery/gallery-08.webp',
+    '/images/gallery/gallery-09.webp',
+    '/images/gallery/gallery-10.webp',
+    '/images/gallery/gallery-11.webp',
+    '/images/gallery/gallery-12.webp',
+    '/images/gallery/gallery-13.webp',
+    '/images/gallery/gallery-14.webp',
+    '/images/gallery/gallery-15.webp',
+
+    // 11 Services & Treatment Visuals
+    '/images/services/airbrush-bridal.webp',
+    '/images/services/bridal-hair-styling.webp',
+    '/images/services/bridal-makeup.webp',
+    '/images/services/bridal-saree-draping.webp',
+    '/images/services/glass-skin-bridal.webp',
+    '/images/services/hair-highlights.webp',
+    '/images/services/hd-bridal-makeup.webp',
+    '/images/services/keratin-treatment.webp',
+    '/images/services/korean-facial.webp',
+    '/images/services/pedicure-spa.webp',
+    '/images/services/reception-makeup.webp'
   ];
 
   const imageSet = new Set(CORE_IMAGES);

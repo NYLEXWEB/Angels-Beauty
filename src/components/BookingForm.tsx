@@ -217,7 +217,7 @@ export default function BookingForm() {
                   href={SITE_CONFIG.contact.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="py-3 px-5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider text-charcoal border border-gold-border hover:bg-surface flex items-center justify-center gap-2 transition-colors cursor-pointer text-center"
+                  className="btn-luxury-shimmer py-3 px-5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider text-charcoal border border-gold-border hover:bg-surface flex items-center justify-center gap-2 transition-colors cursor-pointer text-center"
                 >
                   <MessageCircle className="w-4 h-4 text-[#25D366]" />
                   <span>Direct Chat</span>
@@ -225,7 +225,7 @@ export default function BookingForm() {
 
                 <button
                   type="submit"
-                  className="py-3.5 px-7 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-gold hover:bg-gold-hover text-charcoal shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
+                  className="btn-luxury-shimmer py-3.5 px-7 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-gold hover:bg-gold-hover text-charcoal shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-98"
                 >
                   <Send className="w-4 h-4" />
                   <span>Send via WhatsApp</span>

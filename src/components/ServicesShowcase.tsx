@@ -323,7 +323,7 @@ export default function ServicesShowcase() {
                   top: `${mobileTopOffset}px`,
                   zIndex: cardZIndex
                 }}
-                className="mobile-stack-card sticky md:static md:top-auto mb-20 sm:mb-28 md:mb-0 last:mb-0 w-full group relative rounded-[28px] sm:rounded-3xl bg-white border border-black/[0.08] shadow-[0_-10px_28px_-4px_rgba(0,0,0,0.12),0_20px_45px_-8px_rgba(34,28,24,0.18)] md:shadow-[0_4px_20px_-4px_rgba(34,28,24,0.06)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.18)] transition-all duration-300 overflow-hidden flex flex-col justify-between md:!z-auto"
+                className="mobile-stack-card luxury-card-hover sticky md:static md:top-auto mb-20 sm:mb-28 md:mb-0 last:mb-0 w-full group relative rounded-[28px] sm:rounded-3xl bg-white border border-black/[0.08] shadow-[0_-10px_28px_-4px_rgba(0,0,0,0.12),0_20px_45px_-8px_rgba(34,28,24,0.18)] md:shadow-[0_4px_20px_-4px_rgba(34,28,24,0.06)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.18)] transition-all duration-300 overflow-hidden flex flex-col justify-between md:!z-auto"
               >
                 {/* 3D Luxury Gold Top Rim Highlight on Mobile */}
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-gold/50 to-transparent pointer-events-none md:hidden z-20" />
@@ -407,7 +407,7 @@ export default function ServicesShowcase() {
                       href={waUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 py-2 px-3.5 sm:px-4 rounded-full bg-charcoal hover:bg-black text-white text-xs font-sans font-medium tracking-wide transition-all duration-300 shadow-2xs hover:shadow-xs active:scale-97 shrink-0 group/btn"
+                      className="btn-luxury-shimmer inline-flex items-center gap-1.5 py-2 px-3.5 sm:px-4 rounded-full bg-charcoal hover:bg-black text-white text-xs font-sans font-medium tracking-wide transition-all duration-300 shadow-2xs hover:shadow-xs active:scale-97 shrink-0 group/btn"
                       aria-label={`Enquire about ${service.name} on WhatsApp`}
                     >
                       <svg className="w-3.5 h-3.5 fill-[#25D366] text-[#25D366] shrink-0 group-hover/btn:scale-110 transition-transform" viewBox="0 0 24 24">
@@ -434,7 +434,7 @@ export default function ServicesShowcase() {
             <button
               type="button"
               onClick={() => toggleCategoryExpand(activeCategory)}
-              className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-white hover:bg-neutral-50 text-charcoal border border-gold/40 hover:border-gold shadow-md hover:shadow-lg transition-all duration-300 font-sans text-xs sm:text-sm font-medium tracking-wide active:scale-98 cursor-pointer group"
+              className="btn-luxury-shimmer inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-white hover:bg-neutral-50 text-charcoal border border-gold/40 hover:border-gold shadow-md hover:shadow-lg transition-all duration-300 font-sans text-xs sm:text-sm font-medium tracking-wide active:scale-98 cursor-pointer group"
             >
               <span>
                 {isExpanded ? 'Show Less Services' : `View More Services (+${remainingCount} More Treatments)`}

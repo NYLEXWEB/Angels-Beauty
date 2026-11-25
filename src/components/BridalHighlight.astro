@@ -38,7 +38,7 @@ import { BRIDAL_PACKAGES, getWhatsAppBookingUrl } from '../config/site';
         const formattedIndex = String(index + 1).padStart(2, '0');
 
         return (
-          <div class="bridal-package-card relative rounded-[28px] sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between group overflow-hidden bg-white border border-black/[0.08] hover:border-gold/50 shadow-[0_4px_20px_-4px_rgba(34,28,24,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.12)]">
+          <div class="bridal-package-card luxury-card-hover relative rounded-[28px] sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between group overflow-hidden bg-white border border-black/[0.08] hover:border-gold/50 shadow-[0_4px_20px_-4px_rgba(34,28,24,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.12)]">
             {/* Delicate Luxury Gold Hairline Accent */}
             <div class="card-gold-hairline absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent pointer-events-none" />
             
@@ -96,7 +96,7 @@ import { BRIDAL_PACKAGES, getWhatsAppBookingUrl } from '../config/site';
                 href={waUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full py-3.5 px-5 rounded-full text-xs font-sans font-medium tracking-wide flex items-center justify-center gap-2.5 transition-all duration-300 active:scale-97 shadow-xs hover:shadow-md bg-charcoal hover:bg-black text-white group/btn cursor-pointer"
+                class="btn-luxury-shimmer w-full py-3.5 px-5 rounded-full text-xs font-sans font-medium tracking-wide flex items-center justify-center gap-2.5 transition-all duration-300 active:scale-97 shadow-xs hover:shadow-md bg-charcoal hover:bg-black text-white group/btn cursor-pointer"
                 aria-label={`Enquire & Book ${pkg.name} on WhatsApp`}
               >
                 <svg class="w-4 h-4 fill-current text-[#25D366] group-hover/btn:scale-110 transition-transform shrink-0" viewBox="0 0 24 24">
@@ -115,7 +115,7 @@ import { BRIDAL_PACKAGES, getWhatsAppBookingUrl } from '../config/site';
     <div class="mt-12 sm:mt-16 text-center">
       <a 
         href="/bridal" 
-        class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-white hover:bg-neutral-50 text-charcoal border border-black/[0.08] hover:border-black/25 transition-all shadow-2xs hover:shadow-xs group"
+        class="btn-luxury-shimmer inline-flex items-center gap-2 px-6 py-3.5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-white hover:bg-neutral-50 text-charcoal border border-black/[0.08] hover:border-black/25 transition-all shadow-2xs hover:shadow-xs group"
       >
         <span>Discover Our Complete 3-Step Bridal Consultation Flow</span>
         <span class="text-charcoal/70 transition-transform duration-300 group-hover:translate-x-1">→</span>

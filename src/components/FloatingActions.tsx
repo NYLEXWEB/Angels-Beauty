@@ -23,7 +23,7 @@ export default function FloatingActions() {
           href={SITE_CONFIG.social.instagramUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-[#FD1D1D] via-[#E1306C] to-[#833AB4] text-white flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-110 active:scale-95 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2"
+          className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-tr from-[#FD1D1D] via-[#E1306C] to-[#833AB4] text-white flex items-center justify-center shadow-md transition-transform duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_8px_25px_rgba(225,48,108,0.45)] focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-offset-2"
           aria-label="Visit Angels Beauty Parlour Instagram Profile"
         >
           <svg className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
@@ -41,7 +41,7 @@ export default function FloatingActions() {
           href={SITE_CONFIG.contact.whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-108 active:scale-95 focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
+          className="relative w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_8px_25px_rgba(37,211,102,0.45)] focus:outline-none focus:ring-2 focus:ring-[#25D366] focus:ring-offset-2"
           aria-label="Chat directly with Angels Beauty Parlour on WhatsApp"
         >
           {/* Subtle pulse ring */}
