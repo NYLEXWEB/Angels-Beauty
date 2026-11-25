@@ -15,9 +15,15 @@ import { BRIDAL_PACKAGES, getWhatsAppBookingUrl } from '../config/site';
         </span>
       </div>
       
-      <h2 class="text-3xl sm:text-5xl md:text-6xl font-serif text-charcoal tracking-tight leading-[1.12]">
-        Ceremonial Packages <br class="hidden sm:inline" />
-        <span class="italic font-normal font-serif">Tailored to Your Vision</span>
+      <h2 class="packages-heading-reveal text-3xl sm:text-5xl md:text-6xl font-serif text-charcoal tracking-tight leading-[1.12]">
+        <span class="bridal-word inline-block opacity-40 text-charcoal/60 will-change-[opacity,transform,color]">Ceremonial</span>{" "}
+        <span class="bridal-word inline-block opacity-40 text-charcoal/60 will-change-[opacity,transform,color]">Packages</span> <br class="hidden sm:inline" />
+        <span class="italic font-normal font-serif">
+          <span class="bridal-word inline-block opacity-40 text-charcoal/60 will-change-[opacity,transform,color]">Tailored</span>{" "}
+          <span class="bridal-word inline-block opacity-40 text-charcoal/60 will-change-[opacity,transform,color]">to</span>{" "}
+          <span class="bridal-word inline-block opacity-40 text-charcoal/60 will-change-[opacity,transform,color]">Your</span>{" "}
+          <span class="bridal-word inline-block opacity-40 text-charcoal/60 will-change-[opacity,transform,color]">Vision</span>
+        </span>
       </h2>
 
       <p class="text-muted text-xs sm:text-sm md:text-base font-sans leading-relaxed max-w-2xl mx-auto">
@@ -32,7 +38,9 @@ import { BRIDAL_PACKAGES, getWhatsAppBookingUrl } from '../config/site';
         const formattedIndex = String(index + 1).padStart(2, '0');
 
         return (
-          <div class="relative rounded-[28px] sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between group overflow-hidden bg-white border border-black/[0.08] hover:border-black/25 shadow-[0_4px_20px_-4px_rgba(34,28,24,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(34,28,24,0.08)]">
+          <div class="bridal-package-card relative rounded-[28px] sm:rounded-3xl p-6 sm:p-8 transition-all duration-300 flex flex-col justify-between group overflow-hidden bg-white border border-black/[0.08] hover:border-gold/50 shadow-[0_4px_20px_-4px_rgba(34,28,24,0.04)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.12)]">
+            {/* Delicate Luxury Gold Hairline Accent */}
+            <div class="card-gold-hairline absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent pointer-events-none" />
             
             <div>
               <!-- Header Bar: Serial + Minimalist Badge -->

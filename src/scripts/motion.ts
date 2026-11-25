@@ -28,15 +28,15 @@ export function initMotion() {
 
   // Initialize Ultra-Smooth Luxury Momentum Scrolling Engine (Lenis 1.3+)
   const lenis = new Lenis({
-    lerp: 0.08, // Silky luxury linear interpolation for buttery momentum
+    lerp: 0.08,
     duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple-style exponential deceleration
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 0.9, // Buttery smooth mousewheel glide without jerky steps
+    wheelMultiplier: 0.9,
     touchMultiplier: 1.5,
-    syncTouch: true, // Seamless touch momentum on trackpads and mobile devices
+    syncTouch: true,
     syncTouchLerp: 0.08,
     touchInertiaExponent: 1.7,
     autoResize: true,
@@ -67,7 +67,7 @@ export function initMotion() {
     lenis.resize();
   });
 
-  // Smooth scroll for in-page anchor links (e.g. #services, #contact)
+  // Smooth scroll for in-page anchor links
   document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((anchor) => {
     anchor.addEventListener('click', (e) => {
       const href = anchor.getAttribute('href');
@@ -86,7 +86,6 @@ export function initMotion() {
     });
   });
 
-  // Refresh ScrollTrigger calculations after all fonts and layout settle
   if (document.fonts) {
     document.fonts.ready.then(() => {
       ScrollTrigger.refresh();
@@ -98,20 +97,124 @@ export function initMotion() {
 
   // 1. Hero page-load sequence
   const heroReveal = document.querySelector('.hero-text-reveal');
+  const playHeroReveal = () => {
+    if (heroReveal) {
+      gsap.fromTo(
+        heroReveal.children,
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          stagger: 0.1,
+          duration: 1.0,
+          ease: 'power3.out'
+        }
+      );
+    }
+  };
 
-  if (heroReveal) {
-    gsap.from(heroReveal.children, {
-      opacity: 0,
-      y: 35,
+  const preloaderEl = document.getElementById('angels-preloader');
+  if (preloaderEl) {
+    window.addEventListener('angels:ready', playHeroReveal, { once: true });
+  } else {
+    playHeroReveal();
+  }
+
+  // 2. About Section: Line-by-Line Scroll-Tied Heading Reveal
+  // As the user scrolls, each line becomes crisp, dark and visible in direct sync with scroll
+  const aboutHeadings = document.querySelectorAll('.about-scroll-heading');
+  aboutHeadings.forEach((heading) => {
+    const lines = heading.querySelectorAll('.about-heading-line');
+    if (lines.length > 0) {
+      gsap.to(lines, {
+        opacity: 1,
+        color: '#221C18',
+        stagger: 0.15,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heading,
+          start: 'top 85%',
+          end: 'bottom 55%',
+          scrub: 0.35,
+        },
+      });
+    }
+  });
+
+  // 3. Packages Heading Reveal Animation (Smooth Word-by-Word Automatic Reveal)
+  const bridalWords = document.querySelectorAll('.bridal-word');
+  const packagesTrigger = document.querySelector('.packages-heading-reveal');
+
+  if (bridalWords.length > 0 && packagesTrigger) {
+    gsap.to(bridalWords, {
+      opacity: 1,
+      y: 0,
+      color: '#1A1614',
       stagger: 0.1,
-      duration: 1.1,
-      ease: 'power3.out',
-      delay: 0.15
+      duration: 0.7,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: packagesTrigger,
+        start: 'top 85%',
+        toggleActions: 'play none none none',
+      },
     });
   }
 
-  // 2. Google Reviews Card Reveal Animation
-  // Skip mutating if inside an astro-island (React client component) to prevent hydration mismatches
+  // 4. Gallery Section: Multi-Directional Scroll Reveal
+  // Images enter gracefully from left, bottom, and right sides as the user scrolls
+  const galleryItems = document.querySelectorAll<HTMLElement>('.gallery-item');
+  if (galleryItems.length > 0) {
+    const isDesktop = window.innerWidth >= 768;
+
+    galleryItems.forEach((item, index) => {
+      let xOffset = 0;
+      let yOffset = 0;
+
+      if (isDesktop) {
+        const col = index % 3;
+        if (col === 0) {
+          xOffset = -55; // Left column slides in from left
+        } else if (col === 1) {
+          yOffset = 50;  // Center column rises from bottom
+        } else {
+          xOffset = 55;  // Right column slides in from right
+        }
+      } else {
+        const col = index % 2;
+        if (col === 0) {
+          xOffset = -40; // Left on mobile
+        } else {
+          xOffset = 40;  // Right on mobile
+        }
+      }
+
+      gsap.fromTo(
+        item,
+        {
+          opacity: 0.2,
+          x: xOffset,
+          y: yOffset,
+          scale: 0.94,
+        },
+        {
+          opacity: 1,
+          x: 0,
+          y: 0,
+          scale: 1,
+          duration: 0.9,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+    });
+  }
+
+  // 5. Google Reviews Card Reveal Animation
   const reviewsSection = document.querySelector('#reviews');
   if (reviewsSection && !reviewsSection.closest('astro-island')) {
     const reviewSummary = reviewsSection.querySelector('.rounded-3xl, .rounded-2xl');
@@ -148,99 +251,22 @@ export function initMotion() {
     }
   }
 
-  // 3. Image Reveal Variety Animations (GSAP ScrollTrigger)
-  // Skip images inside client-hydrated React components (astro-island) to prevent hydration mismatches
-  const allImages = document.querySelectorAll('img:not(.hero-text-reveal img):not(#site-header img):not(#gallery-lightbox img)');
-
-  allImages.forEach((img, index) => {
-    if (img.closest('astro-island')) return;
-
-    const parent = img.parentElement;
-    if (!parent) return;
-
-    const styleVariant = index % 3;
-
-    if (styleVariant === 0) {
-      // Style A: Smooth Curtain Clip-path reveal (Bottom to Top)
-      gsap.fromTo(
-        img,
-        {
-          clipPath: 'polygon(0% 100%, 100% 100%, 100% 100%, 0% 100%)',
-          scale: 1.08,
-          opacity: 0.8
-        },
-        {
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          scale: 1,
-          opacity: 1,
-          duration: 1.2,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: parent,
-            start: 'top 88%',
-            toggleActions: 'play none none none'
-          }
-        }
-      );
-    } else if (styleVariant === 1) {
-      // Style B: Scale-In & Radiant Fade Reveal
-      gsap.fromTo(
-        img,
-        {
-          scale: 1.12,
-          opacity: 0
-        },
-        {
-          scale: 1,
-          opacity: 1,
-          duration: 1.1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: parent,
-            start: 'top 85%',
-            toggleActions: 'play none none none'
-          }
-        }
-      );
-    } else {
-      // Style C: Side Curtain Reveal (Left to Right)
-      gsap.fromTo(
-        img,
-        {
-          clipPath: 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)',
-          scale: 1.06,
-          opacity: 0.85
-        },
-        {
-          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)',
-          scale: 1,
-          opacity: 1,
-          duration: 1.15,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: parent,
-            start: 'top 86%',
-            toggleActions: 'play none none none'
-          }
-        }
-      );
-    }
-  });
-
-  // 4. Section Titles Staggered Reveal
-  // Skip sections inside client-hydrated React components (astro-island) to prevent hydration mismatches
+  // 6. Section Titles Staggered Reveal
   if (window.innerWidth >= 640) {
     gsap.utils.toArray<HTMLElement>('section:not(:first-of-type)').forEach((section) => {
-      if (section.closest('astro-island')) return;
+      if (
+        section.closest('astro-island') ||
+        section.querySelector('.packages-heading-reveal') ||
+        section.querySelector('.about-scroll-heading')
+      ) return;
 
-      const heading = section.querySelector('h2');
       const overline = section.querySelector('span[class*="tracking-"]');
       const desc = section.querySelector('p');
 
-      if (heading) {
-        gsap.from([overline, heading, desc].filter(Boolean), {
+      if (overline || desc) {
+        gsap.from([overline, desc].filter(Boolean), {
           opacity: 0,
-          y: 30,
+          y: 20,
           stagger: 0.1,
           duration: 0.9,
           ease: 'power2.out',

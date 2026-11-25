@@ -264,16 +264,18 @@ export default function ServicesShowcase() {
 
         {/* 
           SERVICES SHOWCASE CARDS:
-          - Mobile: Physical Luxury Stacking Cards (cards smoothly stack on top of each other as you scroll)
+          - Mobile: 3D Layered Stacking Cards (cards smoothly stack in tiered 3D layers as you scroll)
           - Desktop: Elegant 2-column or 3-column editorial grid
         */}
         <div className="relative flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-7 pb-20 sm:pb-28">
           {displayedServices.map((service, index) => {
             const formattedIndex = String(index + 1).padStart(2, '0');
             const waUrl = getWhatsAppBookingUrl({ serviceName: service.name });
-            // Clean sticky stack on mobile: 76px below mobile navbar
-            const mobileTopOffset = 76;
-            const cardZIndex = 10 + index * 2;
+
+            // 3D Stacking Cards: Stepped top offset so cards form a tiered layered physical deck
+            const stackLevel = index % 5;
+            const mobileTopOffset = 75 + stackLevel * 16;
+            const cardZIndex = 20 + index;
 
             return (
               <div
@@ -282,8 +284,11 @@ export default function ServicesShowcase() {
                   top: `${mobileTopOffset}px`,
                   zIndex: cardZIndex
                 }}
-                className="mobile-stack-card sticky md:static md:top-auto mb-20 sm:mb-28 md:mb-0 last:mb-0 w-full group relative rounded-3xl bg-white border border-black/[0.08] shadow-[0_-6px_24px_rgba(0,0,0,0.05),0_18px_40px_-8px_rgba(34,28,24,0.16)] md:shadow-[0_4px_20px_-4px_rgba(34,28,24,0.06)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.14)] transition-all duration-300 overflow-hidden flex flex-col justify-between md:!z-auto"
+                className="mobile-stack-card sticky md:static md:top-auto mb-20 sm:mb-28 md:mb-0 last:mb-0 w-full group relative rounded-[28px] sm:rounded-3xl bg-white border border-black/[0.08] shadow-[0_-10px_28px_-4px_rgba(0,0,0,0.12),0_20px_45px_-8px_rgba(34,28,24,0.18)] md:shadow-[0_4px_20px_-4px_rgba(34,28,24,0.06)] hover:shadow-[0_16px_36px_-8px_rgba(158,123,53,0.18)] transition-all duration-300 overflow-hidden flex flex-col justify-between md:!z-auto"
               >
+                {/* 3D Luxury Gold Top Rim Highlight on Mobile */}
+                <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-gold/50 to-transparent pointer-events-none md:hidden z-20" />
+
                 {/* 1. Cinematic Clean Photo Frame (Zero text overlays on the image) */}
                 <div className="relative aspect-[16/10] overflow-hidden bg-surface">
                   <img

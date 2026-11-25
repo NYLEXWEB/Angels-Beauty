@@ -22,7 +22,7 @@ export const GOOGLE_RATING_SUMMARY = {
   averageRating: 4.9,
   totalReviews: 239,
   googleProfileUrl: "https://maps.app.goo.gl/JZCY4X9pEQJ6NKky9",
-  writeReviewUrl: "https://maps.app.goo.gl/JZCY4X9pEQJ6NKky9"
+  writeReviewUrl: "https://search.google.com/local/writereview?placeid=ChIJV4lQNAnfpTsRIlp0oeix6vg"
 };
 
 export const SAMPLE_REVIEWS: GoogleReview[] = [

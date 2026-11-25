@@ -35,7 +35,8 @@
     letter-spacing: -0.015em;
     max-width: 100vw;
     width: 100%;
-    scroll-behavior: auto !important; /* Prevents native browser jumpiness from fighting Lenis physics */
+    scroll-behavior: auto !important;
+    /* Prevents native browser jumpiness from fighting Lenis physics */
   }
 
   /* GPU Hardware Acceleration for ultra-smooth 60/120fps scrolling */
@@ -150,7 +151,7 @@
   border-color: #C9A66B;
 }
 
-/* Mobile Stacking Cards Class */
+/* Mobile 3D Stacking Cards */
 @media (max-width: 767px) {
   .mobile-stack-card {
     position: -webkit-sticky !important;
@@ -158,7 +159,6 @@
     will-change: transform;
     backface-visibility: hidden;
     transform: translateZ(0);
-    box-shadow: 0 -6px 24px -2px rgba(0, 0, 0, 0.08), 0 16px 36px -6px rgba(34, 28, 24, 0.18) !important;
   }
 }
 

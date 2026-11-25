@@ -58,7 +58,7 @@ export const SITE_CONFIG = {
   maps: {
     embedUrl: "https://maps.google.com/maps?q=Angels+Beauty+Parlour+and+Bridal+Studio,+PP+Building,+Near+St+Joseph's+Hospital,+Mananthavady,+Wayanad,+Kerala+670645&t=&z=16&ie=UTF8&iwloc=B&output=embed",
     directionsUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9",
-    reviewUrl: "https://maps.app.goo.gl/Eo8g6Q6LwAWUtfvW9"
+    reviewUrl: "https://search.google.com/local/writereview?placeid=ChIJV4lQNAnfpTsRIlp0oeix6vg"
   }
 };
 export const SERVICES: Record<string, ServiceItem[]> = {

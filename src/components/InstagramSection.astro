@@ -100,38 +100,39 @@ const REELS = [
     </div>
 
     <!-- Instagram Video Reel Frames:
-         On Mobile: Smooth Stacking Cards (each video fixes at top, and next video glides over and fixes on top)
+         On Mobile: Pure 3D Stacking Cards (framed luxury phone cards stack with tiered offset and deep shadows)
          On Tablet: 2-column clean responsive grid
          On Desktop: Sleek 3-column side-by-side grid (3x3 = 9 cards)
     -->
     <div class="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto relative pb-12 sm:pb-16">
       {REELS.map((reel, index) => {
-        const mobileTop = 76;
-        const zIndex = 10 + index * 2;
+        // Continuous 3D Stacking Cards: Every reel smoothly stacks on top of the previous one in one single continuous deck
+        const mobileTop = 75 + index * 14;
+        const zIndex = 20 + index;
         return (
           <div 
-            class="reel-wrapper mobile-stack-card sticky md:static md:top-auto mb-28 sm:mb-40 md:mb-0 last:mb-0 w-full transition-transform duration-300 md:!z-auto"
+            class="reel-wrapper mobile-stack-card sticky md:static md:top-auto mb-24 sm:mb-36 md:mb-0 last:mb-0 w-full transition-all duration-300 md:!z-auto"
             style={`top: ${mobileTop}px; z-index: ${zIndex};`}
           >
-            <div class="reel-container relative aspect-[9/16] w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[360px] md:max-w-none mx-auto rounded-[26px] sm:rounded-[32px] overflow-hidden bg-black shadow-[0_16px_40px_-10px_rgba(0,0,0,0.7)] border-[4px] sm:border-[5px] border-charcoal/90 select-none group transition-all duration-300 hover:shadow-gold/20">
+            <div class="reel-container relative aspect-[9/16] w-full max-w-[295px] xs:max-w-[320px] sm:max-w-[345px] md:max-w-none mx-auto rounded-[28px] sm:rounded-[34px] overflow-hidden bg-black shadow-[0_-12px_32px_-4px_rgba(0,0,0,0.65),0_25px_50px_-10px_rgba(0,0,0,0.85)] border-[2.5px] sm:border-[4px] border-gold-border/60 hover:border-gold/80 select-none group transition-all duration-300">
             
-            <!-- Video Element (Played by IntersectionObserver when in view) -->
+            <!-- Video Element (Paused by default, plays only when user clicks play) -->
             <video 
               class="reel-video absolute inset-0 w-full h-full object-cover cursor-pointer"
               src={reel.videoSrc}
               loop
               muted
               playsinline
-              preload="metadata"
+              preload="auto"
             ></video>
 
-            <!-- Play/Pause Indicator (Flashes briefly on click) -->
-            <div class="reel-play-indicator absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-200 z-30">
-              <div class="w-16 h-16 rounded-full bg-black/60 backdrop-blur-md flex items-center justify-center text-white shadow-xl">
-                <svg class="play-icon w-8 h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
+            <!-- Central 3D Luxury Play Button: Click to play only (Zero scroll lag) -->
+            <div class="reel-center-play absolute inset-0 flex items-center justify-center cursor-pointer z-30 transition-all duration-300">
+              <div class="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-black/70 hover:bg-black/90 backdrop-blur-md border border-gold/60 flex items-center justify-center text-gold shadow-[0_8px_25px_rgba(0,0,0,0.7)] transition-transform duration-300 group-hover:scale-105 active:scale-95">
+                <svg class="play-svg w-8 h-8 fill-current translate-x-0.5" viewBox="0 0 24 24">
                   <path d="M8 5v14l11-7z"/>
                 </svg>
-                <svg class="pause-icon w-8 h-8 fill-current hidden" viewBox="0 0 24 24">
+                <svg class="pause-svg w-8 h-8 fill-current hidden" viewBox="0 0 24 24">
                   <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
                 </svg>
               </div>
@@ -268,17 +269,23 @@ const REELS = [
       aria-label="Fullscreen Video Player"
     >
       <!-- Top Navigation Bar: Minimalist Studio Badge -->
-      <div class="w-full max-w-5xl mx-auto flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 mb-2 pointer-events-auto shrink-0 z-30">
+      <div class="w-full max-w-5xl mx-auto flex items-center justify-between px-3 sm:px-6 py-2.5 sm:py-3.5 mb-2 pointer-events-auto shrink-0 z-30">
         <!-- Studio Label -->
         <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-xs font-sans tracking-wide border border-white/15">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span id="theater-audio-label" class="font-medium text-white/90 truncate max-w-[240px] sm:max-w-md">Angels Beauty & Bridal Studio</span>
+          <span id="theater-audio-label" class="font-medium text-white/90 truncate max-w-[200px] sm:max-w-md">Angels Beauty & Bridal Studio</span>
         </div>
       </div>
 
       <!-- Theater Video Container (Mathematically Centered, Vertical Pillar Frame) -->
       <div class="relative w-auto h-[78vh] sm:h-[82vh] max-h-[740px] aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/20 bg-black flex items-center justify-center pointer-events-auto group">
         
+        <!-- Luxury Buffering Spinner -->
+        <div id="theater-video-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-xs pointer-events-none transition-opacity duration-300 z-30">
+          <div class="w-10 h-10 border-2 border-gold/30 border-t-gold rounded-full animate-spin mb-2"></div>
+          <span class="text-[11px] font-sans tracking-widest uppercase text-white/80">Loading Reel...</span>
+        </div>
+
         <!-- Video Element -->
         <video 
           id="theater-video" 
@@ -384,7 +391,6 @@ const REELS = [
   const theaterModal = document.getElementById('video-theater-modal');
   const theaterVideo = document.getElementById('theater-video') as HTMLVideoElement;
   const theaterAudioLabel = document.getElementById('theater-audio-label');
-  const theaterCloseBtn = document.getElementById('theater-close-btn');
   const theaterPlayIndicator = document.getElementById('theater-play-indicator') as HTMLElement;
   const theaterPlayIcon = document.getElementById('theater-play-icon');
   const theaterPauseIcon = document.getElementById('theater-pause-icon');
@@ -439,6 +445,8 @@ const REELS = [
   const headerContainer = document.getElementById('header-container');
   const floatingActions = document.getElementById('floating-actions');
 
+  const theaterLoader = document.getElementById('theater-video-loader');
+
   function openTheaterModal(videoSrc: string, audioTitle: string, startTime = 0) {
     if (!theaterModal || !theaterVideo) return;
 
@@ -451,12 +459,31 @@ const REELS = [
     if (headerContainer) headerContainer.style.setProperty('display', 'none', 'important');
     if (floatingActions) floatingActions.style.setProperty('display', 'none', 'important');
 
-    theaterVideo.src = videoSrc;
-    if (startTime > 0) {
-      try {
-        theaterVideo.currentTime = startTime;
-      } catch (err) {}
+    if (theaterLoader) {
+      theaterLoader.classList.remove('opacity-0', 'pointer-events-none');
+      theaterLoader.classList.add('opacity-100');
     }
+
+    theaterVideo.src = videoSrc;
+    theaterVideo.load();
+
+    const onMeta = () => {
+      theaterVideo.removeEventListener('loadedmetadata', onMeta);
+      if (startTime > 0 && Number.isFinite(startTime) && startTime < theaterVideo.duration) {
+        theaterVideo.currentTime = startTime;
+      }
+    };
+    theaterVideo.addEventListener('loadedmetadata', onMeta, { once: true });
+
+    const onCanPlay = () => {
+      if (theaterLoader) {
+        theaterLoader.classList.remove('opacity-100');
+        theaterLoader.classList.add('opacity-0', 'pointer-events-none');
+      }
+    };
+    theaterVideo.addEventListener('canplay', onCanPlay, { once: true });
+    theaterVideo.addEventListener('playing', onCanPlay);
+
     if (theaterAudioLabel) theaterAudioLabel.textContent = audioTitle || 'Angels Beauty & Bridal Studio';
     
     theaterModal.classList.remove('hidden');
@@ -466,10 +493,22 @@ const REELS = [
     });
 
     theaterVideo.muted = false;
-    theaterVideo.play().catch(() => {});
-    theaterSoundActiveIcon?.classList.remove('hidden');
-    theaterSoundMutedIcon?.classList.add('hidden');
-    if (theaterSoundLabel) theaterSoundLabel.textContent = 'Sound On';
+    const playPromise = theaterVideo.play();
+    if (playPromise !== undefined) {
+      playPromise.then(() => {
+        theaterSoundActiveIcon?.classList.remove('hidden');
+        theaterSoundMutedIcon?.classList.add('hidden');
+        if (theaterSoundLabel) theaterSoundLabel.textContent = 'Sound On';
+      }).catch(() => {
+        // In case browser autoplay policy blocks unmuted audio, play muted and let user tap for sound
+        theaterVideo.muted = true;
+        theaterSoundActiveIcon?.classList.add('hidden');
+        theaterSoundMutedIcon?.classList.remove('hidden');
+        if (theaterSoundLabel) theaterSoundLabel.textContent = 'Tap for Sound';
+        theaterVideo.play().catch(() => {});
+      });
+    }
+
     document.body.classList.add('overflow-hidden');
   }
 
@@ -491,7 +530,6 @@ const REELS = [
     }, 300);
   }
 
-  theaterCloseBtn?.addEventListener('click', closeTheaterModal);
   const cornerCloseBtn = document.getElementById('theater-video-corner-close');
   cornerCloseBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
@@ -526,40 +564,57 @@ const REELS = [
     const saveIcon = container.querySelector('.save-icon');
     const saveText = container.querySelector('.save-text');
 
+    const centerPlay = container.querySelector('.reel-center-play') as HTMLElement;
+    const playSvg = container.querySelector('.play-svg');
+    const pauseSvg = container.querySelector('.pause-svg');
+
     if (!video) return;
 
-    // 1. Play / Pause by tapping video with 2.5–3 Second Auto-Hide
-    let playTimer: any = null;
+    // 1. Play / Pause ONLY on User Click (Zero scroll lag, single video playing at a time)
+    let hidePlayTimer: any = null;
 
     function handlePlayPauseToggle(e?: Event) {
       if (e) e.stopPropagation();
 
       if (video.paused) {
-        video.play();
-        playIcon?.classList.remove('hidden');
-        pauseIcon?.classList.add('hidden');
+        // Pause all OTHER videos first so only ONE video plays at a time
+        reelContainers.forEach(other => {
+          if (other !== container) {
+            const otherVid = other.querySelector('.reel-video') as HTMLVideoElement;
+            if (otherVid && !otherVid.paused) {
+              otherVid.pause();
+              other.querySelector('.play-svg')?.classList.remove('hidden');
+              other.querySelector('.pause-svg')?.classList.add('hidden');
+              other.querySelector('.reel-center-play')?.classList.remove('opacity-0', 'pointer-events-none');
+            }
+          }
+        });
+
+        video.play().then(() => {
+          playSvg?.classList.add('hidden');
+          pauseSvg?.classList.remove('hidden');
+          // Hide play button while playing after brief moment
+          if (hidePlayTimer) clearTimeout(hidePlayTimer);
+          hidePlayTimer = setTimeout(() => {
+            if (!video.paused && centerPlay) {
+              centerPlay.classList.add('opacity-0', 'pointer-events-none');
+            }
+          }, 1200);
+        }).catch(() => {});
+
       } else {
         video.pause();
-        playIcon?.classList.add('hidden');
-        pauseIcon?.classList.remove('hidden');
-      }
-
-      // Show the button indicator
-      if (playIndicator) {
-        playIndicator.classList.remove('opacity-0', 'pointer-events-none');
-        playIndicator.classList.add('opacity-100');
-
-        // Automatically hide after 2.5 seconds (User requested max 3 seconds auto-hide)
-        if (playTimer) clearTimeout(playTimer);
-        playTimer = setTimeout(() => {
-          playIndicator.classList.remove('opacity-100');
-          playIndicator.classList.add('opacity-0', 'pointer-events-none');
-        }, 2500);
+        playSvg?.classList.remove('hidden');
+        pauseSvg?.classList.add('hidden');
+        if (hidePlayTimer) clearTimeout(hidePlayTimer);
+        if (centerPlay) {
+          centerPlay.classList.remove('opacity-0', 'pointer-events-none');
+        }
       }
     }
 
+    centerPlay?.addEventListener('click', handlePlayPauseToggle);
     video.addEventListener('click', handlePlayPauseToggle);
-    playIndicator?.addEventListener('click', handlePlayPauseToggle);
 
     // 2. Expand / Fullscreen Button for Desktop Theater Mode
     expandBtn?.addEventListener('click', (e) => {
@@ -652,21 +707,21 @@ const REELS = [
     });
   });
 
-  // 7. Smooth autoplay on mobile scroll when a reel is active in view
+  // 7. Auto-pause videos when scrolled out of viewport (Zero scroll lag, NO autoplay)
   if ('IntersectionObserver' in window) {
-    const videoObserver = new IntersectionObserver((entries) => {
+    const videoPauseObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         const video = entry.target.querySelector('.reel-video') as HTMLVideoElement;
-        if (video) {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {});
-          } else {
-            video.pause();
-          }
+        if (video && !entry.isIntersecting && !video.paused) {
+          video.pause();
+          const centerPlay = entry.target.querySelector('.reel-center-play');
+          centerPlay?.classList.remove('opacity-0', 'pointer-events-none');
+          entry.target.querySelector('.play-svg')?.classList.remove('hidden');
+          entry.target.querySelector('.pause-svg')?.classList.add('hidden');
         }
       });
-    }, { threshold: 0.5 });
+    }, { threshold: 0.1 });
 
-    reelContainers.forEach(container => videoObserver.observe(container));
+    reelContainers.forEach(container => videoPauseObserver.observe(container));
   }
 </script>

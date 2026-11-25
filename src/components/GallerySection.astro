@@ -164,7 +164,7 @@ const GALLERY_PHOTOS = [
             src={photo.src} 
             alt={photo.alt}
             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            loading="lazy"
+            loading="eager"
             decoding="async"
             width="600"
             height="800"
@@ -175,35 +175,42 @@ const GALLERY_PHOTOS = [
 
   </div>
 
-  <!-- Minimalist Lightbox Modal (Full-Screen Pure Image Viewer - Zero Overlays on Photo) -->
+  <!-- Fullscreen Bridal Lightbox Modal with Dedicated Top Close Bar -->
   <div 
     id="gallery-lightbox" 
-    class="fixed inset-0 z-50 bg-black/92 backdrop-blur-xl flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300"
+    class="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex items-center justify-center p-3 sm:p-6 md:p-8 hidden opacity-0 transition-opacity duration-300 select-none"
     role="dialog"
     aria-modal="true"
     aria-label="Bridal Gallery Lightbox"
   >
-    <!-- Top Bar: Counter & Close Button -->
-    <div class="absolute top-4 sm:top-6 inset-x-4 sm:inset-x-8 flex items-center justify-between z-20 pointer-events-none">
-      <div class="px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white/90 text-xs font-sans tracking-widest uppercase border border-white/10 pointer-events-auto">
-        <span id="lightbox-counter">1 / 15</span>
+    <!-- Dedicated Top Close Bar (Prominent and impossible to miss) -->
+    <div class="fixed top-0 inset-x-0 z-30 bg-black/85 backdrop-blur-xl border-b border-white/15 px-4 sm:px-8 py-3.5 flex items-center justify-between pointer-events-auto">
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <span class="w-2 h-2 rounded-full bg-gold-deep animate-pulse"></span>
+        <span class="text-xs sm:text-sm font-sans tracking-wide text-white/90 font-medium">Angels Bridal Gallery</span>
+        <span class="text-white/30 hidden xs:inline">·</span>
+        <div class="px-2.5 py-0.5 rounded-full bg-white/10 text-gold-light text-xs font-sans tracking-wider border border-white/10">
+          <span id="lightbox-counter">1 / 15</span>
+        </div>
       </div>
       
+      <!-- Prominent Close Bar Button -->
       <button 
         id="lightbox-close" 
-        class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/10 pointer-events-auto"
+        class="inline-flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 rounded-full bg-white/15 hover:bg-white/25 active:bg-white/35 text-white border border-white/25 text-xs font-sans font-semibold uppercase tracking-wider transition-all active:scale-95 cursor-pointer shadow-lg"
         aria-label="Close Lightbox"
       >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
+        <span>Close</span>
       </button>
     </div>
 
     <!-- Navigation Arrow: Previous -->
     <button 
       id="lightbox-prev"
-      class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all cursor-pointer border border-white/10 z-20 shadow-lg active:scale-95"
+      class="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all cursor-pointer border border-white/15 z-20 shadow-2xl active:scale-95"
       aria-label="Previous Image"
     >
       <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,7 +221,7 @@ const GALLERY_PHOTOS = [
     <!-- Navigation Arrow: Next -->
     <button 
       id="lightbox-next"
-      class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-13 sm:h-13 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all cursor-pointer border border-white/10 z-20 shadow-lg active:scale-95"
+      class="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-white/10 hover:bg-white/25 text-white flex items-center justify-center transition-all cursor-pointer border border-white/15 z-20 shadow-2xl active:scale-95"
       aria-label="Next Image"
     >
       <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -223,13 +230,23 @@ const GALLERY_PHOTOS = [
     </button>
 
     <!-- Center Image Container (Pure Image, No Text) -->
-    <div class="relative max-w-4xl max-h-[85dvh] flex items-center justify-center z-10 pointer-events-none select-none">
+    <div class="relative max-w-4xl max-h-[82dvh] flex items-center justify-center z-10 pointer-events-none select-none pt-12">
       <img 
         id="lightbox-img" 
         src="" 
         alt="Enlarged bridal photo" 
-        class="max-w-[90vw] max-h-[80dvh] object-contain rounded-2xl shadow-2xl border border-white/10 pointer-events-auto transition-transform duration-300"
+        class="max-w-[92vw] max-h-[76dvh] object-contain rounded-2xl shadow-2xl border border-white/15 pointer-events-auto transition-transform duration-300"
       />
+    </div>
+
+    <!-- Mobile Bottom Quick Close Pill -->
+    <div class="fixed bottom-4 inset-x-0 flex justify-center z-30 sm:hidden pointer-events-auto">
+      <button 
+        id="lightbox-bottom-close"
+        class="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-charcoal/90 text-white border border-white/20 text-xs font-sans tracking-wide uppercase shadow-xl active:scale-95"
+      >
+        <span>✕ Close Preview</span>
+      </button>
     </div>
   </div>
 </section>
@@ -296,6 +313,12 @@ const GALLERY_PHOTOS = [
 
   function openLightbox(item: Element) {
     if (!lightbox) return;
+
+    // Teleport lightbox directly to body to avoid any parent transform or overflow restrictions
+    if (lightbox.parentElement !== document.body) {
+      document.body.appendChild(lightbox);
+    }
+
     const visible = getVisibleItems();
     currentVisibleIndex = visible.indexOf(item);
     if (currentVisibleIndex === -1) currentVisibleIndex = 0;
@@ -303,10 +326,10 @@ const GALLERY_PHOTOS = [
     updateLightboxImage();
 
     lightbox.classList.remove('hidden');
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       lightbox.classList.remove('opacity-0');
       lightbox.classList.add('opacity-100');
-    }, 10);
+    });
     document.body.classList.add('overflow-hidden');
   }
 
@@ -319,6 +342,9 @@ const GALLERY_PHOTOS = [
       document.body.classList.remove('overflow-hidden');
     }, 300);
   }
+
+  const bottomCloseBtn = document.getElementById('lightbox-bottom-close');
+  bottomCloseBtn?.addEventListener('click', closeLightbox);
 
   function showNext() {
     currentVisibleIndex++;
