@@ -11,6 +11,7 @@ export default function FloatingActions() {
 
   return (
     <aside 
+      id="floating-actions"
       aria-label="Quick Connect Options"
       className={`fixed bottom-4 right-4 sm:bottom-8 sm:right-8 z-40 flex flex-col items-center gap-2.5 sm:gap-3 transition-all duration-500 ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8 pointer-events-none'

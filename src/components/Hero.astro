@@ -10,6 +10,10 @@ import { SITE_CONFIG } from '../config/site';
       alt="Angels Beauty Parlour & Bridal Studio Interior" 
       class="w-full h-full object-cover object-[70%_center] sm:object-center transform scale-100 transition-transform duration-1000"
       loading="eager"
+      fetchpriority="high"
+      decoding="async"
+      width="1920"
+      height="1080"
     />
     <!-- Subtle Gradient Overlay: Clean ivory fade on left for text readability, keeping the luxury illuminated vanity and salon interior visible on right -->
     <div class="absolute inset-0 bg-gradient-to-r from-[#FDFBF7]/96 via-[#FDFBF7]/85 to-[#FDFBF7]/20 sm:to-transparent"></div>
@@ -17,10 +21,10 @@ import { SITE_CONFIG } from '../config/site';
   </div>
 
   <!-- Hero Content (Full Responsive Desktop & Mobile Full-Fit Screen) -->
-  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-between pt-4 sm:pt-16 pb-2 sm:pb-6">
+  <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-between pt-4 sm:pt-16 pb-2 sm:pb-6 text-left">
     
-    <!-- Main Center Hero Text & CTAs -->
-    <div class="max-w-2xl sm:max-w-3xl space-y-4 sm:space-y-6 pt-2 sm:pt-0 my-auto hero-text-reveal">
+    <!-- Main Center Hero Text & CTAs (Strictly Left-Aligned & Editorial Structure) -->
+    <div class="max-w-2xl sm:max-w-3xl space-y-4 sm:space-y-6 pt-1 sm:pt-0 my-auto text-left hero-text-reveal">
       
       <!-- Location & Status Badge -->
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-black/[0.08] bg-white/90 backdrop-blur-md text-charcoal shadow-2xs max-w-fit">
@@ -30,27 +34,29 @@ import { SITE_CONFIG } from '../config/site';
         </span>
       </div>
 
-      <!-- Headline with 100% Apple SF Pro Font Style (Slim / Light Weight) -->
-      <h1 class="text-[2rem] xs:text-4xl sm:text-5xl lg:text-[4rem] font-light text-charcoal leading-[1.08] tracking-[-0.035em]">
-        Where Timeless Bridal Grace Meets Modern Artistry.
+      <!-- Headline with Structured Left-Aligned Typography -->
+      <h1 class="text-3xl xs:text-4xl sm:text-5xl lg:text-[4rem] font-light text-charcoal leading-[1.12] sm:leading-[1.08] tracking-[-0.035em] text-left">
+        Where Timeless <br class="block" />
+        Bridal Grace <br class="block" />
+        <span class="italic font-normal text-gold-deep font-serif">Meets Modern Artistry.</span>
       </h1>
 
       <!-- One Line Support Text -->
-      <p class="text-xs sm:text-base lg:text-lg text-muted max-w-xl font-sans leading-relaxed tracking-tight">
+      <p class="text-xs sm:text-base lg:text-lg text-muted max-w-md sm:max-w-xl font-sans leading-relaxed tracking-tight text-left">
         Wayanad's signature studio for bespoke HD bridal makeup, Korean glass skin facials, advanced hair transformations, and tranquil salon pampering.
       </p>
 
-      <!-- CTA Action Buttons (Full-Fit 2-Col Grid on Mobile, Side-by-Side Pill on Desktop) -->
-      <div class="grid grid-cols-2 gap-2.5 sm:flex sm:flex-row sm:items-center sm:gap-3.5 pt-2 sm:pt-3 max-w-md">
+      <!-- CTA Action Buttons: Symmetrically Left-Aligned -->
+      <div class="flex flex-row items-center gap-2.5 sm:gap-3.5 pt-1.5 sm:pt-3 text-left">
         <a 
           href="/booking" 
-          class="inline-flex items-center justify-center py-3 px-3 sm:px-7 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide uppercase bg-gold hover:bg-gold-hover text-charcoal shadow-xs transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-97 text-center shrink-0"
+          class="inline-flex items-center justify-center py-2.5 sm:py-3 px-5 sm:px-7 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide uppercase bg-gold hover:bg-gold-hover text-charcoal shadow-xs transition-all duration-200 hover:shadow-md hover:-translate-y-0.5 active:scale-97 text-center shrink-0"
         >
           Book Appointment
         </a>
         <a 
           href="/bridal" 
-          class="inline-flex items-center justify-center py-3 px-3 sm:px-7 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide uppercase border border-gold-border-strong text-charcoal bg-white/85 backdrop-blur-md hover:bg-white shadow-2xs transition-all duration-200 active:scale-97 text-center shrink-0"
+          class="inline-flex items-center justify-center py-2.5 sm:py-3 px-5 sm:px-7 rounded-full text-[11px] sm:text-xs font-semibold tracking-wide uppercase border border-gold-border-strong text-charcoal bg-white/85 backdrop-blur-md hover:bg-white shadow-2xs transition-all duration-200 active:scale-97 text-center shrink-0"
         >
           Bridal Packages
         </a>
@@ -58,27 +64,27 @@ import { SITE_CONFIG } from '../config/site';
 
     </div>
 
-    <!-- Quick Assurance Badges & Mobile Scroll Cue (Anchored Gracefully at Screen Bottom) -->
-    <div class="mt-auto pt-5 sm:pt-7 border-t border-black/[0.06] w-full max-w-2xl">
+    <!-- Quick Assurance Badges & Mobile Scroll Cue (Structured Architectural Left Grid) -->
+    <div class="mt-auto pt-4 sm:pt-7 border-t border-black/[0.06] w-full max-w-2xl text-left">
       <div class="grid grid-cols-3 gap-2 sm:gap-4 text-xs font-sans text-muted">
-        <div class="space-y-0.5">
+        <div class="border-l border-gold/40 pl-2.5 sm:pl-3 space-y-0.5">
           <span class="block text-charcoal font-semibold text-xs sm:text-sm tracking-tight">Bridal Suite</span>
-          <span class="text-[10.5px] sm:text-[11px] text-muted tracking-tight">Private lounge</span>
+          <span class="text-[10px] sm:text-[11px] text-muted tracking-tight">Private lounge</span>
         </div>
-        <div class="space-y-0.5">
+        <div class="border-l border-gold/40 pl-2.5 sm:pl-3 space-y-0.5">
           <span class="block text-charcoal font-semibold text-xs sm:text-sm tracking-tight">Glass Skin</span>
-          <span class="text-[10.5px] sm:text-[11px] text-muted tracking-tight">Aesthetic care</span>
+          <span class="text-[10px] sm:text-[11px] text-muted tracking-tight">Aesthetic care</span>
         </div>
-        <div class="space-y-0.5">
+        <div class="border-l border-gold/40 pl-2.5 sm:pl-3 space-y-0.5">
           <span class="block text-charcoal font-semibold text-xs sm:text-sm tracking-tight">Open 7 Days</span>
-          <span class="text-[10.5px] sm:text-[11px] text-muted tracking-tight">9 AM to 8 PM</span>
+          <span class="text-[10px] sm:text-[11px] text-muted tracking-tight">9 AM to 8 PM</span>
         </div>
       </div>
 
       <!-- Subtle Mobile & Desktop Scroll Indicator -->
       <a 
         href="/#services" 
-        class="flex items-center justify-center gap-1.5 pt-3 pb-1 text-muted/60 hover:text-gold-deep transition-colors text-[10px] font-sans uppercase tracking-[0.2em]"
+        class="flex items-center justify-start gap-1.5 pt-3 pb-1 text-muted/60 hover:text-gold-deep transition-colors text-[10px] font-sans uppercase tracking-[0.2em]"
         aria-label="Scroll down to explore services"
       >
         <span>Explore Studio</span>

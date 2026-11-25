@@ -3,6 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ServicesShowcase from '../components/ServicesShowcase';
+import HairBeforeAfter from '../components/HairBeforeAfter';
+import NailPortfolio from '../components/NailPortfolio';
 import BookingForm from '../components/BookingForm';
 import FloatingActions from '../components/FloatingActions';
 import { SITE_CONFIG } from '../config/site';
@@ -14,7 +16,7 @@ import { SITE_CONFIG } from '../config/site';
 >
   <Header />
 
-  <main class="min-h-screen bg-canvas overflow-x-clip pt-24 sm:pt-28">
+  <main class="min-h-screen bg-canvas pt-24 sm:pt-28">
     
     <!-- Page Hero Banner (Apple SF Pro Style - Minimalist & Slim) -->
     <section class="py-12 sm:py-16 lg:py-20 bg-surface border-b border-gold-border/30">
@@ -69,6 +71,12 @@ import { SITE_CONFIG } from '../config/site';
 
     <!-- Services Interactive Showcase Component -->
     <ServicesShowcase client:load />
+
+    <!-- Hair Treatments Before & After Interactive Showcase -->
+    <HairBeforeAfter client:visible />
+
+    <!-- Dedicated Nail Studio Portfolio -->
+    <NailPortfolio client:visible />
 
     <!-- Booking Form Section -->
     <BookingForm client:visible />

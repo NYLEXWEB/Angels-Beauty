@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SITE_CONFIG, SERVICES, BRIDAL_PACKAGES } from '../config/site';
-import { Calendar, Clock, User, Phone, Sparkles, MessageCircle, Send } from 'lucide-react';
+import { Calendar, Clock, User, Phone, MessageCircle, Send, Sparkles } from 'lucide-react';
 
 export default function BookingForm() {
   const [formData, setFormData] = useState({
@@ -17,13 +17,14 @@ export default function BookingForm() {
 
   const allServices = [
     { group: 'Signature Bridal Packages', items: BRIDAL_PACKAGES.map(p => p.name) },
-    { group: 'Bridal Studio & Ceremonial', items: (SERVICES.bridal || []).map(s => s.name) },
-    { group: 'Hair Care, Biotin & Treatments', items: (SERVICES['hair-treatments'] || []).map(s => s.name) },
-    { group: 'Hair Colouring & Balayage', items: (SERVICES['hair-colour'] || []).map(s => s.name) },
+    { group: 'Bridal Gallery & Ceremonial', items: (SERVICES.bridal || []).map(s => s.name) },
     { group: 'Skin Care & Facials', items: (SERVICES.skin || []).map(s => s.name) },
-    { group: 'Korean Beauty & Spa', items: (SERVICES['korean-spa'] || []).map(s => s.name) },
-    { group: 'Nail Lounge & Art', items: (SERVICES.nails || []).map(s => s.name) },
-    { group: 'Brows, Lashes & Semi-Permanent', items: (SERVICES['eyes-brows'] || []).map(s => s.name) },
+    { group: 'Hair Care & Treatments (Botox, Keratin, Biotin)', items: (SERVICES['hair-treatments'] || []).map(s => s.name) },
+    { group: 'Hair Colour Studio & Balayage', items: (SERVICES['hair-colour'] || []).map(s => s.name) },
+    { group: 'Nail Studio & Extensions', items: (SERVICES.nails || []).map(s => s.name) },
+    { group: 'Brow Studio & Lashes', items: (SERVICES['eyes-brows'] || []).map(s => s.name) },
+    { group: 'Korean Beauty Spa', items: (SERVICES['korean-spa'] || []).map(s => s.name) },
+    { group: 'Professional Makeup & Styling', items: (SERVICES['makeup-styling'] || []).map(s => s.name) },
     { group: 'Waxing & Body Care', items: (SERVICES['waxing-body'] || []).map(s => s.name) },
     { group: 'Hair Extensions', items: (SERVICES.extensions || []).map(s => s.name) }
   ];
@@ -72,7 +73,6 @@ export default function BookingForm() {
         {/* Form Header */}
         <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2 sm:space-y-3">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-sans font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold-deep">
-            <Sparkles className="w-3.5 h-3.5" />
             <span>Instant Reservation</span>
           </div>
           <h2 className="text-2xl sm:text-4xl md:text-5xl font-serif text-charcoal tracking-tight">

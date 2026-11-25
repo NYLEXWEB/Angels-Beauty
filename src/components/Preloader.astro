@@ -19,18 +19,18 @@
   aria-valuemax="100"
   aria-valuenow="0"
 >
-  {/* Ambient Luxury Warm Glow */}
+  <!-- Ambient Luxury Warm Glow -->
   <div class="absolute w-[32rem] h-[32rem] bg-gold/10 rounded-full blur-3xl pointer-events-none -top-20 -left-20 animate-pulse"></div>
   <div class="absolute w-[28rem] h-[28rem] bg-gold/8 rounded-full blur-3xl pointer-events-none -bottom-20 -right-20"></div>
 
   <div class="relative z-10 flex flex-col items-center max-w-sm px-6 text-center">
 
-    {/* Brand Emblem with Breathing Gold Halo */}
+    <!-- Brand Emblem with Breathing Gold Halo -->
     <div class="relative mb-6 sm:mb-7 group">
-      {/* Outer subtle rotating gold dash halo */}
+      <!-- Outer subtle rotating gold dash halo -->
       <div class="absolute -inset-2.5 rounded-full border border-gold/30 border-dashed animate-[spin_20s_linear_infinite] pointer-events-none"></div>
       
-      {/* Inner glowing circle */}
+      <!-- Inner glowing circle -->
       <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-white border border-gold/40 shadow-[0_8px_24px_rgba(158,123,53,0.15)] flex items-center justify-center overflow-hidden">
         <img 
           src="/images/logo.png" 
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    {/* Luxury Haute-Couture Typography */}
+    <!-- Luxury Haute-Couture Typography -->
     <h2 class="font-serif text-2xl sm:text-3xl font-light tracking-[0.25em] uppercase text-charcoal leading-none">
       Angels
     </h2>
@@ -54,7 +54,7 @@
       Mananthavady · Wayanad
     </span>
 
-    {/* Elegant Tabular Percentage Counter */}
+    <!-- Elegant Tabular Percentage Counter -->
     <div 
       id="preloader-counter" 
       class="font-sans text-xs sm:text-sm font-medium tracking-[0.22em] text-charcoal/85 tabular-nums mt-7 sm:mt-8"
@@ -62,7 +62,7 @@
       0%
     </div>
 
-    {/* Hairline Gold Progress Bar */}
+    <!-- Hairline Gold Progress Bar -->
     <div class="w-44 sm:w-56 h-[2px] bg-black/[0.07] rounded-full overflow-hidden relative mt-2.5 shadow-2xs">
       <div 
         id="preloader-bar" 
@@ -70,7 +70,7 @@
       ></div>
     </div>
 
-    {/* Contextual Status Message */}
+    <!-- Contextual Status Message -->
     <p 
       id="preloader-status" 
       class="text-[9px] sm:text-[10px] font-sans tracking-[0.22em] uppercase text-muted/60 mt-3.5 h-4 transition-opacity duration-300"
@@ -101,19 +101,20 @@
   const barEl = document.getElementById('preloader-bar');
   const statusEl = document.getElementById('preloader-status');
 
-  // Complete Catalog of Visual Assets across the entire site
-  const MASTER_ASSET_MANIFEST = [
-    // Brand & Studio Architecture
+  // Critical Above-The-Fold Assets
+  const CRITICAL_ASSETS = [
     '/images/logo.png',
-    '/images/hero-bg.jpg',
+    '/images/hero-bg.jpg'
+  ];
+
+  // Secondary Visual Assets
+  const SECONDARY_ASSETS = [
     '/images/bridal-church.jpg',
     '/images/bridal-room.jpg',
     '/images/bridal-suite.jpg',
     '/images/pedicure-spa.jpg',
     '/images/skin-hair-lounge.jpg',
     '/images/styling-aisle.jpg',
-    
-    // Curated Services Showcase Imagery
     '/images/services/bridal-makeup.jpg',
     '/images/services/hd-bridal-makeup.jpg',
     '/images/services/glass-skin-bridal.jpg',
@@ -123,121 +124,112 @@
     '/images/services/reception-makeup.jpg',
     '/images/services/hair-highlights.jpg',
     '/images/services/keratin-treatment.jpg',
-    '/images/services/korean-facial.jpg',
-    '/images/services/pedicure-spa.jpg',
-
-    // Full 15-Photo Bridal Gallery
-    '/images/gallery/gallery-01.jpg',
-    '/images/gallery/gallery-02.jpg',
-    '/images/gallery/gallery-03.jpg',
-    '/images/gallery/gallery-04.jpg',
-    '/images/gallery/gallery-05.jpg',
-    '/images/gallery/gallery-06.jpg',
-    '/images/gallery/gallery-07.jpg',
-    '/images/gallery/gallery-08.jpg',
-    '/images/gallery/gallery-09.jpg',
-    '/images/gallery/gallery-10.jpg',
-    '/images/gallery/gallery-11.jpg',
-    '/images/gallery/gallery-12.jpg',
-    '/images/gallery/gallery-13.jpg',
-    '/images/gallery/gallery-14.jpg',
-    '/images/gallery/gallery-15.jpg'
+    '/images/services/korean-facial.jpg'
   ];
 
-  // Also collect any additional images found in DOM
-  const uniqueImageUrls = new Set(MASTER_ASSET_MANIFEST);
-  const domImages = Array.from(document.images || []);
-  domImages.forEach(img => {
-    const src = img.currentSrc || img.src || img.getAttribute('src');
-    if (src && !src.startsWith('data:') && !src.startsWith('blob:')) {
-      uniqueImageUrls.add(src);
-    }
-  });
-
-  // Collect video elements (Reels)
-  const domVideos = Array.from(document.querySelectorAll('video') || []);
-
-  const totalAssets = uniqueImageUrls.size + domVideos.length;
-  let loadedAssets = 0;
-  let targetProgress = totalAssets === 0 ? 100 : 0;
+  let criticalLoaded = 0;
+  let secondaryLoaded = 0;
+  let targetProgress = 15;
   let currentProgress = 0;
   let isFinished = false;
 
-  function onAssetReady() {
-    loadedAssets++;
-    const rawPercent = Math.round((loadedAssets / totalAssets) * 100);
-    targetProgress = Math.min(100, Math.max(targetProgress, rawPercent));
+  function updateTarget() {
+    const critRatio = criticalLoaded / CRITICAL_ASSETS.length; // 0 to 1
+    const secRatio = SECONDARY_ASSETS.length > 0 ? (secondaryLoaded / SECONDARY_ASSETS.length) : 1;
+    // Critical assets weight 60%, secondary assets weight 40%
+    const calculated = Math.round((critRatio * 60) + (secRatio * 40));
+    targetProgress = Math.min(100, Math.max(targetProgress, calculated));
   }
 
-  // 1. Force Image GPU Decompression & Decoding into Memory
-  uniqueImageUrls.forEach(url => {
+  // Step A: Preload and Decode Critical Assets First
+  CRITICAL_ASSETS.forEach(url => {
     const img = new Image();
     img.src = url;
-
-    // Use native modern img.decode() to guarantee bitmap is fully loaded and ready in memory
     if (typeof img.decode === 'function') {
       img.decode()
-        .then(onAssetReady)
-        .catch(function() {
-          // If decode fails or is interrupted, fallback to onload
-          if (img.complete) {
-            onAssetReady();
-          } else {
-            img.onload = onAssetReady;
-            img.onerror = onAssetReady;
-          }
+        .then(() => {
+          criticalLoaded++;
+          updateTarget();
+        })
+        .catch(() => {
+          criticalLoaded++;
+          updateTarget();
         });
     } else {
-      if (img.complete) {
-        onAssetReady();
-      } else {
-        img.onload = onAssetReady;
-        img.onerror = onAssetReady;
-      }
-    }
-  });
-
-  // 2. Preload and Buffer Video Elements (Ready for instantaneous playback)
-  domVideos.forEach(video => {
-    // Ensure video begins preloading
-    video.preload = 'auto';
-
-    if (video.readyState >= 2) { // HAVE_CURRENT_DATA or higher
-      onAssetReady();
-    } else {
-      let resolved = false;
-      const onVideoReady = function() {
-        if (resolved) return;
-        resolved = true;
-        video.removeEventListener('loadeddata', onVideoReady);
-        video.removeEventListener('canplay', onVideoReady);
-        video.removeEventListener('error', onVideoReady);
-        onAssetReady();
+      img.onload = () => {
+        criticalLoaded++;
+        updateTarget();
       };
-
-      video.addEventListener('loadeddata', onVideoReady, { once: true });
-      video.addEventListener('canplay', onVideoReady, { once: true });
-      video.addEventListener('error', onVideoReady, { once: true });
-
-      try {
-        video.load();
-      } catch (e) {
-        onAssetReady();
-      }
+      img.onerror = () => {
+        criticalLoaded++;
+        updateTarget();
+      };
     }
   });
 
-  // 3. Safety Fallback: Ensure UI never gets stuck indefinitely if a network stall occurs
+  // Step B: Fonts Readiness
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(() => {
+      targetProgress = Math.max(targetProgress, 35);
+    });
+  }
+
+  // Step C: Decode Secondary Visuals in Background
+  SECONDARY_ASSETS.forEach(url => {
+    const img = new Image();
+    img.src = url;
+    if (typeof img.decode === 'function') {
+      img.decode()
+        .then(() => {
+          secondaryLoaded++;
+          updateTarget();
+        })
+        .catch(() => {
+          secondaryLoaded++;
+          updateTarget();
+        });
+    } else {
+      img.onload = () => {
+        secondaryLoaded++;
+        updateTarget();
+      };
+      img.onerror = () => {
+        secondaryLoaded++;
+        updateTarget();
+      };
+    }
+  });
+
+  // Step D: Prepare First Video Reel Metadata (Ready for immediate playback without downloading full video)
+  const firstVideo = document.querySelector('video.reel-video');
+  if (firstVideo) {
+    if (firstVideo.readyState >= 1) { // HAVE_METADATA or higher
+      targetProgress = Math.max(targetProgress, 50);
+    } else {
+      firstVideo.addEventListener('loadedmetadata', () => {
+        targetProgress = Math.max(targetProgress, 50);
+      }, { once: true });
+    }
+  }
+
+  // Step E: Adaptive Progress Boost (Ensures smooth, steady advance without stalling)
+  const steadyTimer = setInterval(() => {
+    if (targetProgress < 95) {
+      targetProgress = Math.min(95, targetProgress + 8);
+    }
+  }, 120);
+
+  // Safety Fallback: Guarantee website opens within 2.2 seconds maximum on any connection
   const safetyTimeout = setTimeout(function() {
     targetProgress = 100;
-  }, 4500);
+  }, 2200);
 
-  // 4. Fluid Lerp Animation Loop
+  // Step F: Fluid Haute-Couture Lerp Animation Loop
   function renderProgress() {
     if (isFinished) return;
 
     if (currentProgress < targetProgress) {
-      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.16));
+      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.18));
       currentProgress = Math.min(targetProgress, currentProgress + step);
     }
 
@@ -250,9 +242,9 @@
       if (currentProgress < 30) {
         statusEl.textContent = "Loading Haute Visuals...";
       } else if (currentProgress < 65) {
-        statusEl.textContent = "Decoding Gallery Imagery...";
+        statusEl.textContent = "Decoding Studio Imagery...";
       } else if (currentProgress < 90) {
-        statusEl.textContent = "Buffering Cinematic Reels...";
+        statusEl.textContent = "Preparing Cinematic Reels...";
       } else if (currentProgress < 100) {
         statusEl.textContent = "Refining Studio Ambience...";
       } else {
@@ -261,10 +253,11 @@
     }
 
     // Completion Trigger
-    if (currentProgress >= 100 && (loadedAssets >= totalAssets || targetProgress === 100)) {
+    if (currentProgress >= 100) {
       isFinished = true;
+      clearInterval(steadyTimer);
       clearTimeout(safetyTimeout);
-      setTimeout(dismissPreloader, 350);
+      setTimeout(dismissPreloader, 280);
       return;
     }
 
@@ -273,25 +266,25 @@
 
   requestAnimationFrame(renderProgress);
 
-  // 5. Dismiss Preloader and Save Session State
+  // Step G: Dismiss Preloader and Save Session State
   function dismissPreloader() {
     sessionStorage.setItem(SESSION_KEY, 'true');
     document.documentElement.classList.add('preloader-skipped');
     document.body.style.overflow = '';
 
-    preloader.style.transition = 'opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1)';
+    preloader.style.transition = 'opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1)';
     preloader.style.opacity = '0';
-    preloader.style.transform = 'translateY(-14px) scale(1.01)';
+    preloader.style.transform = 'translateY(-12px) scale(1.008)';
     preloader.style.pointerEvents = 'none';
 
     setTimeout(function() {
       preloader.classList.add('is-done');
       preloader.remove();
       window.dispatchEvent(new CustomEvent('angels:ready'));
-    }, 750);
+    }, 650);
   }
 
-  // 6. Support Back-Forward Cache (bfcache) navigation
+  // Step H: Support Back-Forward Cache (bfcache) navigation
   window.addEventListener('pageshow', function(e) {
     if (e.persisted || sessionStorage.getItem(SESSION_KEY)) {
       document.body.style.overflow = '';

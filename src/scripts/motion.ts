@@ -7,6 +7,7 @@ gsap.registerPlugin(ScrollTrigger);
 declare global {
   interface Window {
     __lenis?: Lenis;
+    __lenisTicker?: (time: number) => void;
   }
 }
 
@@ -16,21 +17,28 @@ export function initMotion() {
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (prefersReduced) return;
 
-  // Prevent duplicate Lenis instances on re-initialization
+  // Prevent duplicate Lenis instances and kill old ScrollTriggers on re-initialization
   if (window.__lenis) {
     window.__lenis.destroy();
+    ScrollTrigger.getAll().forEach(t => t.kill());
+  }
+  if (window.__lenisTicker) {
+    gsap.ticker.remove(window.__lenisTicker);
   }
 
-  // Initialize Ultra-Smooth Lenis Momentum Scrolling
+  // Initialize Ultra-Smooth Luxury Momentum Scrolling Engine (Lenis 1.3+)
   const lenis = new Lenis({
     lerp: 0.08, // Silky luxury linear interpolation for buttery momentum
-    duration: 1.3,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Apple-style exponential deceleration
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1.0,
+    wheelMultiplier: 0.9, // Buttery smooth mousewheel glide without jerky steps
     touchMultiplier: 1.5,
+    syncTouch: true, // Seamless touch momentum on trackpads and mobile devices
+    syncTouchLerp: 0.08,
+    touchInertiaExponent: 1.7,
     autoResize: true,
   });
 
@@ -39,10 +47,25 @@ export function initMotion() {
   // Seamless GSAP ScrollTrigger Synchronization
   lenis.on('scroll', ScrollTrigger.update);
 
-  gsap.ticker.add((time) => {
+  const tickerCallback = (time: number) => {
     lenis.raf(time * 1000);
-  });
+  };
+  window.__lenisTicker = tickerCallback;
+  gsap.ticker.add(tickerCallback);
   gsap.ticker.lagSmoothing(0);
+
+  // Auto-recalculate dimensions when preloader opens and after layout settles
+  const refreshScroll = () => {
+    lenis.resize();
+    lenis.start();
+    ScrollTrigger.refresh();
+  };
+
+  window.addEventListener('angels:ready', refreshScroll);
+  window.addEventListener('load', refreshScroll);
+  window.addEventListener('resize', () => {
+    lenis.resize();
+  });
 
   // Smooth scroll for in-page anchor links (e.g. #services, #contact)
   document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((anchor) => {

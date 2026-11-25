@@ -29,11 +29,46 @@ const REELS = [
     likes: "1,756",
     audio: "Original Audio · Bridal Studio Moments",
     location: "Mananthavady, Wayanad"
+  },
+  {
+    id: "reel-5",
+    videoSrc: "/videos/VID_20261124_143321_853.mp4",
+    likes: "2,310",
+    audio: "Original Audio · Glowing Bride Reveal",
+    location: "Mananthavady, Wayanad"
+  },
+  {
+    id: "reel-6",
+    videoSrc: "/videos/VID_20261124_143511_546.mp4",
+    likes: "1,940",
+    audio: "Original Audio · Haute Bridal Elegance",
+    location: "Mananthavady, Wayanad"
+  },
+  {
+    id: "reel-7",
+    videoSrc: "/videos/VID_20261124_143611_495_1.mp4",
+    likes: "2,185",
+    audio: "Original Audio · Glass Skin Transformation",
+    location: "Mananthavady, Wayanad"
+  },
+  {
+    id: "reel-8",
+    videoSrc: "/videos/VID_20261124_144422_092.mp4",
+    likes: "3,420",
+    audio: "Original Audio · Signature Reception Look",
+    location: "Mananthavady, Wayanad"
+  },
+  {
+    id: "reel-9",
+    videoSrc: "/videos/VID_20261124_144509_481.mp4",
+    likes: "1,875",
+    audio: "Original Audio · Timeless Bridal Artistry",
+    location: "Mananthavady, Wayanad"
   }
 ];
 ---
 
-<section id="instagram" class="py-16 sm:py-24 lg:py-32 bg-surface border-b border-gold-border/30 overflow-x-clip relative">
+<section id="instagram" class="py-16 sm:py-24 lg:py-32 bg-surface border-b border-gold-border/30 overflow-x-clip relative z-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Minimalist Section Header -->
@@ -65,16 +100,20 @@ const REELS = [
     </div>
 
     <!-- Instagram Video Reel Frames:
-         On Mobile: Sticky Card Stack (each card glides up, stacks and fixes over the previous one)
-         On Desktop: Sleek 4-column side-by-side grid
+         On Mobile: Smooth Stacking Cards (each video fixes at top, and next video glides over and fixes on top)
+         On Tablet: 2-column clean responsive grid
+         On Desktop: Sleek 3-column side-by-side grid (3x3 = 9 cards)
     -->
-    <div class="flex flex-col lg:grid lg:grid-cols-4 lg:gap-6 max-w-7xl mx-auto relative">
-      {REELS.map((reel, index) => (
-        <div 
-          class="reel-wrapper sticky top-[76px] sm:top-24 lg:static lg:top-auto mb-28 sm:mb-36 lg:mb-0 last:mb-0 w-full transition-transform duration-300"
-          style={`z-index: ${10 + index * 10};`}
-        >
-          <div class="reel-container relative aspect-[9/16] w-full max-w-[330px] sm:max-w-[360px] lg:max-w-none mx-auto rounded-[30px] sm:rounded-[34px] overflow-hidden bg-black shadow-2xl border-[5px] sm:border-[6px] border-charcoal/90 select-none group transition-all duration-300 hover:shadow-gold/15">
+    <div class="flex flex-col md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto relative pb-12 sm:pb-16">
+      {REELS.map((reel, index) => {
+        const mobileTop = 76;
+        const zIndex = 10 + index * 2;
+        return (
+          <div 
+            class="reel-wrapper mobile-stack-card sticky md:static md:top-auto mb-28 sm:mb-40 md:mb-0 last:mb-0 w-full transition-transform duration-300 md:!z-auto"
+            style={`top: ${mobileTop}px; z-index: ${zIndex};`}
+          >
+            <div class="reel-container relative aspect-[9/16] w-full max-w-[320px] xs:max-w-[340px] sm:max-w-[360px] md:max-w-none mx-auto rounded-[26px] sm:rounded-[32px] overflow-hidden bg-black shadow-[0_16px_40px_-10px_rgba(0,0,0,0.7)] border-[4px] sm:border-[5px] border-charcoal/90 select-none group transition-all duration-300 hover:shadow-gold/20">
             
             <!-- Video Element (Played by IntersectionObserver when in view) -->
             <video 
@@ -107,7 +146,7 @@ const REELS = [
                 class="flex items-center gap-2 hover:opacity-90 transition-opacity"
               >
                 <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full p-0.5 bg-gradient-to-tr from-[#FD1D1D] via-[#E1306C] to-[#833AB4] shrink-0">
-                  <img src="/images/logo.png" alt="Angels" class="w-full h-full object-cover rounded-full bg-white p-0.5" />
+                  <img src="/images/logo.png" alt="Angels" class="w-full h-full object-cover rounded-full bg-white p-0.5" width="36" height="36" loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <div class="flex items-center gap-1">
@@ -216,37 +255,31 @@ const REELS = [
 
           </div>
         </div>
-      ))}
+        );
+      })}
     </div>
 
-    <!-- Fullscreen / Theater Video Modal (Minimalist & Aesthetic Desktop Video Viewer) -->
+    <!-- Fullscreen / Theater Video Modal (Minimalist & Aesthetic Luxury Video Viewer) -->
     <div 
       id="video-theater-modal" 
-      class="fixed inset-0 z-50 bg-black/95 backdrop-blur-2xl flex items-center justify-center p-4 sm:p-8 hidden opacity-0 transition-opacity duration-300"
+      class="fixed inset-0 z-[999999] bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-3 sm:p-6 md:p-8 hidden opacity-0 transition-opacity duration-300 select-none"
       role="dialog"
       aria-modal="true"
       aria-label="Fullscreen Video Player"
     >
-      <!-- Top Bar: Info Badge & Close Button -->
-      <div class="absolute top-4 sm:top-6 inset-x-4 sm:inset-x-8 flex items-center justify-between z-20 pointer-events-none">
-        <div class="flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md text-white text-xs font-sans tracking-wide border border-white/15 pointer-events-auto">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-          <span id="theater-audio-label" class="font-medium">Angels Beauty & Bridal Studio</span>
+      <!-- Top Navigation Bar: Minimalist Studio Badge -->
+      <div class="w-full max-w-5xl mx-auto flex items-center justify-between px-3 sm:px-6 py-2 sm:py-3 mb-2 pointer-events-auto shrink-0 z-30">
+        <!-- Studio Label -->
+        <div class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md text-white text-xs font-sans tracking-wide border border-white/15">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span id="theater-audio-label" class="font-medium text-white/90 truncate max-w-[240px] sm:max-w-md">Angels Beauty & Bridal Studio</span>
         </div>
-        
-        <button 
-          id="theater-close-btn" 
-          class="w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors cursor-pointer border border-white/15 pointer-events-auto active:scale-95"
-          aria-label="Close Fullscreen Video"
-        >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
       </div>
 
-      <!-- Theater Video Frame -->
-      <div class="relative max-w-sm sm:max-w-md max-h-[85dvh] aspect-[9/16] rounded-3xl overflow-hidden shadow-2xl border-2 border-white/15 bg-black flex items-center justify-center pointer-events-auto group">
+      <!-- Theater Video Container (Mathematically Centered, Vertical Pillar Frame) -->
+      <div class="relative w-auto h-[78vh] sm:h-[82vh] max-h-[740px] aspect-[9/16] rounded-2xl sm:rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] border border-white/20 bg-black flex items-center justify-center pointer-events-auto group">
+        
+        <!-- Video Element -->
         <video 
           id="theater-video" 
           class="w-full h-full object-cover cursor-pointer" 
@@ -254,6 +287,19 @@ const REELS = [
           playsinline 
           autoplay
         ></video>
+
+        <!-- Direct Floating Corner Close Button on Video Frame (Instant Touch on Mobile) -->
+        <button 
+          id="theater-video-corner-close" 
+          type="button"
+          class="absolute top-3 right-3 z-40 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-black/70 hover:bg-black/90 text-white flex items-center justify-center border border-white/30 cursor-pointer shadow-lg active:scale-90 transition-all"
+          aria-label="Close Video"
+          title="Close"
+        >
+          <svg class="w-4 h-4 sm:w-5 sm:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
 
         <!-- Play/Pause Indicator (Flashes on click with 2.5s auto-hide) -->
         <div id="theater-play-indicator" class="absolute inset-0 flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-300 z-30">
@@ -268,28 +314,28 @@ const REELS = [
         </div>
 
         <!-- Theater Bottom Controls: Sound Toggle + Tap Hint -->
-        <div class="absolute bottom-0 inset-x-0 p-4 pb-5 z-20 flex items-center justify-between bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-auto">
+        <div class="absolute bottom-0 inset-x-0 p-3.5 sm:p-4 pb-4 sm:pb-5 z-20 flex items-center justify-between bg-gradient-to-t from-black/85 via-black/40 to-transparent pointer-events-auto">
           <!-- Theater Sound Toggle Button -->
           <button 
             id="theater-sound-btn" 
             type="button" 
-            class="px-3.5 py-1.5 rounded-full bg-black/50 hover:bg-black/75 backdrop-blur-md text-white text-xs font-sans flex items-center gap-2 border border-white/20 cursor-pointer transition-all active:scale-95"
+            class="px-3.5 py-1.5 rounded-full bg-black/60 hover:bg-black/80 backdrop-blur-md text-white text-xs font-sans flex items-center gap-2 border border-white/20 cursor-pointer transition-all active:scale-95"
             aria-label="Toggle Sound"
           >
             <!-- Speaker Active -->
-            <svg id="theater-sound-active-icon" class="w-4 h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <svg id="theater-sound-active-icon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
             </svg>
             <!-- Speaker Muted -->
-            <svg id="theater-sound-muted-icon" class="w-4 h-4 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <svg id="theater-sound-muted-icon" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
               <path stroke-linecap="round" stroke-linejoin="round" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
               <path stroke-linecap="round" stroke-linejoin="round" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
             </svg>
-            <span id="theater-sound-label">Sound On</span>
+            <span id="theater-sound-label" class="text-[11px] sm:text-xs">Sound On</span>
           </button>
 
           <!-- Tap Hint -->
-          <span class="text-[11px] text-white/70 font-sans">Tap video to pause / play</span>
+          <span class="text-[10px] sm:text-[11px] text-white/70 font-sans tracking-tight">Tap video to pause / play</span>
         </div>
       </div>
     </div>
@@ -390,16 +436,35 @@ const REELS = [
     }
   });
 
-  function openTheaterModal(videoSrc: string, audioTitle: string) {
+  const headerContainer = document.getElementById('header-container');
+  const floatingActions = document.getElementById('floating-actions');
+
+  function openTheaterModal(videoSrc: string, audioTitle: string, startTime = 0) {
     if (!theaterModal || !theaterVideo) return;
+
+    // Teleport to body to escape any parent section stacking context
+    if (theaterModal.parentElement !== document.body) {
+      document.body.appendChild(theaterModal);
+    }
+
+    // Hide navbar and floating action buttons while in fullscreen mode
+    if (headerContainer) headerContainer.style.setProperty('display', 'none', 'important');
+    if (floatingActions) floatingActions.style.setProperty('display', 'none', 'important');
+
     theaterVideo.src = videoSrc;
+    if (startTime > 0) {
+      try {
+        theaterVideo.currentTime = startTime;
+      } catch (err) {}
+    }
     if (theaterAudioLabel) theaterAudioLabel.textContent = audioTitle || 'Angels Beauty & Bridal Studio';
     
     theaterModal.classList.remove('hidden');
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       theaterModal.classList.remove('opacity-0');
       theaterModal.classList.add('opacity-100');
-    }, 10);
+    });
+
     theaterVideo.muted = false;
     theaterVideo.play().catch(() => {});
     theaterSoundActiveIcon?.classList.remove('hidden');
@@ -420,10 +485,18 @@ const REELS = [
     setTimeout(() => {
       theaterModal.classList.add('hidden');
       document.body.classList.remove('overflow-hidden');
+      // Restore navbar and floating actions
+      if (headerContainer) headerContainer.style.removeProperty('display');
+      if (floatingActions) floatingActions.style.removeProperty('display');
     }, 300);
   }
 
   theaterCloseBtn?.addEventListener('click', closeTheaterModal);
+  const cornerCloseBtn = document.getElementById('theater-video-corner-close');
+  cornerCloseBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeTheaterModal();
+  });
   theaterModal?.addEventListener('click', (e) => {
     if (e.target === theaterModal) closeTheaterModal();
   });
@@ -491,10 +564,11 @@ const REELS = [
     // 2. Expand / Fullscreen Button for Desktop Theater Mode
     expandBtn?.addEventListener('click', (e) => {
       e.stopPropagation();
+      const currentPos = video.currentTime || 0;
       video.pause();
       const videoSrc = expandBtn.getAttribute('data-video-src') || '';
       const audioTitle = expandBtn.getAttribute('data-audio') || '';
-      openTheaterModal(videoSrc, audioTitle);
+      openTheaterModal(videoSrc, audioTitle, currentPos);
     });
 
     // 3. Sound Mute / Unmute Toggle
