@@ -41,8 +41,7 @@
 
   /* GPU Hardware Acceleration for ultra-smooth 60/120fps scrolling */
   .mobile-stack-card,
-  .reel-container,
-  #header-container {
+  .reel-container {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
     backface-visibility: hidden;
