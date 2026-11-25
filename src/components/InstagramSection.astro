@@ -5,6 +5,7 @@ const REELS = [
   {
     id: "reel-1",
     videoSrc: "/videos/angels-reel-1.mp4",
+    poster: "/images/gallery/gallery-01.webp",
     likes: "1,428",
     audio: "Original Audio · Angels Bridal Couture",
     location: "Mananthavady, Wayanad"
@@ -12,6 +13,7 @@ const REELS = [
   {
     id: "reel-2",
     videoSrc: "/videos/angels-reel-2.mp4",
+    poster: "/images/gallery/gallery-02.webp",
     likes: "1,184",
     audio: "Original Audio · Angels Beauty Studio",
     location: "Mananthavady, Wayanad"
@@ -19,6 +21,7 @@ const REELS = [
   {
     id: "reel-3",
     videoSrc: "/videos/angels-reel-3.mp4",
+    poster: "/images/services/hair-highlights.webp",
     likes: "2,045",
     audio: "Original Audio · Hair Transformations",
     location: "Mananthavady, Wayanad"
@@ -26,6 +29,7 @@ const REELS = [
   {
     id: "reel-4",
     videoSrc: "/videos/angels-reel-4.mp4",
+    poster: "/images/gallery/gallery-04.webp",
     likes: "1,756",
     audio: "Original Audio · Bridal Studio Moments",
     location: "Mananthavady, Wayanad"
@@ -33,6 +37,7 @@ const REELS = [
   {
     id: "reel-5",
     videoSrc: "/videos/VID_20261124_143321_853.mp4",
+    poster: "/images/gallery/gallery-05.webp",
     likes: "2,310",
     audio: "Original Audio · Glowing Bride Reveal",
     location: "Mananthavady, Wayanad"
@@ -40,6 +45,7 @@ const REELS = [
   {
     id: "reel-6",
     videoSrc: "/videos/VID_20261124_143511_546.mp4",
+    poster: "/images/gallery/gallery-06.webp",
     likes: "1,940",
     audio: "Original Audio · Haute Bridal Elegance",
     location: "Mananthavady, Wayanad"
@@ -47,6 +53,7 @@ const REELS = [
   {
     id: "reel-7",
     videoSrc: "/videos/VID_20261124_143611_495_1.mp4",
+    poster: "/images/services/glass-skin-bridal.webp",
     likes: "2,185",
     audio: "Original Audio · Glass Skin Transformation",
     location: "Mananthavady, Wayanad"
@@ -54,6 +61,7 @@ const REELS = [
   {
     id: "reel-8",
     videoSrc: "/videos/VID_20261124_144422_092.mp4",
+    poster: "/images/services/reception-makeup.webp",
     likes: "3,420",
     audio: "Original Audio · Signature Reception Look",
     location: "Mananthavady, Wayanad"
@@ -61,6 +69,7 @@ const REELS = [
   {
     id: "reel-9",
     videoSrc: "/videos/VID_20261124_144509_481.mp4",
+    poster: "/images/gallery/gallery-08.webp",
     likes: "1,875",
     audio: "Original Audio · Timeless Bridal Artistry",
     location: "Mananthavady, Wayanad"
@@ -68,11 +77,11 @@ const REELS = [
 ];
 ---
 
-<section id="instagram" class="py-16 sm:py-24 lg:py-32 bg-surface border-b border-gold-border/30 overflow-x-clip relative z-10">
+<section id="instagram" class="py-14 sm:py-18 lg:py-20 bg-surface border-b border-gold-border/30 overflow-x-clip relative z-10">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Minimalist Section Header -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-16">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
       <div class="max-w-2xl space-y-2 sm:space-y-3">
         <span class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep block">
           Instagram Reels · Studio Life
@@ -116,14 +125,31 @@ const REELS = [
           >
             <div class="reel-container relative aspect-[9/16] w-full max-w-[295px] xs:max-w-[320px] sm:max-w-[345px] md:max-w-none mx-auto rounded-[28px] sm:rounded-[34px] overflow-hidden bg-black shadow-[0_-12px_32px_-4px_rgba(0,0,0,0.65),0_25px_50px_-10px_rgba(0,0,0,0.85)] border-[2.5px] sm:border-[4px] border-gold-border/60 hover:border-gold/80 select-none group transition-all duration-300">
             
-            <!-- Video Element (Paused by default, plays only when user clicks play) -->
+            <!-- Preloaded Poster Image (Decoded off-thread in preloader, instant rendering with 0 download lag) -->
+            <img 
+              src={reel.poster}
+              alt={reel.audio}
+              class="reel-poster absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-opacity duration-500 z-10"
+              width="345"
+              height="613"
+              loading="eager"
+              decoding="async"
+            />
+
+            <!-- Luxury Video Buffering Spinner (Active during on-click stream buffer) -->
+            <div class="reel-loader absolute inset-0 flex flex-col items-center justify-center bg-black/50 backdrop-blur-xs pointer-events-none opacity-0 transition-opacity duration-300 z-20">
+              <div class="w-10 h-10 border-2 border-gold/40 border-t-gold rounded-full animate-spin mb-2"></div>
+              <span class="text-[10px] font-sans tracking-widest uppercase text-white/90">Loading Video...</span>
+            </div>
+
+            <!-- Video Element: Strictly Lazy - zero bytes downloaded until user clicks to play -->
             <video 
-              class="reel-video absolute inset-0 w-full h-full object-cover cursor-pointer"
-              src={reel.videoSrc}
+              class="reel-video absolute inset-0 w-full h-full object-cover cursor-pointer z-10 opacity-0 transition-opacity duration-500"
+              data-src={reel.videoSrc}
               loop
               muted
               playsinline
-              preload="auto"
+              preload="none"
             ></video>
 
             <!-- Central 3D Luxury Play Button: Click to play only (Zero scroll lag) -->
@@ -147,7 +173,7 @@ const REELS = [
                 class="flex items-center gap-2 hover:opacity-90 transition-opacity"
               >
                 <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full p-0.5 bg-gradient-to-tr from-[#FD1D1D] via-[#E1306C] to-[#833AB4] shrink-0">
-                  <img src="/images/logo.png" alt="Angels" class="w-full h-full object-cover rounded-full bg-white p-0.5" width="36" height="36" loading="lazy" decoding="async" />
+                  <img src="/images/logo.webp" alt="Angels" class="w-full h-full object-cover rounded-full bg-white p-0.5" width="36" height="36" loading="lazy" decoding="async" />
                 </div>
                 <div>
                   <div class="flex items-center gap-1">
@@ -356,7 +382,7 @@ const REELS = [
     </div>
 
     <!-- Link out banner -->
-    <div class="mt-12 text-center">
+    <div class="mt-8 sm:mt-10 text-center">
       <a 
         href={SITE_CONFIG.social.instagramUrl} 
         target="_blank" 
@@ -444,7 +470,6 @@ const REELS = [
 
   const headerContainer = document.getElementById('header-container');
   const floatingActions = document.getElementById('floating-actions');
-
   const theaterLoader = document.getElementById('theater-video-loader');
 
   function openTheaterModal(videoSrc: string, audioTitle: string, startTime = 0) {
@@ -549,13 +574,12 @@ const REELS = [
 
   reelContainers.forEach(container => {
     const video = container.querySelector('.reel-video') as HTMLVideoElement;
+    const poster = container.querySelector('.reel-poster') as HTMLElement;
+    const loader = container.querySelector('.reel-loader') as HTMLElement;
     const soundBtn = container.querySelector('.reel-sound-btn');
     const soundMutedIcon = container.querySelector('.sound-muted-icon');
     const soundActiveIcon = container.querySelector('.sound-active-icon');
     const expandBtn = container.querySelector('.reel-expand-btn') as HTMLElement;
-    const playIndicator = container.querySelector('.reel-play-indicator') as HTMLElement;
-    const playIcon = container.querySelector('.play-icon');
-    const pauseIcon = container.querySelector('.pause-icon');
     const likeBtn = container.querySelector('.reel-like-btn');
     const likeIcon = container.querySelector('.like-icon');
     const likeCount = container.querySelector('.like-count');
@@ -570,11 +594,40 @@ const REELS = [
 
     if (!video) return;
 
-    // 1. Play / Pause ONLY on User Click (Zero scroll lag, single video playing at a time)
     let hidePlayTimer: any = null;
 
+    // 1. Play / Pause ONLY on User Click - Lazy loads video stream strictly on demand
     function handlePlayPauseToggle(e?: Event) {
       if (e) e.stopPropagation();
+
+      // Lazy load video stream on FIRST click
+      if (!video.src || video.src === '' || video.currentSrc === '') {
+        const rawSrc = video.getAttribute('data-src');
+        if (rawSrc) {
+          if (loader) {
+            loader.classList.remove('opacity-0');
+            loader.classList.add('opacity-100');
+          }
+
+          video.src = rawSrc;
+          video.load();
+
+          const onReady = () => {
+            if (loader) {
+              loader.classList.add('opacity-0');
+              loader.classList.remove('opacity-100');
+            }
+            video.classList.remove('opacity-0');
+            video.classList.add('opacity-100');
+            if (poster) {
+              poster.classList.add('opacity-0');
+            }
+          };
+
+          video.addEventListener('canplay', onReady, { once: true });
+          video.addEventListener('playing', onReady);
+        }
+      }
 
       if (video.paused) {
         // Pause all OTHER videos first so only ONE video plays at a time
@@ -593,7 +646,6 @@ const REELS = [
         video.play().then(() => {
           playSvg?.classList.add('hidden');
           pauseSvg?.classList.remove('hidden');
-          // Hide play button while playing after brief moment
           if (hidePlayTimer) clearTimeout(hidePlayTimer);
           hidePlayTimer = setTimeout(() => {
             if (!video.paused && centerPlay) {

@@ -28,17 +28,15 @@ export function initMotion() {
 
   // Initialize Ultra-Smooth Luxury Momentum Scrolling Engine (Lenis 1.3+)
   const lenis = new Lenis({
-    lerp: 0.08,
-    duration: 1.2,
+    lerp: 0.1,
+    duration: 1.0,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 0.9,
-    touchMultiplier: 1.5,
-    syncTouch: true,
-    syncTouchLerp: 0.08,
-    touchInertiaExponent: 1.7,
+    wheelMultiplier: 1.0,
+    touchMultiplier: 1.0,
+    syncTouch: false,
     autoResize: true,
   });
 
@@ -52,7 +50,7 @@ export function initMotion() {
   };
   window.__lenisTicker = tickerCallback;
   gsap.ticker.add(tickerCallback);
-  gsap.ticker.lagSmoothing(0);
+  gsap.ticker.lagSmoothing(500, 33);
 
   // Auto-recalculate dimensions when preloader opens and after layout settles
   const refreshScroll = () => {
@@ -208,6 +206,7 @@ export function initMotion() {
             trigger: item,
             start: 'top 90%',
             toggleActions: 'play none none none',
+            once: true,
           },
         }
       );
@@ -225,7 +224,8 @@ export function initMotion() {
         scrollTrigger: {
           trigger: reviewsSection,
           start: 'top 85%',
-          toggleActions: 'play none none none'
+          toggleActions: 'play none none none',
+          once: true
         },
         opacity: 0,
         y: 40,
@@ -240,7 +240,8 @@ export function initMotion() {
         scrollTrigger: {
           trigger: reviewCards[0],
           start: 'top 88%',
-          toggleActions: 'play none none none'
+          toggleActions: 'play none none none',
+          once: true
         },
         opacity: 0,
         y: 45,
@@ -273,7 +274,8 @@ export function initMotion() {
           scrollTrigger: {
             trigger: section,
             start: 'top 82%',
-            toggleActions: 'play none none none'
+            toggleActions: 'play none none none',
+            once: true
           }
         });
       }

@@ -12,7 +12,7 @@ interface Props {
 const {
   title = "Angels Beauty Parlour and Bridal Studio | Wayanad, Kerala",
   description = "Wayanad's signature destination for bespoke bridal makeup, HD beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady.",
-  ogImage = "/images/bridal-church.jpg"
+  ogImage = "/images/bridal-church.webp"
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://angelsbeautyparlour.in');
@@ -21,7 +21,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BeautySalon",
   "name": SITE_CONFIG.name,
-  "image": "https://angelsbeautyparlour.in/images/logo.png",
+  "image": "https://angelsbeautyparlour.in/images/logo.webp",
   "url": "https://angelsbeautyparlour.in",
   "telephone": SITE_CONFIG.contact.phoneTel,
   "address": {
@@ -66,9 +66,9 @@ const jsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/webp" href="/favicon.webp" />
     <link rel="shortcut icon" href="/favicon.ico" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.webp" />
     <link rel="canonical" href={canonicalURL} />
     
     <!-- Google & Apple Modern Sans-Serif Fonts (Inter & Plus Jakarta Sans) -->
@@ -81,8 +81,8 @@ const jsonLd = {
     </noscript>
 
     <!-- Critical Above-The-Fold Asset Preloads (Zero LCP Delay) -->
-    <link rel="preload" as="image" href="/images/hero-bg.jpg" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/logo.png" />
+    <link rel="preload" as="image" href="/images/hero-bg.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/logo.webp" />
     
     <!-- Primary Meta -->
     <title>{title}</title>

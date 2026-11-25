@@ -31,6 +31,8 @@ export default function ServicesShowcase() {
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('bridal');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedService, setSelectedService] = useState<ServiceItem | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const closeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
   const categoryScrollRef = useRef<HTMLDivElement>(null);
 
@@ -41,20 +43,57 @@ export default function ServicesShowcase() {
     }
   };
 
-  // Close modal on Escape key
+  const openServiceModal = (service: ServiceItem) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    setSelectedService(service);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        setIsModalVisible(true);
+      });
+    });
+  };
+
+  const closeServiceModal = () => {
+    setIsModalVisible(false);
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+    }
+    closeTimeoutRef.current = setTimeout(() => {
+      setSelectedService(null);
+    }, 280);
+  };
+
+  // Close modal on Escape key & synchronize scroll prevention with Lenis
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setSelectedService(null);
+      if (e.key === 'Escape') closeServiceModal();
     };
+
     if (selectedService) {
+      document.documentElement.classList.add('overflow-hidden');
       document.body.classList.add('overflow-hidden');
-      window.addEventListener('keydown', handleKeyDown);
+      if (typeof window !== 'undefined') {
+        (window as any).__lenis?.stop();
+        window.addEventListener('keydown', handleKeyDown);
+      }
     } else {
+      document.documentElement.classList.remove('overflow-hidden');
       document.body.classList.remove('overflow-hidden');
+      if (typeof window !== 'undefined') {
+        (window as any).__lenis?.start();
+      }
     }
+
     return () => {
+      document.documentElement.classList.remove('overflow-hidden');
       document.body.classList.remove('overflow-hidden');
-      window.removeEventListener('keydown', handleKeyDown);
+      if (typeof window !== 'undefined') {
+        (window as any).__lenis?.start();
+        window.removeEventListener('keydown', handleKeyDown);
+      }
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
     };
   }, [selectedService]);
 
@@ -89,7 +128,7 @@ export default function ServicesShowcase() {
   const activeCategoryMeta = CATEGORIES.find(c => c.key === activeCategory);
 
   return (
-    <section id="services" suppressHydrationWarning className="py-16 sm:py-24 lg:py-28 bg-canvas relative overflow-x-clip">
+    <section id="services" suppressHydrationWarning className="pt-14 sm:pt-20 pb-8 sm:pb-12 bg-canvas relative overflow-x-clip">
 
       {/* Subtle luxury ambient glow */}
       <div className="absolute top-1/4 -left-40 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
@@ -290,7 +329,10 @@ export default function ServicesShowcase() {
                 <div className="absolute top-0 inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-gold/50 to-transparent pointer-events-none md:hidden z-20" />
 
                 {/* 1. Cinematic Clean Photo Frame (Zero text overlays on the image) */}
-                <div className="relative aspect-[16/10] overflow-hidden bg-surface">
+                <div
+                  onClick={() => openServiceModal(service)}
+                  className="relative aspect-[16/10] overflow-hidden bg-surface cursor-pointer"
+                >
                   <img
                     src={service.image}
                     alt={service.name}
@@ -333,7 +375,10 @@ export default function ServicesShowcase() {
                     </div>
 
                     {/* Service Title */}
-                    <h3 className="font-sans text-lg sm:text-xl font-normal text-charcoal tracking-tight group-hover:text-gold-deep transition-colors duration-200 leading-snug">
+                    <h3
+                      onClick={() => openServiceModal(service)}
+                      className="font-sans text-lg sm:text-xl font-normal text-charcoal tracking-tight group-hover:text-gold-deep transition-colors duration-200 leading-snug cursor-pointer"
+                    >
                       {service.name}
                     </h3>
 
@@ -349,7 +394,7 @@ export default function ServicesShowcase() {
                     {/* Inclusions Trigger */}
                     <button
                       type="button"
-                      onClick={() => setSelectedService(service)}
+                      onClick={() => openServiceModal(service)}
                       className="inline-flex items-center gap-1 text-xs font-sans font-medium text-charcoal/80 hover:text-gold-deep transition-colors py-2 cursor-pointer group/link"
                       aria-label={`View full details for ${service.name}`}
                     >
@@ -385,7 +430,7 @@ export default function ServicesShowcase() {
           ഉദാഹരണത്തിന് Hair Treatments ക്ലിക്ക് ചെയ്താൽ Botox, Keratin, Nanoplastia തുടങ്ങിയ സർവീസുകളുടെ വിവരങ്ങളും ചിത്രങ്ങളും കാണണം."
         */}
         {hasMore && (
-          <div className="pt-4 pb-12 flex flex-col items-center justify-center">
+          <div className="pt-4 pb-2 flex flex-col items-center justify-center">
             <button
               type="button"
               onClick={() => toggleCategoryExpand(activeCategory)}
@@ -426,107 +471,123 @@ export default function ServicesShowcase() {
       {/* POPUP MODAL: Treatment Dossier Dialog */}
       {selectedService && (
         <div
-          className="fixed inset-0 z-50 bg-charcoal/70 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto"
+          data-lenis-prevent
+          className={`fixed inset-0 z-[200] flex items-center justify-center p-3.5 sm:p-5 md:p-6 transition-all duration-300 ease-out select-none ${
+            isModalVisible
+              ? 'opacity-100 backdrop-blur-md bg-charcoal/80'
+              : 'opacity-0 backdrop-blur-none bg-charcoal/0 pointer-events-none'
+          }`}
           role="dialog"
           aria-modal="true"
-          onClick={() => setSelectedService(null)}
+          aria-labelledby="treatment-dialog-title"
+          onClick={closeServiceModal}
         >
           <div
-            className="relative w-full max-w-xl bg-canvas rounded-3xl border border-gold/40 shadow-2xl overflow-hidden my-auto animate-in fade-in zoom-in-95 duration-200"
+            data-lenis-prevent
+            className={`relative w-full max-w-lg lg:max-w-xl bg-canvas rounded-2xl sm:rounded-3xl border border-gold/40 shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] select-text my-auto ${
+              isModalVisible
+                ? 'opacity-100 scale-100 translate-y-0'
+                : 'opacity-0 scale-95 translate-y-3'
+            }`}
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Image Header */}
-            <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface">
+            <div className="relative h-40 xs:h-44 sm:h-52 md:h-56 w-full shrink-0 overflow-hidden bg-surface">
               <img
                 src={selectedService.image}
                 alt={selectedService.name}
                 className="w-full h-full object-cover"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/30 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/40 to-black/25" />
 
-              {/* Close Button */}
+              {/* Close Button Top Right */}
               <button
                 type="button"
-                onClick={() => setSelectedService(null)}
-                className="absolute top-4 right-4 w-9 h-9 rounded-full bg-charcoal/60 hover:bg-charcoal text-white flex items-center justify-center backdrop-blur-xs transition-colors cursor-pointer border border-white/20"
+                onClick={closeServiceModal}
+                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-charcoal/70 hover:bg-charcoal text-white flex items-center justify-center backdrop-blur-md transition-all duration-200 cursor-pointer border border-white/20 hover:scale-105 active:scale-95 shadow-lg z-10"
                 aria-label="Close details"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="absolute bottom-4 left-5 right-5 text-white">
+              {/* Text on Image Header */}
+              <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 text-white pointer-events-none">
                 <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-light block mb-1">
                   {selectedService.category.toUpperCase()} • ANGELS BESPOKE STUDIO
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium leading-tight text-white drop-shadow-sm">
+                <h3
+                  id="treatment-dialog-title"
+                  className="font-serif text-xl sm:text-2xl md:text-3xl font-medium leading-tight text-white drop-shadow-sm line-clamp-2"
+                >
                   {selectedService.name}
                 </h3>
               </div>
             </div>
 
-            {/* Modal Body Content */}
-            <div className="p-6 sm:p-8 space-y-6 max-h-[60dvh] overflow-y-auto">
+            {/* Modal Body Content (Scrollable with smooth luxury scrollbar) */}
+            <div className="p-4 sm:p-6 md:p-7 space-y-4 sm:space-y-5 overflow-y-auto overscroll-contain flex-1 custom-modal-scrollbar">
 
               {/* Duration Pill */}
               {selectedService.duration && (
-                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-surface border border-gold-border/60 text-charcoal text-xs font-sans font-medium">
-                  <Clock className="w-3.5 h-3.5 text-gold-deep" />
-                  <span>Estimated Duration: <strong className="font-semibold">{selectedService.duration}</strong></span>
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-gold-border/60 text-charcoal text-xs font-sans font-medium">
+                  <Clock className="w-3.5 h-3.5 text-gold-deep shrink-0" />
+                  <span>Estimated Duration: <strong className="font-semibold text-charcoal">{selectedService.duration}</strong></span>
                 </div>
               )}
 
               {/* Description */}
-              <div className="space-y-2">
+              <div className="space-y-1.5">
                 <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
                   Treatment Overview & Philosophy
                 </h4>
-                <p className="text-xs sm:text-sm text-muted font-sans font-light leading-relaxed">
+                <p className="text-xs sm:text-[13px] md:text-sm text-muted font-sans font-light leading-relaxed">
                   {selectedService.detailedInfo || selectedService.description}
                 </p>
               </div>
 
               {/* Benefits Checklist */}
               {selectedService.benefits && selectedService.benefits.length > 0 && (
-                <div className="space-y-3 pt-4 border-t border-gold-border/30">
+                <div className="space-y-2.5 pt-3 border-t border-gold-border/25">
                   <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
                     Key Highlights & Inclusions
                   </h4>
                   <ul className="space-y-2">
                     {selectedService.benefits.map((b, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm font-sans text-charcoal/90">
+                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-[13px] font-sans text-charcoal/90">
                         <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                        <span>{b}</span>
+                        <span className="leading-snug">{b}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
               )}
 
-              {/* Action Buttons in Modal */}
-              <div className="pt-6 border-t border-gold-border/40 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                <button
-                  type="button"
-                  onClick={() => setSelectedService(null)}
-                  className="px-5 py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider border border-gold-border hover:bg-surface text-charcoal text-center cursor-pointer order-2 sm:order-1 transition-colors"
-                >
-                  Close Window
-                </button>
-
-                <a
-                  href={getWhatsAppBookingUrl({ serviceName: selectedService.name })}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-charcoal hover:bg-black text-white shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer order-1 sm:order-2 group"
-                >
-                  <svg className="w-4 h-4 fill-[#25D366] text-[#25D366] shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
-                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                  </svg>
-                  <span>Reserve on WhatsApp</span>
-                </a>
-              </div>
-
             </div>
+
+            {/* Modal Pinned Action Footer (Always visible, perfectly responsive on all devices) */}
+            <div className="p-3.5 sm:px-6 sm:py-4 border-t border-gold-border/30 bg-surface/90 backdrop-blur-xs shrink-0 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
+              <button
+                type="button"
+                onClick={closeServiceModal}
+                className="px-5 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider border border-gold-border/70 hover:bg-white text-charcoal text-center cursor-pointer transition-colors active:scale-98"
+              >
+                Close Window
+              </button>
+
+              <a
+                href={getWhatsAppBookingUrl({ serviceName: selectedService.name })}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-charcoal hover:bg-black text-white shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98 group"
+              >
+                <svg className="w-4 h-4 fill-[#25D366] text-[#25D366] shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                </svg>
+                <span>Reserve on WhatsApp</span>
+              </a>
+            </div>
+
           </div>
         </div>
       )}

@@ -22,11 +22,11 @@ export default function ReviewsCarousel() {
   };
 
   return (
-    <section id="reviews" suppressHydrationWarning className="py-20 sm:py-28 bg-canvas overflow-hidden">
+    <section id="reviews" suppressHydrationWarning className="py-14 sm:py-18 bg-canvas overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Minimalist Google Header Summary Card */}
-        <div suppressHydrationWarning className="p-6 sm:p-8 rounded-3xl bg-white border border-black/[0.06] shadow-sm mb-12 sm:mb-16">
+        <div suppressHydrationWarning className="p-6 sm:p-8 rounded-3xl bg-white border border-black/[0.06] shadow-sm mb-8 sm:mb-10">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
 
             {/* Google Brand Rating Left */}

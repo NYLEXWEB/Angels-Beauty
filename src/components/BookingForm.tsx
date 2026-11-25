@@ -67,11 +67,11 @@ export default function BookingForm() {
   };
 
   return (
-    <section id="booking" suppressHydrationWarning className="py-20 sm:py-28 lg:py-32 bg-surface border-y border-gold-border/30 overflow-x-clip">
+    <section id="booking" suppressHydrationWarning className="py-14 sm:py-18 lg:py-20 bg-surface border-y border-gold-border/30 overflow-x-clip">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Form Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12 space-y-2 sm:space-y-3">
+        <div className="text-center max-w-2xl mx-auto mb-6 sm:mb-8 space-y-2 sm:space-y-3">
           <div className="inline-flex items-center gap-2 text-[11px] sm:text-xs font-sans font-semibold tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold-deep">
             <span>Instant Reservation</span>
           </div>

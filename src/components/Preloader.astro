@@ -2,10 +2,11 @@
 /**
  * Master Haute-Couture Preloader for Angels Beauty Parlour & Bridal Studio
  * 
- * Strict Features:
- * - Truly preloads and decodes EVERY photo (34 high-res images) into GPU/RAM memory
- * - Pre-buffers all 9 cinematic video reels so they play without buffering on scroll or fullscreen
- * - Real-time percentage counter (0% to 100%) tracking actual asset readiness
+ * Strict Performance Features:
+ * - Truly preloads and GPU-decodes EVERY photography asset (34 high-res images) before site entrance
+ * - Strict gating: Website is revealed ONLY AFTER 100% of images are loaded and decoded
+ * - Real-time percentage counter (0% to 100%) tracking actual image readiness
+ * - ZERO video buffering in preloader: Videos are lazy-loaded strictly on user click/play
  * - Elegant gold track, emblem rotation, and smooth curtain reveal
  * - Instant scroll unlock and trigger of hero entrance sequence
  */
@@ -34,7 +35,7 @@
       <!-- Inner glowing circle -->
       <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-white border border-gold/40 shadow-[0_8px_24px_rgba(158,123,53,0.18)] flex items-center justify-center overflow-hidden">
         <img 
-          src="/images/logo.png" 
+          src="/images/logo.webp" 
           alt="Angels Beauty Parlour Emblem" 
           class="w-full h-full object-cover rounded-full" 
           width="96" 
@@ -94,146 +95,124 @@
   const barEl = document.getElementById('preloader-bar');
   const statusEl = document.getElementById('preloader-status');
 
-  // Complete List of All 34 Photography Assets on Site
-  const ALL_IMAGES = [
+  // Complete List of All 34 Photography Assets on the Website
+  const CORE_IMAGES = [
     // Core & Studio Atmosphere
-    '/images/logo.png',
-    '/images/hero-bg.jpg',
-    '/images/bridal-church.jpg',
-    '/images/bridal-room.jpg',
-    '/images/bridal-suite.jpg',
-    '/images/pedicure-spa.jpg',
-    '/images/skin-hair-lounge.jpg',
-    '/images/styling-aisle.jpg',
+    '/images/logo.webp',
+    '/images/hero-bg.webp',
+    '/images/bridal-church.webp',
+    '/images/bridal-room.webp',
+    '/images/bridal-suite.webp',
+    '/images/pedicure-spa.webp',
+    '/images/skin-hair-lounge.webp',
+    '/images/styling-aisle.webp',
 
     // 15 Real Bridal Portfolio Photos (Gallery Section)
-    '/images/gallery/gallery-01.jpg',
-    '/images/gallery/gallery-02.jpg',
-    '/images/gallery/gallery-03.jpg',
-    '/images/gallery/gallery-04.jpg',
-    '/images/gallery/gallery-05.jpg',
-    '/images/gallery/gallery-06.jpg',
-    '/images/gallery/gallery-07.jpg',
-    '/images/gallery/gallery-08.jpg',
-    '/images/gallery/gallery-09.jpg',
-    '/images/gallery/gallery-10.jpg',
-    '/images/gallery/gallery-11.jpg',
-    '/images/gallery/gallery-12.jpg',
-    '/images/gallery/gallery-13.jpg',
-    '/images/gallery/gallery-14.jpg',
-    '/images/gallery/gallery-15.jpg',
+    '/images/gallery/gallery-01.webp',
+    '/images/gallery/gallery-02.webp',
+    '/images/gallery/gallery-03.webp',
+    '/images/gallery/gallery-04.webp',
+    '/images/gallery/gallery-05.webp',
+    '/images/gallery/gallery-06.webp',
+    '/images/gallery/gallery-07.webp',
+    '/images/gallery/gallery-08.webp',
+    '/images/gallery/gallery-09.webp',
+    '/images/gallery/gallery-10.webp',
+    '/images/gallery/gallery-11.webp',
+    '/images/gallery/gallery-12.webp',
+    '/images/gallery/gallery-13.webp',
+    '/images/gallery/gallery-14.webp',
+    '/images/gallery/gallery-15.webp',
 
     // 11 Services & Treatment Visuals
-    '/images/services/airbrush-bridal.jpg',
-    '/images/services/bridal-hair-styling.jpg',
-    '/images/services/bridal-makeup.jpg',
-    '/images/services/bridal-saree-draping.jpg',
-    '/images/services/glass-skin-bridal.jpg',
-    '/images/services/hair-highlights.jpg',
-    '/images/services/hd-bridal-makeup.jpg',
-    '/images/services/keratin-treatment.jpg',
-    '/images/services/korean-facial.jpg',
-    '/images/services/pedicure-spa.jpg',
-    '/images/services/reception-makeup.jpg'
+    '/images/services/airbrush-bridal.webp',
+    '/images/services/bridal-hair-styling.webp',
+    '/images/services/bridal-makeup.webp',
+    '/images/services/bridal-saree-draping.webp',
+    '/images/services/glass-skin-bridal.webp',
+    '/images/services/hair-highlights.webp',
+    '/images/services/hd-bridal-makeup.webp',
+    '/images/services/keratin-treatment.webp',
+    '/images/services/korean-facial.webp',
+    '/images/services/pedicure-spa.webp',
+    '/images/services/reception-makeup.webp'
   ];
 
-  // Complete List of All 9 Cinematic Video Reels
-  const ALL_VIDEOS = [
-    '/videos/angels-reel-1.mp4',
-    '/videos/angels-reel-2.mp4',
-    '/videos/angels-reel-3.mp4',
-    '/videos/angels-reel-4.mp4',
-    '/videos/VID_20261124_143321_853.mp4',
-    '/videos/VID_20261124_143511_546.mp4',
-    '/videos/VID_20261124_143611_495_1.mp4',
-    '/videos/VID_20261124_144422_092.mp4',
-    '/videos/VID_20261124_144509_481.mp4'
-  ];
+  // Discover any additional in-page images
+  const imageSet = new Set(CORE_IMAGES);
+  try {
+    const pageImgs = document.querySelectorAll('img');
+    pageImgs.forEach(function(img) {
+      const src = img.getAttribute('src');
+      if (src && !src.startsWith('data:') && !src.endsWith('.svg')) {
+        imageSet.add(src);
+      }
+    });
+  } catch (e) {
+    // ignore
+  }
 
-  const totalAssets = ALL_IMAGES.length + ALL_VIDEOS.length;
-  let loadedAssets = 0;
-  let targetProgress = 10;
+  const ALL_IMAGES = Array.from(imageSet);
+  const totalImages = ALL_IMAGES.length;
+  let loadedImages = 0;
+  let targetProgress = 5;
   let currentProgress = 0;
   let isDone = false;
 
-  function updateTarget() {
-    const rawProgress = Math.round((loadedAssets / totalAssets) * 100);
+  function onImageDone() {
+    loadedImages++;
+    const rawProgress = Math.round((loadedImages / totalImages) * 100);
     targetProgress = Math.max(targetProgress, Math.min(100, rawProgress));
+    if (loadedImages >= totalImages) {
+      targetProgress = 100;
+    }
   }
 
-  function onAssetFinished() {
-    loadedAssets++;
-    updateTarget();
-  }
-
-  // 1. Preload and GPU-Decode All 34 Images
+  // Preload and GPU-Decode All Images into Browser Memory
   ALL_IMAGES.forEach(function(url) {
     const img = new Image();
     img.src = url;
+
     if (typeof img.decode === 'function') {
-      img.decode().then(onAssetFinished).catch(onAssetFinished);
+      img.decode()
+        .then(onImageDone)
+        .catch(function() {
+          if (img.complete) {
+            onImageDone();
+          } else {
+            img.onload = onImageDone;
+            img.onerror = onImageDone;
+          }
+        });
     } else {
-      img.onload = onAssetFinished;
-      img.onerror = onAssetFinished;
-    }
-  });
-
-  // 2. Preload and Verify Stream Readiness for All 9 Video Reels
-  ALL_VIDEOS.forEach(function(url) {
-    const v = document.createElement('video');
-    v.preload = 'metadata';
-    v.muted = true;
-    v.playsInline = true;
-    v.src = url;
-
-    let finished = false;
-    function finishVideo() {
-      if (finished) return;
-      finished = true;
-      v.removeEventListener('loadedmetadata', finishVideo);
-      v.removeEventListener('canplay', finishVideo);
-      v.removeEventListener('error', finishVideo);
-      onAssetFinished();
-    }
-
-    if (v.readyState >= 1) {
-      finishVideo();
-    } else {
-      v.addEventListener('loadedmetadata', finishVideo, { once: true });
-      v.addEventListener('canplay', finishVideo, { once: true });
-      v.addEventListener('error', finishVideo, { once: true });
-      try {
-        v.load();
-      } catch (e) {
-        finishVideo();
+      if (img.complete) {
+        onImageDone();
+      } else {
+        img.onload = onImageDone;
+        img.onerror = onImageDone;
       }
     }
   });
 
-  // 3. Fonts Readiness Check
+  // Fonts Readiness Check
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(function() {
-      targetProgress = Math.max(targetProgress, 25);
+      targetProgress = Math.max(targetProgress, 15);
     });
   }
 
-  // 4. Fallback Ramp to guarantee site opens within max 2.8 seconds even on slow networks
-  const steadyTimer = setInterval(function() {
-    if (targetProgress < 95) {
-      targetProgress = Math.min(95, targetProgress + 4);
-    }
-  }, 100);
-
-  const maxWait = setTimeout(function() {
+  // Emergency Safety Timeout (12s safeguard for offline/unstable networks so user is never trapped)
+  const emergencyTimeout = setTimeout(function() {
     targetProgress = 100;
-  }, 2600);
+    loadedImages = totalImages;
+  }, 12000);
 
-  // 5. Smooth Haute-Couture Lerp Animation Loop
+  // Smooth Haute-Couture Lerp Animation Loop
   function renderProgress() {
     if (isDone) return;
 
     if (currentProgress < targetProgress) {
-      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.14));
+      const step = Math.max(1, Math.ceil((targetProgress - currentProgress) * 0.16));
       currentProgress = Math.min(targetProgress, currentProgress + step);
     }
 
@@ -244,23 +223,22 @@
     // Refined Editorial Status Labels
     if (statusEl) {
       if (currentProgress < 30) {
-        statusEl.textContent = 'Decoding Studio Imagery...';
+        statusEl.textContent = 'Decoding Studio Atmosphere...';
       } else if (currentProgress < 65) {
-        statusEl.textContent = 'Preloading Real Bridal Gallery...';
-      } else if (currentProgress < 92) {
-        statusEl.textContent = 'Buffering Video Reels...';
+        statusEl.textContent = 'Preloading Bridal Collections...';
+      } else if (currentProgress < 90) {
+        statusEl.textContent = 'Preparing High-Resolution Gallery...';
       } else if (currentProgress < 100) {
-        statusEl.textContent = 'Refining Studio Ambience...';
+        statusEl.textContent = 'Perfecting Studio Ambience...';
       } else {
         statusEl.textContent = 'Welcome to Angels Studio';
       }
     }
 
-    // Completion Trigger
-    if (currentProgress >= 100 && (loadedAssets >= (totalAssets * 0.8) || targetProgress === 100)) {
+    // STRICT COMPLETION: Reveals website ONLY when 100% of images are loaded & decoded
+    if (currentProgress >= 100 && loadedImages >= totalImages) {
       isDone = true;
-      clearInterval(steadyTimer);
-      clearTimeout(maxWait);
+      clearTimeout(emergencyTimeout);
       setTimeout(dismissPreloader, 220);
       return;
     }
@@ -270,7 +248,7 @@
 
   requestAnimationFrame(renderProgress);
 
-  // 6. Dismiss Preloader and Unlock Screen
+  // Dismiss Preloader and Reveal Website
   function dismissPreloader() {
     document.body.style.overflow = '';
 

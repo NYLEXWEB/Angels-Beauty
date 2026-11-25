@@ -2,102 +2,102 @@
 const GALLERY_PHOTOS = [
   {
     id: 1,
-    src: "/images/gallery/gallery-01.jpg",
+    src: "/images/gallery/gallery-01.webp",
     alt: "South Indian bride in orange Kanchipuram silk saree with traditional temple jewelry",
     category: "traditional"
   },
   {
     id: 2,
-    src: "/images/gallery/gallery-02.jpg",
+    src: "/images/gallery/gallery-02.webp",
     alt: "Christian bride in delicate white lace gown holding floral bouquet",
     category: "christian"
   },
   {
     id: 3,
-    src: "/images/gallery/gallery-03.jpg",
+    src: "/images/gallery/gallery-03.webp",
     alt: "Outdoor garden bridal portrait of Christian bride in white dress",
     category: "christian"
   },
   {
     id: 4,
-    src: "/images/gallery/gallery-04.jpg",
+    src: "/images/gallery/gallery-04.webp",
     alt: "South Indian bride in vibrant rani pink silk saree against lush green backdrop",
     category: "traditional"
   },
   {
     id: 5,
-    src: "/images/gallery/gallery-05.jpg",
+    src: "/images/gallery/gallery-05.webp",
     alt: "Bride in radiant crimson red bridal lehenga outdoors",
     category: "lehenga"
   },
   {
     id: 6,
-    src: "/images/gallery/gallery-06.jpg",
+    src: "/images/gallery/gallery-06.webp",
     alt: "Bride in pastel baby pink embroidered lehenga with tropical greenery",
     category: "lehenga"
   },
   {
     id: 7,
-    src: "/images/gallery/gallery-07.jpg",
+    src: "/images/gallery/gallery-07.webp",
     alt: "Bride in soft peach-pink saree with delicate styling",
     category: "traditional"
   },
   {
     id: 8,
-    src: "/images/gallery/gallery-08.jpg",
+    src: "/images/gallery/gallery-08.webp",
     alt: "Kerala bride in red silk saree and antique gold temple jewelry in Wayanad fields",
     category: "traditional"
   },
   {
     id: 9,
-    src: "/images/gallery/gallery-09.jpg",
+    src: "/images/gallery/gallery-09.webp",
     alt: "Traditional Kerala Kasavu white and gold saree bride at temple",
     category: "traditional"
   },
   {
     id: 10,
-    src: "/images/gallery/gallery-10.jpg",
+    src: "/images/gallery/gallery-10.webp",
     alt: "Bride in maroon velvet lehenga in bamboo garden",
     category: "lehenga"
   },
   {
     id: 11,
-    src: "/images/gallery/gallery-11.jpg",
+    src: "/images/gallery/gallery-11.webp",
     alt: "Christian wedding couple portrait with bride in lace gown and groom in burgundy suit",
     category: "christian"
   },
   {
     id: 12,
-    src: "/images/gallery/gallery-12.jpg",
+    src: "/images/gallery/gallery-12.webp",
     alt: "Christian bride smiling with pastel roses wedding bouquet",
     category: "christian"
   },
   {
     id: 13,
-    src: "/images/gallery/gallery-13.jpg",
+    src: "/images/gallery/gallery-13.webp",
     alt: "South Indian bride in heritage orange and gold Kanchipuram saree",
     category: "traditional"
   },
   {
     id: 14,
-    src: "/images/gallery/gallery-14.jpg",
+    src: "/images/gallery/gallery-14.webp",
     alt: "Full-length outdoor bridal portrait of Christian bride in white gown",
     category: "christian"
   },
   {
     id: 15,
-    src: "/images/gallery/gallery-15.jpg",
+    src: "/images/gallery/gallery-15.webp",
     alt: "Close-up portrait of South Indian bride in coral silk saree and bridal jewelry",
     category: "traditional"
   }
 ];
 ---
 
-<section id="gallery" class="py-20 sm:py-28 lg:py-32 bg-canvas overflow-hidden">
+<section id="gallery" class="py-14 sm:py-18 lg:py-20 bg-canvas overflow-hidden">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     
     <!-- Minimalist Section Header -->
-    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 sm:mb-14">
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
       <div class="max-w-2xl space-y-2 sm:space-y-3">
         <span class="text-[11px] sm:text-xs font-sans font-semibold tracking-[0.25em] uppercase text-gold-deep block">
           Portfolio & Real Brides
@@ -164,7 +164,7 @@ const GALLERY_PHOTOS = [
             src={photo.src} 
             alt={photo.alt}
             class="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-            loading="eager"
+            loading="lazy"
             decoding="async"
             width="600"
             height="800"
