@@ -128,7 +128,7 @@ export default function ServicesShowcase() {
   const activeCategoryMeta = CATEGORIES.find(c => c.key === activeCategory);
 
   return (
-    <section id="services" suppressHydrationWarning className="pt-14 sm:pt-20 pb-8 sm:pb-12 bg-canvas relative overflow-x-clip">
+    <section id="services" suppressHydrationWarning className="pt-12 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 bg-canvas relative overflow-x-clip">
 
       {/* Subtle luxury ambient glow */}
       <div className="absolute top-1/4 -left-40 w-96 h-96 bg-gold/5 rounded-full blur-3xl pointer-events-none" />
@@ -430,7 +430,7 @@ export default function ServicesShowcase() {
           ഉദാഹരണത്തിന് Hair Treatments ക്ലിക്ക് ചെയ്താൽ Botox, Keratin, Nanoplastia തുടങ്ങിയ സർവീസുകളുടെ വിവരങ്ങളും ചിത്രങ്ങളും കാണണം."
         */}
         {hasMore && (
-          <div className="pt-4 pb-2 flex flex-col items-center justify-center">
+          <div className="pt-4 pb-4 flex flex-col items-center justify-center">
             <button
               type="button"
               onClick={() => toggleCategoryExpand(activeCategory)}
@@ -468,11 +468,11 @@ export default function ServicesShowcase() {
 
       </div>
 
-      {/* POPUP MODAL: Treatment Dossier Dialog */}
+      {/* POPUP MODAL: Treatment Dossier Dialog (Split Left-Image / Right-Content on Desktop, Luxury Card on Mobile) */}
       {selectedService && (
         <div
           data-lenis-prevent
-          className={`fixed inset-0 z-[200] flex items-center justify-center p-3.5 sm:p-5 md:p-6 transition-all duration-300 ease-out select-none ${
+          className={`fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-5 md:p-6 lg:p-8 transition-all duration-300 ease-out select-none ${
             isModalVisible
               ? 'opacity-100 backdrop-blur-md bg-charcoal/80'
               : 'opacity-0 backdrop-blur-none bg-charcoal/0 pointer-events-none'
@@ -484,108 +484,173 @@ export default function ServicesShowcase() {
         >
           <div
             data-lenis-prevent
-            className={`relative w-full max-w-lg lg:max-w-xl bg-canvas rounded-2xl sm:rounded-3xl border border-gold/40 shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] select-text my-auto ${
+            className={`relative w-full max-w-lg md:max-w-3xl lg:max-w-4xl xl:max-w-[960px] bg-canvas rounded-2xl sm:rounded-3xl border border-gold/40 shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] select-text my-auto ${
               isModalVisible
                 ? 'opacity-100 scale-100 translate-y-0'
                 : 'opacity-0 scale-95 translate-y-3'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Modal Image Header */}
-            <div className="relative h-40 xs:h-44 sm:h-52 md:h-56 w-full shrink-0 overflow-hidden bg-surface">
+            {/* LEFT COLUMN: Large Editorial Portrait Photo Frame (Desktop ~44% width, Mobile rich banner) */}
+            <div className="relative w-full md:w-[44%] lg:w-[42%] h-52 xs:h-60 sm:h-68 md:h-auto shrink-0 bg-charcoal overflow-hidden group">
               <img
                 src={selectedService.image}
                 alt={selectedService.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/40 to-black/25" />
+              
+              {/* Cinematic ambient gradients */}
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/30 to-black/20 md:bg-gradient-to-t md:from-charcoal/80 md:via-transparent md:to-black/30 pointer-events-none" />
 
-              {/* Close Button Top Right */}
+              {/* Floating Luxury Tag on Image */}
+              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 flex items-center gap-2 pointer-events-none z-10">
+                <span className="text-[9.5px] sm:text-[10px] font-sans font-semibold tracking-[0.22em] uppercase px-3 py-1 rounded-full bg-charcoal/75 backdrop-blur-md text-gold-light border border-white/15 shadow-sm">
+                  {selectedService.category.toUpperCase()} • BESPOKE STUDIO
+                </span>
+              </div>
+
+              {/* Mobile-Only Close Button (Pinned top-right on image) */}
               <button
                 type="button"
                 onClick={closeServiceModal}
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-charcoal/70 hover:bg-charcoal text-white flex items-center justify-center backdrop-blur-md transition-all duration-200 cursor-pointer border border-white/20 hover:scale-105 active:scale-95 shadow-lg z-10"
+                className="md:hidden absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-charcoal/70 hover:bg-charcoal text-white flex items-center justify-center backdrop-blur-md transition-all duration-200 cursor-pointer border border-white/20 active:scale-95 shadow-lg z-20"
                 aria-label="Close details"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Text on Image Header */}
-              <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 text-white pointer-events-none">
-                <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-light block mb-1">
-                  {selectedService.category.toUpperCase()} • ANGELS BESPOKE STUDIO
-                </span>
+              {/* Mobile-Only Title Overlay over bottom gradient */}
+              <div className="md:hidden absolute bottom-3 left-4 right-4 text-white pointer-events-none z-10">
                 <h3
                   id="treatment-dialog-title"
-                  className="font-serif text-xl sm:text-2xl md:text-3xl font-medium leading-tight text-white drop-shadow-sm line-clamp-2"
+                  className="font-serif text-xl xs:text-2xl font-medium leading-tight text-white drop-shadow-md line-clamp-2"
                 >
                   {selectedService.name}
                 </h3>
               </div>
+
+              {/* Desktop Bottom Signature Stamp */}
+              <div className="hidden md:flex absolute bottom-5 left-5 right-5 p-3 rounded-2xl bg-black/45 backdrop-blur-md border border-white/15 items-center gap-3 text-white pointer-events-none z-10">
+                <div className="w-8 h-8 rounded-full bg-gold/25 border border-gold/40 flex items-center justify-center shrink-0">
+                  <span className="font-serif text-gold-light text-xs font-semibold">A</span>
+                </div>
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[11px] font-medium text-white tracking-wide truncate">Angels Beauty & Bridal</span>
+                  <span className="text-[9px] text-gold-light/80 tracking-wider uppercase">Private Bespoke Suite</span>
+                </div>
+              </div>
             </div>
 
-            {/* Modal Body Content (Scrollable with smooth luxury scrollbar) */}
-            <div className="p-4 sm:p-6 md:p-7 space-y-4 sm:space-y-5 overflow-y-auto overscroll-contain flex-1 custom-modal-scrollbar">
+            {/* RIGHT COLUMN: Treatment Dossier Body & Action Controls */}
+            <div className="flex-1 flex flex-col justify-between overflow-hidden bg-canvas min-w-0">
 
-              {/* Duration Pill */}
-              {selectedService.duration && (
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-gold-border/60 text-charcoal text-xs font-sans font-medium">
-                  <Clock className="w-3.5 h-3.5 text-gold-deep shrink-0" />
-                  <span>Estimated Duration: <strong className="font-semibold text-charcoal">{selectedService.duration}</strong></span>
+              {/* Desktop Header Bar with Close Button */}
+              <div className="hidden md:flex items-center justify-between px-6 lg:px-8 pt-5 pb-3 border-b border-gold-border/25 bg-surface/30 shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-gold-deep animate-pulse" />
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-[0.2em] text-muted">
+                    Treatment Dossier & Inclusions
+                  </span>
                 </div>
-              )}
 
-              {/* Description */}
-              <div className="space-y-1.5">
-                <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
-                  Treatment Overview & Philosophy
-                </h4>
-                <p className="text-xs sm:text-[13px] md:text-sm text-muted font-sans font-light leading-relaxed">
-                  {selectedService.detailedInfo || selectedService.description}
-                </p>
+                <button
+                  type="button"
+                  onClick={closeServiceModal}
+                  className="w-8 h-8 rounded-full bg-surface hover:bg-surface-hover text-charcoal hover:text-black flex items-center justify-center transition-all duration-200 cursor-pointer border border-gold-border/40 hover:scale-105 active:scale-95 shadow-2xs"
+                  aria-label="Close details"
+                >
+                  <X className="w-4 h-4 text-charcoal" />
+                </button>
               </div>
 
-              {/* Benefits Checklist */}
-              {selectedService.benefits && selectedService.benefits.length > 0 && (
-                <div className="space-y-2.5 pt-3 border-t border-gold-border/25">
-                  <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
-                    Key Highlights & Inclusions
-                  </h4>
-                  <ul className="space-y-2">
-                    {selectedService.benefits.map((b, i) => (
-                      <li key={i} className="flex items-start gap-2.5 text-xs sm:text-[13px] font-sans text-charcoal/90">
-                        <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                        <span className="leading-snug">{b}</span>
-                      </li>
-                    ))}
-                  </ul>
+              {/* Scrollable Content Body */}
+              <div className="p-5 sm:p-6 lg:p-7 space-y-4 sm:space-y-5 overflow-y-auto overscroll-contain flex-1 custom-modal-scrollbar">
+
+                {/* Desktop Title & Eyebrow */}
+                <div className="hidden md:block space-y-1">
+                  <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-deep block">
+                    {selectedService.category.toUpperCase()} • CEREMONIAL ARTISTRY
+                  </span>
+                  <h3 className="font-serif text-2xl lg:text-3xl font-medium leading-tight text-charcoal">
+                    {selectedService.name}
+                  </h3>
                 </div>
-              )}
 
-            </div>
+                {/* Duration Pill & Key Meta Badges */}
+                <div className="flex flex-wrap items-center gap-2">
+                  {selectedService.duration && (
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-gold-border/60 text-charcoal text-xs font-sans font-medium shadow-2xs">
+                      <Clock className="w-3.5 h-3.5 text-gold-deep shrink-0" />
+                      <span>Estimated Duration: <strong className="font-semibold text-charcoal">{selectedService.duration}</strong></span>
+                    </div>
+                  )}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50/80 border border-emerald-200/60 text-emerald-800 text-[11px] font-sans font-medium">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-600" />
+                    <span>Private Suite Session</span>
+                  </div>
+                </div>
 
-            {/* Modal Pinned Action Footer (Always visible, perfectly responsive on all devices) */}
-            <div className="p-3.5 sm:px-6 sm:py-4 border-t border-gold-border/30 bg-surface/90 backdrop-blur-xs shrink-0 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
-              <button
-                type="button"
-                onClick={closeServiceModal}
-                className="px-5 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider border border-gold-border/70 hover:bg-white text-charcoal text-center cursor-pointer transition-colors active:scale-98"
-              >
-                Close Window
-              </button>
+                {/* Treatment Overview & Philosophy */}
+                <div className="space-y-1.5">
+                  <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+                    Treatment Overview & Philosophy
+                  </h4>
+                  <p className="text-xs sm:text-[13px] md:text-sm text-muted font-sans font-light leading-relaxed">
+                    {selectedService.detailedInfo || selectedService.description}
+                  </p>
+                </div>
 
-              <a
-                href={getWhatsAppBookingUrl({ serviceName: selectedService.name })}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-charcoal hover:bg-black text-white shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98 group"
-              >
-                <svg className="w-4 h-4 fill-[#25D366] text-[#25D366] shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
-                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
-                </svg>
-                <span>Reserve on WhatsApp</span>
-              </a>
+                {/* Benefits Checklist */}
+                {selectedService.benefits && selectedService.benefits.length > 0 && (
+                  <div className="space-y-2.5 pt-3 border-t border-gold-border/25">
+                    <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+                      Key Highlights & Inclusions
+                    </h4>
+                    <ul className="space-y-2">
+                      {selectedService.benefits.map((b, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs sm:text-[13px] font-sans text-charcoal/90">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                          <span className="leading-snug">{b}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Hygiene Reassurance Pill */}
+                <div className="p-3 rounded-2xl bg-surface/70 border border-gold-border/30 flex items-start gap-2.5 text-[11px] sm:text-xs font-sans text-muted">
+                  <ShieldCheck className="w-4 h-4 text-gold-deep shrink-0 mt-0.5" />
+                  <p className="leading-relaxed">
+                    Performed in private air-conditioned suites using sterilized disposables and hypoallergenic international formulations.
+                  </p>
+                </div>
+
+              </div>
+
+              {/* Action Buttons in Modal Footer (Always Pinned, Never Cut Off) */}
+              <div className="p-3.5 sm:px-6 lg:px-7 sm:py-4 border-t border-gold-border/30 bg-surface/90 backdrop-blur-xs shrink-0 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={closeServiceModal}
+                  className="px-5 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider border border-gold-border/80 hover:bg-white text-charcoal text-center cursor-pointer transition-colors active:scale-98"
+                >
+                  Close Window
+                </button>
+
+                <a
+                  href={getWhatsAppBookingUrl({ serviceName: selectedService.name })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider bg-charcoal hover:bg-black text-white shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98 group"
+                >
+                  <svg className="w-4 h-4 fill-[#25D366] text-[#25D366] shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                    <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z" />
+                  </svg>
+                  <span>Reserve on WhatsApp</span>
+                </a>
+              </div>
+
             </div>
 
           </div>

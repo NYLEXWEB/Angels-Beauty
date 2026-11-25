@@ -285,11 +285,11 @@ export default function NailPortfolio() {
 
       </div>
 
-      {/* Detail Modal */}
+      {/* Detail Modal (Split Left-Image / Right-Content on Desktop, Luxury Card on Mobile) */}
       {activeModal && (
         <div
           data-lenis-prevent
-          className={`fixed inset-0 z-[200] flex items-center justify-center p-3.5 sm:p-5 md:p-6 transition-all duration-300 ease-out select-none ${
+          className={`fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-5 md:p-6 lg:p-8 transition-all duration-300 ease-out select-none ${
             isModalVisible
               ? 'opacity-100 backdrop-blur-md bg-charcoal/80'
               : 'opacity-0 backdrop-blur-none bg-charcoal/0 pointer-events-none'
@@ -300,102 +300,144 @@ export default function NailPortfolio() {
         >
           <div
             data-lenis-prevent
-            className={`relative w-full max-w-lg bg-canvas rounded-2xl sm:rounded-3xl border border-gold/40 shadow-2xl overflow-hidden flex flex-col max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] select-text my-auto ${
+            className={`relative w-full max-w-lg md:max-w-3xl lg:max-w-4xl bg-canvas rounded-2xl sm:rounded-3xl border border-gold/40 shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[calc(100dvh-1.5rem)] sm:max-h-[calc(100dvh-3rem)] transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] select-text my-auto ${
               isModalVisible
                 ? 'opacity-100 scale-100 translate-y-0'
                 : 'opacity-0 scale-95 translate-y-3'
             }`}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Header Image */}
-            <div className="relative h-44 sm:h-56 overflow-hidden bg-surface shrink-0">
+            {/* Left Column: Image Frame */}
+            <div className="relative w-full md:w-[44%] lg:w-[42%] h-52 xs:h-60 sm:h-68 md:h-auto shrink-0 bg-charcoal overflow-hidden group">
               <img
                 src={activeModal.image}
                 alt={activeModal.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-transparent to-black/20" />
-              
+              <div className="absolute inset-0 bg-gradient-to-t from-charcoal/95 via-charcoal/30 to-black/20 md:bg-gradient-to-t md:from-charcoal/80 md:via-transparent md:to-black/30 pointer-events-none" />
+
+              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 flex items-center gap-2 pointer-events-none z-10">
+                <span className="text-[9.5px] sm:text-[10px] font-sans font-semibold tracking-[0.22em] uppercase px-3 py-1 rounded-full bg-charcoal/75 backdrop-blur-md text-gold-light border border-white/15 shadow-sm">
+                  {activeModal.category} • NAIL LOUNGE
+                </span>
+              </div>
+
+              {/* Mobile Close Button */}
               <button
                 type="button"
                 onClick={closeNailModal}
-                className="absolute top-3 right-3 sm:top-4 sm:right-4 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-charcoal/70 hover:bg-charcoal text-white flex items-center justify-center backdrop-blur-md transition-all duration-200 cursor-pointer border border-white/20 hover:scale-105 active:scale-95 shadow-lg z-10"
+                className="md:hidden absolute top-3.5 right-3.5 w-9 h-9 rounded-full bg-charcoal/70 hover:bg-charcoal text-white flex items-center justify-center backdrop-blur-md transition-all duration-200 cursor-pointer border border-white/20 active:scale-95 shadow-lg z-20"
                 aria-label="Close details"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              <div className="absolute bottom-3 left-4 right-4 sm:bottom-4 sm:left-6 sm:right-6 text-white pointer-events-none">
-                <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.2em] text-gold-light block mb-1">
-                  {activeModal.category} • CUSTOM NAIL ART
-                </span>
-                <h3 className="font-serif text-xl sm:text-2xl font-medium leading-tight text-white drop-shadow-sm">
+              {/* Mobile Title Overlay */}
+              <div className="md:hidden absolute bottom-3 left-4 right-4 text-white pointer-events-none z-10">
+                <h3 className="font-serif text-xl xs:text-2xl font-medium leading-tight text-white drop-shadow-md line-clamp-2">
                   {activeModal.name}
                 </h3>
               </div>
             </div>
 
-            {/* Scrollable Body */}
-            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto overscroll-contain flex-1 custom-modal-scrollbar">
-              <div className="flex items-center justify-between">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface border border-gold-border/60 text-charcoal text-xs font-sans font-medium">
-                  <Clock className="w-3.5 h-3.5 text-gold-deep" />
-                  <span>Duration: <strong>{activeModal.duration}</strong></span>
+            {/* Right Column: Content Body & Actions */}
+            <div className="flex-1 flex flex-col justify-between overflow-hidden bg-canvas min-w-0">
+
+              {/* Desktop Header Bar with Close Button */}
+              <div className="hidden md:flex items-center justify-between px-6 lg:px-8 pt-5 pb-3 border-b border-gold-border/25 bg-surface/30 shrink-0">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-gold-deep animate-pulse" />
+                  <span className="text-[11px] font-sans font-medium uppercase tracking-[0.2em] text-muted">
+                    Bespoke Nail Artistry Specs
+                  </span>
                 </div>
-                <span className="text-xs font-sans text-gold-deep font-semibold">
-                  {activeModal.price}
-                </span>
+
+                <button
+                  type="button"
+                  onClick={closeNailModal}
+                  className="w-8 h-8 rounded-full bg-surface hover:bg-surface-hover text-charcoal hover:text-black flex items-center justify-center transition-all duration-200 cursor-pointer border border-gold-border/40 hover:scale-105 active:scale-95 shadow-2xs"
+                  aria-label="Close details"
+                >
+                  <X className="w-4 h-4 text-charcoal" />
+                </button>
               </div>
 
-              <div className="space-y-1.5">
-                <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
-                  Artistry Details & Application
-                </h4>
-                <p className="text-xs sm:text-sm text-muted font-sans leading-relaxed">
-                  {activeModal.description}
-                </p>
+              {/* Scrollable Body */}
+              <div className="p-5 sm:p-6 lg:p-7 space-y-4 sm:space-y-5 overflow-y-auto overscroll-contain flex-1 custom-modal-scrollbar">
+                
+                {/* Desktop Title & Category */}
+                <div className="hidden md:block space-y-1">
+                  <span className="text-[10px] font-sans font-semibold uppercase tracking-[0.22em] text-gold-deep block">
+                    {activeModal.category} • BESPOKE NAILS
+                  </span>
+                  <h3 className="font-serif text-2xl lg:text-3xl font-medium leading-tight text-charcoal">
+                    {activeModal.name}
+                  </h3>
+                </div>
+
+                {/* Duration & Price Pills */}
+                <div className="flex flex-wrap items-center gap-2">
+                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface border border-gold-border/60 text-charcoal text-xs font-sans font-medium shadow-2xs">
+                    <Clock className="w-3.5 h-3.5 text-gold-deep shrink-0" />
+                    <span>Duration: <strong className="font-semibold text-charcoal">{activeModal.duration}</strong></span>
+                  </div>
+                  <span className="text-xs font-sans text-gold-deep font-semibold px-3 py-1.5 rounded-full bg-surface border border-gold-border/40">
+                    {activeModal.price}
+                  </span>
+                </div>
+
+                <div className="space-y-1.5">
+                  <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+                    Artistry Details & Application
+                  </h4>
+                  <p className="text-xs sm:text-[13px] md:text-sm text-muted font-sans font-light leading-relaxed">
+                    {activeModal.description}
+                  </p>
+                </div>
+
+                <div className="space-y-2 pt-3 border-t border-gold-border/25">
+                  <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
+                    Studio Inclusions & Standards
+                  </h4>
+                  <ul className="space-y-2 text-xs sm:text-[13px] text-charcoal/90 font-sans">
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <span>Cuticle care & precision nail sculpting included</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <span>Imported non-yellowing high-gloss protective topcoat</span>
+                    </li>
+                    <li className="flex items-center gap-2">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                      <span>Nourishing botanical cuticle oil hydration finish</span>
+                    </li>
+                  </ul>
+                </div>
+
               </div>
 
-              <div className="space-y-2 pt-2 border-t border-gold-border/20">
-                <h4 className="text-xs font-sans font-semibold uppercase tracking-wider text-charcoal">
-                  Studio Inclusions
-                </h4>
-                <ul className="space-y-1.5 text-xs text-charcoal/80 font-sans">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Cuticle care & nail shaping included</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Imported non-yellowing high-gloss protective topcoat</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                    <span>Nourishing almond cuticle oil finish</span>
-                  </li>
-                </ul>
+              {/* Pinned Action Footer */}
+              <div className="p-3.5 sm:px-6 lg:px-7 sm:py-4 border-t border-gold-border/30 bg-surface/90 backdrop-blur-xs shrink-0 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
+                <button
+                  type="button"
+                  onClick={closeNailModal}
+                  className="px-5 py-2.5 sm:py-3 rounded-full text-xs font-sans font-semibold uppercase tracking-wider border border-gold-border/80 hover:bg-white text-charcoal text-center cursor-pointer transition-colors active:scale-98"
+                >
+                  Close Window
+                </button>
+
+                <a
+                  href={getWhatsAppBookingUrl({ serviceName: `Nail Studio: ${activeModal.name}` })}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-2.5 sm:py-3 rounded-full bg-charcoal hover:bg-black text-white text-xs font-sans font-semibold uppercase tracking-wider shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
+                >
+                  Reserve on WhatsApp
+                </a>
               </div>
-            </div>
 
-            {/* Pinned Action Footer */}
-            <div className="p-3.5 sm:px-6 sm:py-4 border-t border-gold-border/30 bg-surface/90 backdrop-blur-xs shrink-0 flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3">
-              <button
-                type="button"
-                onClick={closeNailModal}
-                className="px-5 py-2.5 rounded-full text-xs font-sans font-semibold uppercase tracking-wider border border-gold-border/70 hover:bg-white text-charcoal text-center cursor-pointer transition-colors active:scale-98"
-              >
-                Close Window
-              </button>
-
-              <a
-                href={getWhatsAppBookingUrl({ serviceName: `Nail Studio: ${activeModal.name}` })}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-2.5 rounded-full bg-charcoal hover:bg-black text-white text-xs font-sans font-semibold uppercase tracking-wider shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer active:scale-98"
-              >
-                Reserve on WhatsApp
-              </a>
             </div>
 
           </div>
