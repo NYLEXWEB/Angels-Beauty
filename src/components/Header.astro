@@ -114,7 +114,7 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
     </nav>
 
     <!-- Header Actions -->
-    <div class="flex items-center gap-3 shrink-0">
+    <div class="flex items-center gap-2.5 sm:gap-3 shrink-0">
       <!-- Direct Call Button -->
       <a 
         href={`tel:${SITE_CONFIG.contact.phoneTel}`} 
@@ -137,7 +137,7 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
       <button 
         type="button" 
         id="mobile-menu-trigger" 
-        class="lg:hidden w-10 h-10 rounded-full border border-gold-border/70 flex items-center justify-center text-charcoal bg-white/80 backdrop-blur-xs hover:bg-surface transition-colors shadow-2xs cursor-pointer"
+        class="lg:hidden w-10 h-10 rounded-full border border-gold-border/70 flex items-center justify-center text-charcoal bg-white/80 backdrop-blur-xs hover:bg-surface transition-colors shadow-2xs cursor-pointer z-50 relative"
         aria-label="Toggle navigation menu"
         aria-expanded="false"
       >
@@ -152,7 +152,7 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
   </div>
 </header>
 
-<!-- Mobile Drawer Overlay (Fixed Fullscreen Backdrop & Floating Luxury Card) -->
+<!-- Mobile Minimalist Luxury Menu Overlay -->
 <div 
   id="mobile-menu-drawer" 
   class="fixed inset-0 z-[95] hidden lg:hidden"
@@ -160,80 +160,106 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
   aria-modal="true"
   aria-label="Mobile Navigation"
 >
-  <!-- Backdrop Blur: click outside to close -->
-  <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/45 backdrop-blur-sm transition-opacity duration-300"></div>
+  <!-- Dark Backdrop Overlay -->
+  <div id="mobile-menu-backdrop" class="absolute inset-0 bg-black/50 backdrop-blur-md transition-opacity duration-300"></div>
 
-  <!-- Floating Menu Card: Sits neatly below header -->
-  <div class="relative z-10 w-full h-full pt-18 sm:pt-22 px-3 sm:px-6 pb-6 flex flex-col pointer-events-none">
-    <div class="pointer-events-auto w-full max-w-md mx-auto bg-[#FDFBF7] rounded-[28px] border border-gold-border/80 p-5 sm:p-6 shadow-2xl flex flex-col justify-between max-h-[calc(100dvh-95px)] overflow-y-auto">
-      <div class="flex flex-col gap-2.5 pt-1">
-        <span class="text-[10px] font-sans font-semibold tracking-[0.25em] uppercase text-muted border-b border-gold-border/30 pb-2">
-          Menu Navigation
+  <!-- Minimalist Floating Luxury Menu Container -->
+  <div class="relative z-10 w-full h-full pt-18 sm:pt-22 px-4 pb-6 flex flex-col justify-start pointer-events-none">
+    <div class="pointer-events-auto w-full max-w-sm mx-auto bg-[#FCFBF8] rounded-3xl border border-gold-border/60 p-5 sm:p-6 shadow-[0_20px_50px_rgba(0,0,0,0.25)] flex flex-col gap-5 max-h-[calc(100dvh-95px)] overflow-y-auto">
+      
+      <!-- Section 1: Salon & Bridal Artistry -->
+      <div class="flex flex-col">
+        <span class="text-[9.5px] font-sans font-semibold tracking-[0.28em] uppercase text-gold-deep/80 pb-2">
+          Salon Artistry
         </span>
-        <a href="/services" class={`mobile-nav-link py-2.5 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/20 ${
-          isServicesActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
-        }`}>
-          <span>Services & Treatments</span>
-          <span class="text-xs text-gold-deep font-sans">100+ Menu →</span>
-        </a>
-        <a href="/bridal" class={`mobile-nav-link py-2.5 text-xl font-serif transition-colors flex items-center justify-between border-b border-gold-border/20 ${
-          isBridalActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
-        }`}>
-          <span>Bridal Packages</span>
-          <span class="text-[10px] uppercase font-sans tracking-widest px-2.5 py-0.5 rounded-full bg-gold/20 text-gold-deep">Featured</span>
-        </a>
-        <a href="/about" class={`mobile-nav-link py-2.5 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/20 ${
-          isAboutActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
-        }`}>
-          <span>About Our Studio</span>
-          <span class="text-xs text-muted/60 font-sans">→</span>
-        </a>
-        <a href="/gallery" class={`mobile-nav-link py-2.5 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/20 ${
-          isGalleryActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
-        }`}>
-          <span>Salon Gallery</span>
-          <span class="text-xs text-muted/60 font-sans">15 Photos →</span>
-        </a>
-        <a href="/reviews" class={`mobile-nav-link py-2.5 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between border-b border-gold-border/20 ${
-          isReviewsActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
-        }`}>
-          <span>Client Reviews</span>
-          <span class="text-xs text-muted/60 font-sans">4.9 ★ →</span>
-        </a>
-        <a href="/contact" class={`mobile-nav-link py-2.5 text-xl font-serif hover:text-gold-deep transition-colors flex items-center justify-between ${
-          isContactActive ? 'text-gold-deep font-semibold' : 'text-charcoal'
-        }`}>
-          <span>Find Studio & Hours</span>
-          <span class="text-xs text-muted/60 font-sans">→</span>
-        </a>
+        <div class="flex flex-col divide-y divide-black/[0.05]">
+          <a href="/services" class={`mobile-nav-link py-2.5 text-lg font-serif transition-colors flex items-center justify-between ${
+            isServicesActive ? 'text-gold-deep font-semibold' : 'text-charcoal hover:text-gold-deep'
+          }`}>
+            <span>Services & Hair Spa</span>
+            <span class="text-xs text-muted/40 font-sans">→</span>
+          </a>
+          <a href="/bridal" class={`mobile-nav-link py-2.5 text-lg font-serif transition-colors flex items-center justify-between ${
+            isBridalActive ? 'text-gold-deep font-semibold' : 'text-charcoal hover:text-gold-deep'
+          }`}>
+            <span>Bridal Packages</span>
+            <span class="text-xs text-muted/40 font-sans">→</span>
+          </a>
+          <a href="/gallery" class={`mobile-nav-link py-2.5 text-lg font-serif transition-colors flex items-center justify-between ${
+            isGalleryActive ? 'text-gold-deep font-semibold' : 'text-charcoal hover:text-gold-deep'
+          }`}>
+            <span>Portfolio Gallery</span>
+            <span class="text-xs text-muted/40 font-sans">→</span>
+          </a>
+        </div>
       </div>
 
-      <!-- Mobile Drawer Footer -->
-      <div class="pt-4 pb-2 border-t border-gold-border/40 flex flex-col gap-3.5 mt-5">
-        <div class="space-y-0.5">
-          <p class="text-xs font-semibold text-charcoal uppercase tracking-wider">Angels Beauty Parlour & Bridal</p>
-          <p class="text-xs text-muted leading-relaxed">{SITE_CONFIG.address.full}</p>
-          <p class="text-xs text-gold-deep font-semibold pt-0.5">Open All Days • 9:00 AM to 8:00 PM</p>
+      <!-- Section 2: Studio & Experiences -->
+      <div class="flex flex-col pt-1">
+        <span class="text-[9.5px] font-sans font-semibold tracking-[0.28em] uppercase text-gold-deep/80 pb-2">
+          Studio Experience
+        </span>
+        <div class="flex flex-col divide-y divide-black/[0.05]">
+          <a href="/about" class={`mobile-nav-link py-2.5 text-lg font-serif transition-colors flex items-center justify-between ${
+            isAboutActive ? 'text-gold-deep font-semibold' : 'text-charcoal hover:text-gold-deep'
+          }`}>
+            <span>About Our Studio</span>
+            <span class="text-xs text-muted/40 font-sans">→</span>
+          </a>
+          <a href="/reviews" class={`mobile-nav-link py-2.5 text-lg font-serif transition-colors flex items-center justify-between ${
+            isReviewsActive ? 'text-gold-deep font-semibold' : 'text-charcoal hover:text-gold-deep'
+          }`}>
+            <span>Client Reviews</span>
+            <span class="text-xs text-muted/40 font-sans">→</span>
+          </a>
+          <a href="/contact" class={`mobile-nav-link py-2.5 text-lg font-serif transition-colors flex items-center justify-between ${
+            isContactActive ? 'text-gold-deep font-semibold' : 'text-charcoal hover:text-gold-deep'
+          }`}>
+            <span>Studio Location & Hours</span>
+            <span class="text-xs text-muted/40 font-sans">→</span>
+          </a>
         </div>
+      </div>
 
-        <div class="grid grid-cols-2 gap-2.5 pt-1">
+      <!-- Actions Section: WhatsApp & Direct Call -->
+      <div class="pt-3 border-t border-black/[0.06] flex flex-col gap-2.5">
+        <div class="grid grid-cols-2 gap-2.5">
+          <!-- WhatsApp Action Button -->
+          <a 
+            href={SITE_CONFIG.contact.whatsappUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 py-3 px-3.5 rounded-2xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 text-[#128C7E] transition-all duration-200 active:scale-97 text-xs font-sans font-semibold tracking-wide"
+            aria-label="Chat on WhatsApp"
+          >
+            <svg class="w-4 h-4 fill-current text-[#25D366] shrink-0" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+            </svg>
+            <span>WhatsApp</span>
+          </a>
+
+          <!-- Call Action Button -->
           <a 
             href={`tel:${SITE_CONFIG.contact.phoneTel}`} 
-            class="flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl border border-gold-border text-xs font-semibold uppercase tracking-wider text-charcoal bg-surface hover:bg-surface-hover transition-colors"
+            class="flex items-center justify-center gap-2 py-3 px-3.5 rounded-2xl bg-charcoal hover:bg-black text-white transition-all duration-200 active:scale-97 text-xs font-sans font-semibold tracking-wide shadow-xs"
+            aria-label="Call salon directly"
           >
-            <svg class="w-3.5 h-3.5 text-gold-deep" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-3.5 h-3.5 text-gold-light shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
             </svg>
-            <span>Call Salon</span>
-          </a>
-          <a 
-            href="/booking" 
-            class="mobile-nav-link flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-xl text-xs font-semibold uppercase tracking-wider text-charcoal bg-gold hover:bg-gold-hover transition-colors shadow-xs"
-          >
-            <span>Book Now</span>
+            <span>Call Directly</span>
           </a>
         </div>
+
+        <!-- Book Appointment Button -->
+        <a 
+          href="/booking" 
+          class="mobile-nav-link w-full py-3 rounded-2xl bg-gold hover:bg-gold-hover text-charcoal font-sans font-semibold text-xs uppercase tracking-wider text-center transition-all duration-200 active:scale-98 shadow-xs"
+        >
+          Book Appointment Online
+        </a>
       </div>
+
     </div>
   </div>
 </div>
@@ -247,7 +273,7 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
   const closeIcon = document.getElementById('close-icon');
   const navLinks = document.querySelectorAll('.mobile-nav-link');
 
-  // Handle scroll transition: Full-width modern Apple-style fixed navbar with smooth glassmorphism
+  // Handle scroll transition: Full-width modern Apple-style fixed navbar
   let wasScrolled = false;
   function handleScroll() {
     const isScrolled = window.scrollY > 25;
@@ -285,6 +311,10 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
     drawer?.classList.remove('hidden');
     hamburgerIcon?.classList.add('hidden');
     closeIcon?.classList.remove('hidden');
+    
+    // Stop background scroll completely (both Lenis and browser native scroll)
+    window.__lenis?.stop();
+    document.documentElement.classList.add('overflow-hidden');
     document.body.classList.add('overflow-hidden');
   }
 
@@ -293,6 +323,10 @@ const isContactActive = currentPath === '/contact' || currentPath === '/contact/
     drawer?.classList.add('hidden');
     hamburgerIcon?.classList.remove('hidden');
     closeIcon?.classList.add('hidden');
+
+    // Resume scroll smoothly
+    window.__lenis?.start();
+    document.documentElement.classList.remove('overflow-hidden');
     document.body.classList.remove('overflow-hidden');
   }
 
