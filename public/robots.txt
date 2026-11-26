@@ -1,0 +1,21 @@
+# Robots.txt for Angels Beauty Parlour and Bridal Studio
+# Website: https://angelsbeautyparlour.in
+# Location: PP Building, Near St Joseph's Hospital, Mananthavady, Wayanad, Kerala 670645
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /_astro/
+
+# Search Engine Specific
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /images/
+
+User-agent: Bingbot
+Allow: /
+
+# Sitemap Index
+Sitemap: https://angelsbeautyparlour.in/sitemap-index.xml

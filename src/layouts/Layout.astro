@@ -3,27 +3,110 @@ import '../styles/global.css';
 import { SITE_CONFIG } from '../config/site';
 import Preloader from '../components/Preloader.astro';
 
+export interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  keywords?: string;
+  breadcrumbs?: BreadcrumbItem[];
+  faqs?: FAQItem[];
+  type?: 'website' | 'article' | 'service';
 }
 
 const {
-  title = "Angels Beauty Parlour and Bridal Studio | Wayanad, Kerala",
-  description = "Wayanad's signature destination for bespoke bridal makeup, HD beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady.",
-  ogImage = "/images/studio/bridal-church.webp"
+  title = "Best Bridal Makeup in Wayanad | Angels Beauty Parlour & Studio",
+  description = "Wayanad's signature destination for bespoke bridal makeup, HD airbrush beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady. Open daily 9 AM – 8 PM.",
+  ogImage = "/images/bridal-church.webp",
+  keywords = "bridal makeup wayanad, best beauty parlour in mananthavady, bridal studio mananthavady, HD bridal makeup kerala, glass skin facial wayanad, hair botox mananthavady, nanoplastia wayanad, airbrush makeup wayanad, wedding makeup artist wayanad",
+  breadcrumbs = [],
+  faqs = [],
+  type = 'website'
 } = Astro.props;
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site || 'https://angelsbeautyparlour.in');
+const siteUrl = Astro.site ? Astro.site.toString().replace(/\/$/, '') : 'https://angelsbeautyparlour.in';
+const pathname = Astro.url.pathname;
+const canonicalURL = new URL(pathname, siteUrl).toString();
 
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "BeautySalon",
+// Generate fully-qualified absolute OpenGraph image URL
+const absoluteOgImage = ogImage.startsWith('http') 
+  ? ogImage 
+  : `${siteUrl}${ogImage.startsWith('/') ? '' : '/'}${ogImage}`;
+
+// Dynamic Breadcrumb Schema
+const defaultBreadcrumbs: BreadcrumbItem[] = [
+  { name: "Home", url: `${siteUrl}/` }
+];
+
+if (breadcrumbs.length > 0) {
+  defaultBreadcrumbs.push(...breadcrumbs.map(b => ({
+    name: b.name,
+    url: b.url.startsWith('http') ? b.url : `${siteUrl}${b.url.startsWith('/') ? '' : '/'}${b.url}`
+  })));
+} else if (pathname !== '/') {
+  const cleanPath = pathname.replace(/^\/|\/$/g, '');
+  const segments = cleanPath.split('/');
+  let accumulatedPath = '';
+  segments.forEach((seg) => {
+    accumulatedPath += `/${seg}`;
+    const formattedName = seg.charAt(0).toUpperCase() + seg.slice(1).replace(/-/g, ' ');
+    defaultBreadcrumbs.push({
+      name: formattedName,
+      url: `${siteUrl}${accumulatedPath}`
+    });
+  });
+}
+
+const breadcrumbSchema = {
+  "@type": "BreadcrumbList",
+  "@id": `${canonicalURL}#breadcrumb`,
+  "itemListElement": defaultBreadcrumbs.map((item, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": item.name,
+    "item": item.url
+  }))
+};
+
+// Comprehensive Local Business & Salon Schema
+const localBusinessSchema = {
+  "@type": ["BeautySalon", "HairSalon", "LocalBusiness"],
+  "@id": `${siteUrl}/#beautysalon`,
   "name": SITE_CONFIG.name,
-  "image": "https://angelsbeautyparlour.in/images/brand/logo.webp",
-  "url": "https://angelsbeautyparlour.in",
+  "alternateName": [
+    "Angels Bridal Studio",
+    "Angels Beauty Studio Mananthavady",
+    "ഏഞ്ചൽസ് ബ്യൂട്ടി പാർലർ മാനന്തവാടി"
+  ],
+  "url": siteUrl,
   "telephone": SITE_CONFIG.contact.phoneTel,
+  "email": SITE_CONFIG.contact.emailPlaceholder,
+  "priceRange": "₹₹",
+  "currenciesAccepted": "INR",
+  "paymentAccepted": "Cash, UPI, Google Pay, PhonePe, Credit Card, Debit Card, Net Banking",
+  "logo": {
+    "@type": "ImageObject",
+    "url": `${siteUrl}/images/logo.webp`,
+    "caption": "Angels Beauty Parlour and Bridal Studio Logo"
+  },
+  "image": [
+    `${siteUrl}/images/hero-bg.webp`,
+    `${siteUrl}/images/logo.webp`,
+    `${siteUrl}/images/bridal-church.webp`,
+    `${siteUrl}/images/bridal-suite.webp`,
+    `${siteUrl}/images/pedicure-spa.webp`,
+    `${siteUrl}/images/skin-hair-lounge.webp`,
+    `${siteUrl}/images/styling-aisle.webp`
+  ],
   "address": {
     "@type": "PostalAddress",
     "streetAddress": SITE_CONFIG.address.line1,
@@ -37,6 +120,7 @@ const jsonLd = {
     "latitude": 11.8028,
     "longitude": 76.0035
   },
+  "hasMap": SITE_CONFIG.maps.directionsUrl,
   "openingHoursSpecification": [
     {
       "@type": "OpeningHoursSpecification",
@@ -53,11 +137,97 @@ const jsonLd = {
       "closes": "20:00"
     }
   ],
-  "sameAs": [
-    SITE_CONFIG.social.instagramUrl
+  "areaServed": [
+    { "@type": "City", "name": "Mananthavady" },
+    { "@type": "AdministrativeArea", "name": "Wayanad" },
+    { "@type": "City", "name": "Kalpetta" },
+    { "@type": "City", "name": "Sulthan Bathery" },
+    { "@type": "City", "name": "Panamaram" },
+    { "@type": "AdministrativeArea", "name": "Kerala" }
   ],
-  "priceRange": "₹₹",
-  "servesCuisine": "Bridal Makeup, HD Airbrush, Korean Glass Skin, Hair Botox, Nanoplastia"
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.9",
+    "bestRating": "5",
+    "worstRating": "1",
+    "reviewCount": "239"
+  },
+  "sameAs": [
+    SITE_CONFIG.social.instagramUrl,
+    SITE_CONFIG.maps.directionsUrl
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Angels Beauty & Bridal Services",
+    "itemListElement": [
+      {
+        "@type": "OfferCatalog",
+        "name": "Bespoke Bridal Packages",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "HD Bridal Makeup Package" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Airbrush Bridal Makeup Package" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Korean Glass Skin Bridal Makeover" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Christian Bridal Gown Styling & Veil Placement" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Traditional Hindu & Muslim Saree / Lehenga Draping" } }
+        ]
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Advanced Hair Transformations",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hair Botox Cuticle Therapy" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Nanoplastia Amino Smoothing" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Keratin Protein Treatment" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Balayage, Streaks & Global Hair Coloring" } }
+        ]
+      },
+      {
+        "@type": "OfferCatalog",
+        "name": "Clinical & Luxury Skincare",
+        "itemListElement": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Korean Glass Skin Facial" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hydra Glow Treatment" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Skin Brightening & De-Tan Therapy" } }
+        ]
+      }
+    ]
+  }
+};
+
+// WebSite Schema
+const webSiteSchema = {
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  "url": siteUrl,
+  "name": SITE_CONFIG.name,
+  "description": SITE_CONFIG.description,
+  "publisher": { "@id": `${siteUrl}/#beautysalon` },
+  "inLanguage": "en-IN"
+};
+
+// FAQ Schema (if FAQs are passed)
+const faqSchema = faqs.length > 0 ? {
+  "@type": "FAQPage",
+  "@id": `${canonicalURL}#faq`,
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": f.answer
+    }
+  }))
+} : null;
+
+// Combined JSON-LD Graph
+const schemaGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    localBusinessSchema,
+    webSiteSchema,
+    breadcrumbSchema,
+    ...(faqSchema ? [faqSchema] : [])
+  ]
 };
 ---
 
@@ -66,12 +236,66 @@ const jsonLd = {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Favicons & App Icons -->
     <link rel="icon" type="image/webp" href="/favicon.webp" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.webp" />
     <link rel="canonical" href={canonicalURL} />
     
-    <!-- Google & Apple Modern Sans-Serif Fonts (Inter & Plus Jakarta Sans) -->
+    <!-- Primary SEO Metadata -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content="Angels Beauty Parlour and Bridal Studio" />
+    
+    <!-- Technical Crawler Directives (Full Google & Bing Indexation) -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="revisit-after" content="3 days" />
+    <meta name="rating" content="general" />
+
+    <!-- Local SEO Geographic Tags (Wayanad, Kerala) -->
+    <meta name="geo.region" content="IN-KL" />
+    <meta name="geo.placename" content="Mananthavady, Wayanad, Kerala" />
+    <meta name="geo.position" content="11.8028;76.0035" />
+    <meta name="ICBM" content="11.8028, 76.0035" />
+    <meta name="format-detection" content="telephone=yes, address=yes, email=yes" />
+
+    <!-- Open Graph / Facebook / WhatsApp Preview -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content="Angels Beauty Parlour and Bridal Studio" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={absoluteOgImage} />
+    <meta property="og:image:secure_url" content={absoluteOgImage} />
+    <meta property="og:image:type" content="image/webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${title} - Angels Beauty Studio Mananthavady`} />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:locale:alternate" content="ml_IN" />
+
+    <!-- Twitter Cards (X) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@angels_beauty__parlour" />
+    <meta name="twitter:creator" content="@angels_beauty__parlour" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteOgImage} />
+    <meta name="twitter:image:alt" content={`${title} - Angels Beauty Studio`} />
+
+    <!-- Mobile Theme & Color Branding -->
+    <meta name="theme-color" content="#FDFBF7" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Angels Beauty" />
+
+    <!-- High-Performance Typography & Asset Preconnections -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" />
@@ -79,6 +303,7 @@ const jsonLd = {
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..800;1,14..32,300..800&family=Plus+Jakarta+Sans:ital,wght@0,300..800;1,300..800&display=swap" />
     </noscript>
+
     <!-- Immediate Zero-Flash Preloader Check: ONLY show on first session visit or page reload (F5) -->
     <script is:inline>
       (function() {
@@ -98,33 +323,12 @@ const jsonLd = {
       }
     </style>
 
-
     <!-- Critical Above-The-Fold Asset Preloads (Zero LCP Delay) -->
-    <link rel="preload" as="image" href="/images/hero/hero-bg.webp" fetchpriority="high" />
-    <link rel="preload" as="image" href="/images/brand/logo.webp" />
-    
-    <!-- Primary Meta -->
-    <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-    <meta name="keywords" content="bridal makeup wayanad, angels beauty parlour mananthavady, bridal studio mananthavady, HD bridal makeup kerala, glass skin facial wayanad, hair botox mananthavady, nanoplastia wayanad" />
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={canonicalURL} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogImage} />
+    <link rel="preload" as="image" href="/images/hero-bg.webp" fetchpriority="high" />
+    <link rel="preload" as="image" href="/images/logo.webp" />
 
-    <!-- LocalBusiness Schema JSON-LD -->
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <!-- Advanced Structured Data (JSON-LD Graph) -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaGraph)} />
   </head>
   <body class="bg-canvas text-charcoal antialiased selection:bg-[#EBD6B0] selection:text-charcoal min-h-screen max-w-full w-full">
     <!-- Studio Preloader -->

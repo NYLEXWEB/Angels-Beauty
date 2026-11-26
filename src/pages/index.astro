@@ -9,14 +9,17 @@ import GallerySection from '../components/GallerySection.astro';
 import InstagramSection from '../components/InstagramSection.astro';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import BookingForm from '../components/BookingForm';
+import FAQSection, { HOME_FAQS } from '../components/FAQSection.astro';
 import ContactSection from '../components/ContactSection.astro';
 import Footer from '../components/Footer.astro';
 import FloatingActions from '../components/FloatingActions';
 ---
 
 <Layout 
-  title="Angels Beauty Parlour and Bridal Studio | Mananthavady, Wayanad"
-  description="Wayanad's signature destination for bespoke bridal makeup, HD beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady. Open daily 9 AM - 8 PM."
+  title="Best Bridal Makeup in Wayanad | Angels Beauty Parlour & Studio"
+  description="Wayanad's signature destination for bespoke bridal makeup, HD airbrush beauty, Korean glass skin facials and hair transformations at PP Building, Mananthavady. Open daily 9 AM – 8 PM."
+  keywords="bridal makeup wayanad, best beauty parlour in mananthavady, bridal studio mananthavady, HD bridal makeup kerala, korean glass skin facial wayanad, hair botox mananthavady, nanoplastia wayanad, wedding makeup artist wayanad"
+  faqs={HOME_FAQS}
 >
   <Header />
   
@@ -45,13 +48,16 @@ import FloatingActions from '../components/FloatingActions';
     <!-- 8. Interactive Booking Form -->
     <BookingForm client:visible />
 
-    <!-- 9. Contact, Address & Google Maps Location -->
+    <!-- 9. Frequently Asked Questions (Local SEO & Rich Snippets) -->
+    <FAQSection />
+
+    <!-- 10. Contact, Address & Google Maps Location -->
     <ContactSection />
   </main>
 
-  <!-- 10. Footer -->
+  <!-- Footer -->
   <Footer />
 
-  <!-- 11. Floating Action Buttons (WhatsApp & Instagram) -->
+  <!-- Floating Action Buttons (WhatsApp & Instagram) -->
   <FloatingActions client:load />
 </Layout>
