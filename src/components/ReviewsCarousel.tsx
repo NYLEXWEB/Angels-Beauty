@@ -123,9 +123,9 @@ export default function ReviewsCarousel() {
                         {review.authorName.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-charcoal font-sans leading-tight">
+                        <h3 className="text-sm font-semibold text-charcoal font-sans leading-tight">
                           {review.authorName}
-                        </h4>
+                        </h3>
                         <div className="flex items-center gap-1.5 text-[11px] text-muted font-sans mt-0.5">
                           <span>{review.relativeTime}</span>
                           <span className="w-1 h-1 rounded-full bg-neutral-300"></span>
@@ -188,9 +188,9 @@ export default function ReviewsCarousel() {
                         {review.authorName.charAt(0)}
                       </div>
                       <div>
-                        <h4 className="text-sm font-semibold text-charcoal font-sans">
+                        <h3 className="text-sm font-semibold text-charcoal font-sans">
                           {review.authorName}
-                        </h4>
+                        </h3>
                         <div className="flex items-center gap-1.5 text-[11px] text-muted font-sans mt-0.5">
                           <span>{review.relativeTime}</span>
                           <span className="w-1 h-1 rounded-full bg-neutral-300"></span>

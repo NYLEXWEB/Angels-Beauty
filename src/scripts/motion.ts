@@ -52,18 +52,20 @@ export function initMotion() {
   gsap.ticker.add(tickerCallback);
   gsap.ticker.lagSmoothing(500, 33);
 
-  // Auto-recalculate dimensions when preloader opens and after layout settles
+  // Debounced recalculation to prevent forced reflow layout thrashing
+  let refreshTimer: ReturnType<typeof setTimeout> | null = null;
   const refreshScroll = () => {
-    lenis.resize();
-    lenis.start();
-    ScrollTrigger.refresh();
+    if (refreshTimer) clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => {
+      lenis.resize();
+      lenis.start();
+      ScrollTrigger.refresh();
+    }, 80);
   };
 
-  window.addEventListener('angels:ready', refreshScroll);
-  window.addEventListener('load', refreshScroll);
-  window.addEventListener('resize', () => {
-    lenis.resize();
-  });
+  window.addEventListener('angels:ready', refreshScroll, { once: true });
+  window.addEventListener('load', refreshScroll, { once: true });
+  window.addEventListener('resize', refreshScroll, { passive: true });
 
   // Smooth scroll for in-page anchor links
   document.querySelectorAll<HTMLAnchorElement>('a[href*="#"]').forEach((anchor) => {
@@ -85,13 +87,8 @@ export function initMotion() {
   });
 
   if (document.fonts) {
-    document.fonts.ready.then(() => {
-      ScrollTrigger.refresh();
-    });
+    document.fonts.ready.then(refreshScroll);
   }
-  window.addEventListener('load', () => {
-    ScrollTrigger.refresh();
-  });
 
   // 1. Hero Page-Load Cinematic Deblur & Stagger Sequence
   const heroReveal = document.querySelector('.hero-text-reveal');
