@@ -185,18 +185,18 @@
     });
   }
 
-  // Safety Timeout (600ms safeguard so user is never stalled)
+  // Safety Timeout (350ms safeguard so user is never stalled and LCP occurs rapidly)
   const emergencyTimeout = setTimeout(function() {
     targetProgress = 100;
     loadedImages = totalImages;
-  }, 600);
+  }, 350);
 
   // Smooth Haute-Couture Lerp Animation Loop
   function renderProgress() {
     if (isDone) return;
 
     if (currentProgress < targetProgress) {
-      const step = Math.max(3, Math.ceil((targetProgress - currentProgress) * 0.35));
+      const step = Math.max(8, Math.ceil((targetProgress - currentProgress) * 0.45));
       currentProgress = Math.min(targetProgress, currentProgress + step);
     }
 

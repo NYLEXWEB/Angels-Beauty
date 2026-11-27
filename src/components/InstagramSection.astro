@@ -228,7 +228,7 @@ const REELS = [
               <button 
                 type="button" 
                 class="reel-like-btn flex flex-col items-center gap-1 group/btn cursor-pointer transition-transform active:scale-125"
-                aria-label="Like this reel"
+                aria-label={`Like this reel (${reel.likes})`}
               >
                 <div class="w-10 h-10 rounded-full bg-black/45 hover:bg-black/70 backdrop-blur-md flex items-center justify-center transition-colors border border-white/15">
                   <svg class="like-icon w-5 h-5 fill-none stroke-current transition-all" viewBox="0 0 24 24" stroke-width="2">

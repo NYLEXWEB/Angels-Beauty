@@ -239,10 +239,13 @@ export default function ReviewsCarousel() {
                 key={i}
                 type="button"
                 onClick={() => setCurrentIndex(i)}
-                className={`h-1.5 rounded-full transition-all ${currentIndex === i ? 'w-6 bg-charcoal' : 'w-1.5 bg-neutral-300'
-                  }`}
+                className="p-2.5 inline-flex items-center justify-center cursor-pointer -m-1 focus:outline-none"
                 aria-label={`Go to review ${i + 1}`}
-              />
+              >
+                <span
+                  className={`h-1.5 rounded-full transition-all block ${currentIndex === i ? 'w-6 bg-charcoal' : 'w-1.5 bg-neutral-300'}`}
+                />
+              </button>
             ))}
           </div>
 

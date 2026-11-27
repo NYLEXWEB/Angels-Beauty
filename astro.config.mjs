@@ -32,6 +32,9 @@ export default defineConfig({
     })
   ],
   prefetch: true,
+  devToolbar: {
+    enabled: false,
+  },
   vite: {
     plugins: [tailwindcss()],
     build: {
@@ -44,6 +47,9 @@ export default defineConfig({
             }
             if (id.includes('node_modules/lucide-react/')) {
               return 'vendor-lucide';
+            }
+            if (id.includes('node_modules/gsap/')) {
+              return 'vendor-gsap';
             }
           }
         }

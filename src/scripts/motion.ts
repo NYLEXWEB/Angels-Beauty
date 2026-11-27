@@ -26,30 +26,37 @@ export function initMotion() {
     gsap.ticker.remove(window.__lenisTicker);
   }
 
-  // Initialize Ultra-Smooth Luxury Momentum Scrolling Engine (Lenis 1.3+)
-  const lenis = new Lenis({
-    lerp: 0.1,
-    duration: 1.0,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    orientation: 'vertical',
-    gestureOrientation: 'vertical',
-    smoothWheel: true,
-    wheelMultiplier: 1.0,
-    touchMultiplier: 1.0,
-    syncTouch: false,
-    autoResize: true,
-  });
+  // Check if device is touch-based (mobile/tablet) to preserve native 120fps compositor scrolling
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  let lenis: Lenis | null = null;
 
-  window.__lenis = lenis;
+  if (!isTouch) {
+    // Initialize Ultra-Smooth Luxury Momentum Scrolling Engine (Lenis 1.3+) for desktop wheel
+    lenis = new Lenis({
+      lerp: 0.1,
+      duration: 1.0,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.0,
+      syncTouch: false,
+      autoResize: true,
+    });
 
-  // Seamless GSAP ScrollTrigger Synchronization
-  lenis.on('scroll', ScrollTrigger.update);
+    window.__lenis = lenis;
 
-  const tickerCallback = (time: number) => {
-    lenis.raf(time * 1000);
-  };
-  window.__lenisTicker = tickerCallback;
-  gsap.ticker.add(tickerCallback);
+    // Seamless GSAP ScrollTrigger Synchronization
+    lenis.on('scroll', ScrollTrigger.update);
+
+    const tickerCallback = (time: number) => {
+      lenis?.raf(time * 1000);
+    };
+    window.__lenisTicker = tickerCallback;
+    gsap.ticker.add(tickerCallback);
+  }
+
   gsap.ticker.lagSmoothing(500, 33);
 
   // Debounced recalculation to prevent forced reflow layout thrashing
@@ -57,8 +64,10 @@ export function initMotion() {
   const refreshScroll = () => {
     if (refreshTimer) clearTimeout(refreshTimer);
     refreshTimer = setTimeout(() => {
-      lenis.resize();
-      lenis.start();
+      if (lenis) {
+        lenis.resize();
+        lenis.start();
+      }
       ScrollTrigger.refresh();
     }, 80);
   };
@@ -77,10 +86,14 @@ export function initMotion() {
         const target = document.querySelector(url.hash);
         if (target) {
           e.preventDefault();
-          lenis.scrollTo(target as HTMLElement, {
-            offset: -75,
-            duration: 1.3,
-          });
+          if (lenis) {
+            lenis.scrollTo(target as HTMLElement, {
+              offset: -75,
+              duration: 1.3,
+            });
+          } else {
+            (target as HTMLElement).scrollIntoView({ behavior: 'smooth' });
+          }
         }
       }
     });
