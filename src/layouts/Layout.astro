@@ -338,12 +338,11 @@ const schemaGraph = {
 
     <script>
       import { initMotion } from '../scripts/motion';
+      const start = () => requestAnimationFrame(() => initMotion());
       if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', () => {
-          initMotion();
-        });
+        document.addEventListener('DOMContentLoaded', start, { once: true });
       } else {
-        initMotion();
+        start();
       }
     </script>
   </body>

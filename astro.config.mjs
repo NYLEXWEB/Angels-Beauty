@@ -41,6 +41,12 @@ export default defineConfig({
       cssCodeSplit: true,
       rollupOptions: {
         output: {
+          assetFileNames: (assetInfo) => {
+            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+              return '_astro/site-[hash].css';
+            }
+            return '_astro/[name]-[hash][extname]';
+          },
           manualChunks(id) {
             if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
               return 'vendor-react';

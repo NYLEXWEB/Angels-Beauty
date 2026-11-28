@@ -6,7 +6,7 @@ import ServicesShowcase from '../components/ServicesShowcase';
 import HairBeforeAfter from '../components/HairBeforeAfter';
 import NailPortfolio from '../components/NailPortfolio';
 import BookingForm from '../components/BookingForm';
-import FloatingActions from '../components/FloatingActions';
+import FloatingActions from '../components/FloatingActions.astro';
 ---
 
 <Layout 
@@ -87,5 +87,5 @@ import FloatingActions from '../components/FloatingActions';
   </main>
 
   <Footer />
-  <FloatingActions client:idle />
+  <FloatingActions />
 </Layout>

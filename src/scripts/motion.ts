@@ -31,30 +31,35 @@ export function initMotion() {
   let lenis: Lenis | null = null;
 
   if (!isTouch) {
-    // Initialize Ultra-Smooth Luxury Momentum Scrolling Engine (Lenis 1.3+) for desktop wheel
-    lenis = new Lenis({
-      lerp: 0.1,
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.0,
-      touchMultiplier: 1.0,
-      syncTouch: false,
-      autoResize: true,
-    });
+    const initLenisDesktop = () => {
+      lenis = new Lenis({
+        lerp: 0.1,
+        duration: 1.0,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 1.0,
+        syncTouch: false,
+        autoResize: true,
+      });
 
-    window.__lenis = lenis;
+      window.__lenis = lenis;
+      lenis.on('scroll', ScrollTrigger.update);
 
-    // Seamless GSAP ScrollTrigger Synchronization
-    lenis.on('scroll', ScrollTrigger.update);
-
-    const tickerCallback = (time: number) => {
-      lenis?.raf(time * 1000);
+      const tickerCallback = (time: number) => {
+        lenis?.raf(time * 1000);
+      };
+      window.__lenisTicker = tickerCallback;
+      gsap.ticker.add(tickerCallback);
     };
-    window.__lenisTicker = tickerCallback;
-    gsap.ticker.add(tickerCallback);
+
+    if (typeof requestIdleCallback !== 'undefined') {
+      requestIdleCallback(initLenisDesktop);
+    } else {
+      setTimeout(initLenisDesktop, 50);
+    }
   }
 
   gsap.ticker.lagSmoothing(500, 33);

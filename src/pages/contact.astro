@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import ContactSection from '../components/ContactSection.astro';
 import BookingForm from '../components/BookingForm';
-import FloatingActions from '../components/FloatingActions';
+import FloatingActions from '../components/FloatingActions.astro';
 ---
 
 <Layout 
@@ -64,5 +64,5 @@ import FloatingActions from '../components/FloatingActions';
   </main>
 
   <Footer />
-  <FloatingActions client:idle />
+  <FloatingActions />
 </Layout>

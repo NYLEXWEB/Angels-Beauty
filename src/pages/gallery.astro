@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import GallerySection from '../components/GallerySection.astro';
 import InstagramSection from '../components/InstagramSection.astro';
-import FloatingActions from '../components/FloatingActions';
+import FloatingActions from '../components/FloatingActions.astro';
 ---
 
 <Layout 
@@ -79,5 +79,5 @@ import FloatingActions from '../components/FloatingActions';
   </main>
 
   <Footer />
-  <FloatingActions client:idle />
+  <FloatingActions />
 </Layout>
